@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#be185d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>N2 形容词复习</title>
+<style>
+:root{
+  --bg:#f4f6fb; --panel:#fff; --ink:#172033; --muted:#5f6b7a; --line:#e2e6ef;
+  --accent:#be185d; --accent-ink:#fff; --soft:#eef2ff;
+  --extra:#b45309; --extra-bg:#fff7ed; --pair:#6d28d9; --pair-bg:#f5f3ff;
+  --col:#0f766e; --col-bg:#f0fdfa; --irr:#fef3c7; --say:#0369a1; --say-bg:#e0f2fe;
+  --shadow:0 8px 24px rgba(23,32,51,.06); --tap:46px;
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a; --panel:#1e293b; --ink:#f1f5f9; --muted:#94a3b8; --line:#334155;
+  --accent:#f9a8d4; --accent-ink:#0f172a; --soft:#1e2a4a;
+  --extra:#fdba74; --extra-bg:#3b2714; --pair:#c4b5fd; --pair-bg:#2e1065;
+  --col:#5eead4; --col-bg:#0b2e2b; --irr:#4a3b0b; --say:#7dd3fc; --say-bg:#0c3049; --shadow:none;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --panel:#1e293b; --ink:#f1f5f9; --muted:#94a3b8; --line:#334155;
+    --accent:#f9a8d4; --accent-ink:#0f172a; --soft:#1e2a4a;
+    --extra:#fdba74; --extra-bg:#3b2714; --pair:#c4b5fd; --pair-bg:#2e1065;
+    --col:#5eead4; --col-bg:#0b2e2b; --irr:#4a3b0b; --say:#7dd3fc; --say-bg:#0c3049; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark} :root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+html{font-size:17px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html.big{font-size:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans CJK JP","PingFang SC","Noto Sans SC",sans-serif}
+button,input{font:inherit}
+header{padding:20px max(16px,env(safe-area-inset-right)) 14px max(16px,env(safe-area-inset-left));background:linear-gradient(135deg,#831843,#be185d 55%,#ea580c);color:#fff}
+h1{font-size:clamp(22px,6.4vw,32px);line-height:1.25;margin:0 0 6px}
+header p{margin:0;opacity:.92;font-size:.9rem}
+.stats{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.stat{background:#ffffff22;border:1px solid #ffffff3a;border-radius:999px;padding:4px 10px;font-weight:700;font-size:.78rem}
+.toolbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:9px max(12px,env(safe-area-inset-left)) 5px}
+.search{width:100%;min-height:var(--tap);border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);padding:10px 14px;outline:none;font-size:16px}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.chips{display:flex;gap:7px;overflow:auto;padding:7px 0 1px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:999px;white-space:nowrap;min-height:40px;cursor:pointer;font-size:.88rem}
+.chip.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:750}
+.lchips .chip{min-width:44px;padding:6px 10px;text-align:center}
+.tchips .chip.active{background:var(--tc,var(--accent));border-color:var(--tc,var(--accent));color:#fff}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:4px 10px;padding-top:4px;font-size:.84rem;color:var(--muted);flex-wrap:wrap}
+.toggles{display:flex;gap:2px 12px;flex-wrap:wrap}
+.toggle{display:flex;align-items:center;gap:6px;min-height:36px;cursor:pointer;white-space:nowrap}
+.toggle input{width:20px;height:20px;accent-color:var(--accent)}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.tbtn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;min-height:38px;padding:4px 10px;cursor:pointer;font-size:.84rem;white-space:nowrap}
+.tbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:800}
+main{max-width:980px;margin:0 auto;padding:10px max(12px,env(safe-area-inset-left)) 88px}
+.legend{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:11px 14px;margin:4px 0 12px;box-shadow:var(--shadow);font-size:.86rem;line-height:1.9}
+.subbar{padding:2px max(12px,env(safe-area-inset-left)) 0}
+.ttsnote{position:fixed;z-index:50;left:10px;right:10px;bottom:max(12px,env(safe-area-inset-bottom));max-width:640px;margin:0 auto;box-shadow:0 8px 30px rgba(0,0,0,.25);background:#fff7ed;color:#7c2d12;border:1px solid #fdba74;border-radius:12px;padding:10px 12px;font-size:.86rem;display:flex;gap:8px;align-items:flex-start}
+:root[data-theme="dark"] .ttsnote{background:#3b2714;color:#fed7aa}
+.ttsnote button{margin-left:auto;flex:0 0 auto}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:1px 8px;font-size:.7rem;font-weight:800;white-space:nowrap;line-height:1.6;vertical-align:middle}
+.badge.book{color:var(--accent);background:var(--soft)}
+.badge.extra{color:var(--extra);background:var(--extra-bg);border:1px solid color-mix(in srgb,var(--extra) 35%,transparent)}
+.badge.tb{color:var(--col);background:var(--col-bg);border:1px solid color-mix(in srgb,var(--col) 30%,transparent);font-size:.66rem;padding:0 6px}
+.badge.nw{color:var(--muted);background:var(--bg);border:1px solid var(--line);font-size:.66rem;padding:0 6px}
+.badge.otype{color:var(--muted);background:var(--bg);border:1px solid var(--line)}
+.badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+details.section{margin:10px 0;background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--c,var(--accent));border-radius:18px;overflow:hidden;box-shadow:var(--shadow);scroll-margin-top:230px}
+summary{list-style:none;cursor:pointer;min-height:56px;padding:13px 16px;display:flex;align-items:center;gap:8px;font-size:1.06rem;font-weight:850}
+summary::-webkit-details-marker{display:none}
+.caret{margin-left:auto;color:var(--muted);transition:transform .18s}
+details[open]>summary .caret{transform:rotate(180deg)}
+.count{color:var(--muted);font-size:.8rem;font-weight:650}
+.inside{padding:0 10px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px}
+.card{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--c,var(--accent));border-radius:16px;padding:12px 12px 11px;min-width:0}
+.card.extra-card{border-style:dashed;border-left-style:solid;background:color-mix(in srgb,var(--extra-bg) 55%,var(--bg))}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.word{font-size:1.5rem;font-weight:860;line-height:1.35;overflow-wrap:anywhere}
+.kana{display:block;margin-top:1px;color:var(--muted);font-size:.95rem;font-weight:700;letter-spacing:.04em}
+.meaning{font-size:1.1rem;font-weight:800;color:var(--c,var(--accent));margin:6px 0 2px;line-height:1.45}
+.en{font-size:.84rem;color:var(--muted);font-weight:650;margin:0 0 7px;line-height:1.4}
+.meta{font-size:.84rem;color:var(--muted);margin-top:6px}
+.meta b{color:var(--ink);font-weight:750}
+.also{display:block;font-size:.78rem;color:var(--muted);margin-top:2px}
+.cardnote{margin:7px 0 0;font-size:.8rem;color:var(--muted);background:var(--panel);border-radius:8px;padding:6px 8px}
+.forms{display:grid;grid-template-columns:1fr;gap:5px}
+@media (min-width:700px){.forms{grid-template-columns:1fr 1fr}}
+.field{background:var(--panel);border-radius:10px;padding:4px 6px 4px 9px;min-width:0;display:flex;align-items:center;gap:6px}
+.field .fv{flex:1;min-width:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:0 8px}
+.field .fv .label{flex:0 0 5.4em}
+.label{display:block;color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.04em}
+.formvalue{font-size:1rem;font-weight:700;overflow-wrap:anywhere}
+.fr{font-size:.78rem;color:var(--muted);line-height:1.3;font-weight:600}
+.cols{margin-top:9px;border-top:1px dashed var(--line);padding-top:6px}
+.col{background:var(--panel);border-left:3px solid var(--col);border-radius:8px;padding:6px 9px;margin-top:6px}
+.cphrase{font-size:1.06rem;font-weight:800;line-height:2.05}
+.cz{font-size:.8rem;font-weight:600;color:var(--muted);margin-left:4px}
+.ex{font-size:1rem;line-height:2.15;margin-top:1px}
+.exz{font-size:.86rem;color:var(--muted);line-height:1.5}
+body.hide-ex .ex, body.hide-ex .exz{display:none}
+body.hide-col .cols{display:none}
+ruby{ruby-position:over}
+rt{font-size:.56em;font-weight:600;color:var(--muted);letter-spacing:0}
+.say{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;border:1px solid color-mix(in srgb,var(--say) 35%,transparent);background:var(--say-bg);color:var(--say);border-radius:999px;min-width:34px;height:30px;padding:0 6px;margin:0 3px;font-size:.92rem;line-height:1;cursor:pointer;flex:0 0 auto;-webkit-tap-highlight-color:transparent}
+.say.speaking{background:var(--say);color:#fff;border-color:var(--say);animation:pulse 1s ease-in-out infinite}
+.word .say{height:34px;min-width:38px;font-size:1rem}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--say) 45%,transparent)}50%{box-shadow:0 0 0 6px transparent}}
+.pair{border:2px solid color-mix(in srgb,var(--pair) 42%,var(--line));border-radius:18px;padding:10px;background:var(--pair-bg);margin:0 0 12px}
+.pairtitle{display:flex;align-items:center;gap:8px;color:var(--pair);font-weight:850;margin:0 2px 8px;font-size:.88rem}
+.paircards{display:grid;grid-template-columns:1fr 36px 1fr;align-items:stretch;gap:6px}
+.paircards .card{background:var(--panel)}
+.paircards .card .col,.paircards .card .cardnote,.paircards .card .field{background:var(--bg)}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--pair);font-size:22px;font-weight:900}
+.pairnote{font-size:.88rem;color:var(--muted);margin:8px 4px 2px}
+.pair.solo .arrow{display:none}
+.pair.solo .paircards{grid-template-columns:1fr}
+.ogroup h3{margin:8px 4px 6px;font-size:.95rem;color:var(--muted)}
+.ogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:8px;margin-bottom:8px}
+.ocard{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.oword{font-size:1.15rem;font-weight:820}
+.ozh{font-weight:750;color:var(--accent);font-size:.95rem}
+.empty{text-align:center;color:var(--muted);padding:40px 12px}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:8px 12px 28px}
+@media (max-width:640px){
+  .paircards{grid-template-columns:1fr}
+  .arrow{height:26px;transform:rotate(90deg)}
+}
+.word ruby rt{font-size:.45em;font-weight:600;color:var(--muted,#64748b)}
+.formvalue ruby rt{font-size:.55em}
+.origin{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 4px;padding:6px 10px;border-radius:10px;background:rgba(8,145,178,.10);border:1px dashed #0891b2;font-size:1.05rem}
+.origin b{font-family:Georgia,"Times New Roman",serif;font-size:1.2rem;color:#0e7490;letter-spacing:.02em}
+.olab{font-size:.8rem;color:#0e7490;font-weight:700}
+.otag{font-size:.75rem;padding:1px 8px;border-radius:999px;background:#0891b2;color:#fff}
+.otag.oforeign{background:#b45309}
+[data-theme=dark] .origin b{color:#67e8f9}
+.badge.self{background:#fef3c7;color:#92400e}
+.badge.newword{background:#e0e7ff;color:#3730a3}
+.badge.vt{background:#f1f5f9;color:#334155;border:1px solid #cbd5e1}
+
+
+/* site chrome: home link + prevent horizontal overflow */
+html{overflow-x:hidden;max-width:100%}
+body{max-width:100%}
+img,svg,video,canvas{max-width:100%;height:auto}
+.site-home{display:inline-flex;align-items:center;min-height:48px;padding:0 8px 0 0;margin:0 0 2px;color:#fff;font-weight:700;font-size:16px;line-height:1.2;text-decoration:none;letter-spacing:.02em}
+.site-home:hover{text-decoration:underline}
+.site-home:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
+
+</style>
+</head>
+<body>
+<header>
+  <a class="site-home" href="../index.html">← 首页</a>
+  <h1>JLPT N2<br>形容词复习</h1>
+  <p>JLPT N2 · い形容词／な形容词 · 否定・过去・て形・副词形 · 五十音 · 🔊 点击朗读</p>
+  <div class="stats" id="stats"></div>
+</header>
+<div class="toolbar">
+  <input id="q" class="search" type="search" placeholder="搜索：日语／平假名／片假名／中文／英语／例句…" autocomplete="off" enterkeyhint="search" aria-label="搜索">
+  <div class="chips" id="chips" aria-label="分类"></div>
+  <div class="chips lchips" id="lchips" aria-label="五十音"></div>
+</div>
+<div class="subbar">
+  <div class="chips tchips" id="tchips" aria-label="类型"></div>
+  <div class="controls">
+    <div class="toggles">
+      <label class="toggle"><input id="onlyNew" type="checkbox">只看没学过的</label>
+      <label class="toggle"><input id="showCol" type="checkbox" checked>搭配</label>
+      <label class="toggle"><input id="showEx" type="checkbox" checked>例句</label>
+    </div>
+    <div class="btns">
+      <button type="button" class="tbtn" id="rateBtn" aria-label="朗读速度">🔊 正常</button>
+      <button type="button" class="tbtn" id="bigBtn" aria-pressed="false">A+ 大字</button>
+      <button type="button" class="tbtn" id="themeBtn">🌓 自动</button>
+    </div>
+  </div>
+  <div class="controls"><span id="resultText"></span><button type="button" class="tbtn" id="foldBtn">全部收起</button></div>
+</div>
+<div id="ttsNote" class="ttsnote hidden" role="status"><span id="ttsNoteText"></span><button type="button" class="tbtn" id="ttsNoteClose">知道了</button></div>
+<main>
+  <div class="legend"><b>い</b>／<b>な</b>形容词。<b>学过</b>＝课本学过；<b>自译</b>＝中文自己翻译。名词兼な形容词、主要当な形容词用的词放在这里。</div>
+  <div id="content"></div>
+  <div id="empty" class="empty hidden">没有匹配的词</div>
+</main>
+<footer>单文件离线版 · JLPT N2 词汇（社区估计词表，JLPT 2010 年后没有官方词表）· 词表：Jonathan Waller / tanos.co.uk（CC BY），经 open-anki-jlpt-decks（MIT）· 词性和外来语来源：JMdict/EDRDG（CC BY-SA 4.0），jmdict-simplified 3.6.2 · 「学过」＝できる日本語 初級／初中級／中級 词表里出现过，中文用课本译词；标「自译」的中文是自己翻译的。例句都是新例句（自己写的），不是来源原文。</footer>
+<script>
+const DATA = {"categories":[{"id":"feel","name":"心情・感受","icon":"💗","color":"#db2777"},{"id":"attitude","name":"性格・态度","icon":"🙂","color":"#16a34a"},{"id":"eval","name":"评价・能力","icon":"⭐","color":"#2563eb"},{"id":"look","name":"外观・样子","icon":"👀","color":"#0891b2"},{"id":"judge","name":"情况・判断","icon":"⚖️","color":"#7c3aed"},{"id":"sense","name":"感官・味道・声音","icon":"👂","color":"#ea580c"},{"id":"degree","name":"程度・数量","icon":"📏","color":"#b45309"},{"id":"manner","name":"言行・做事方式","icon":"🏃","color":"#9333ea"}],"otherTypes":[],"records":[{"kind":"adj","key":"～難い","word":"～難い","reading":"～がたい","wr":"～{難|がた}い","zh":"难以……（理解し難い）","cnsrc":"自译","learned":null,"en":"hard (difficult) to do ~","category":"judge","row":"か","note":"","examples":[{"ex":"{彼|かれ}の{行動|こうどう}は{理解|りかい}し{難|がた}い。","exz":"他的行为难以理解。","c":"","cz":"","tag":"新例句"}],"rows":[14],"otype":null,"type":"i","forms":{"neg":"～{難|がた}くない","past":"～{難|がた}かった","te":"～{難|がた}くて","adv":"～{難|がた}く"},"formsR":{"neg":"～がたくない","past":"～がたかった","te":"～がたくて","adv":"～がたく"}},{"kind":"adj","key":"～辛い","word":"～辛い","reading":"～づらい","wr":"～{辛|づら}い","zh":"难以……（読みづらい）","cnsrc":"自译","learned":null,"en":"hard to do ~","category":"judge","row":"た","note":"词表标记「初級 L4」学过，但那一课的「辛い」是别的词或别的读音/用法（辣），不算学过。","examples":[{"ex":"この{字|じ}は{小|ちい}さくて{読|よ}みづらい。","exz":"这个字太小，很难看清。","c":"","cz":"","tag":"新例句"}],"rows":[85],"otype":null,"type":"i","forms":{"neg":"～{辛|づら}くない","past":"～{辛|づら}かった","te":"～{辛|づら}くて","adv":"～{辛|づら}く"},"formsR":{"neg":"～づらくない","past":"～づらかった","te":"～づらくて","adv":"～づらく"}},{"kind":"adj","key":"～ぽい","word":"～ぽい","reading":"～ぽい","wr":"～ぽい","zh":"有……的样子；……似的（子供っぽい）","cnsrc":"自译","learned":null,"en":"~ish","category":"eval","row":"は","note":"","examples":[{"ex":"{彼|かれ}はときどき{子供|こども}っぽいことを{言|い}う。","exz":"他有时会说些孩子气的话。","c":"","cz":"","tag":"新例句"}],"rows":[107],"otype":null,"type":"i","forms":{"neg":"～ぽくない","past":"～ぽかった","te":"～ぽくて","adv":"～ぽく"},"formsR":{"neg":"～ぽくない","past":"～ぽかった","te":"～ぽくて","adv":"～ぽく"}},{"kind":"adj","key":"～みたい","word":"～みたい","reading":"～みたい","wr":"～みたい","zh":"像……一样（～みたい）","cnsrc":"自译","learned":null,"en":"looks like ~","category":"judge","row":"ま","note":"","examples":[{"ex":"{今日|きょう}はまるで{夏|なつ}みたいに{暑|あつ}い。","exz":"今天热得简直像夏天一样。","c":"","cz":"","tag":"新例句"}],"rows":[109],"otype":null,"type":"na","forms":{"neg":"～みたいじゃない","past":"～みたいだった","te":"～みたいで","adv":"～みたいに"},"formsR":{"neg":"～みたいじゃない","past":"～みたいだった","te":"～みたいで","adv":"～みたいに"}},{"kind":"adj","key":"あいまい","word":"あいまい","reading":"あいまい","wr":"あいまい","zh":"暧昧；含糊","cnsrc":"自译","learned":null,"en":"vague, ambiguous","category":"judge","row":"あ","note":"","examples":[{"ex":"{彼|かれ}はいつもあいまいな{返事|へんじ}をする。","exz":"他总是含糊其辞地回答。","c":"","cz":"","tag":"新例句"}],"rows":[124],"otype":null,"type":"na","forms":{"neg":"あいまいじゃない","past":"あいまいだった","te":"あいまいで","adv":"あいまいに"},"formsR":{"neg":"あいまいじゃない","past":"あいまいだった","te":"あいまいで","adv":"あいまいに"}},{"kind":"adj","key":"青白い","word":"青白い","reading":"あおじろい","wr":"{青白|あおじろ}い","zh":"苍白；青白","cnsrc":"自译","learned":null,"en":"pale","category":"look","row":"あ","note":"","examples":[{"ex":"{彼|かれ}は{青白|あおじろ}い{顔|かお}をしていた。","exz":"他脸色苍白。","c":"","cz":"","tag":"新例句"}],"rows":[126],"otype":null,"type":"i","forms":{"neg":"{青白|あおじろ}くない","past":"{青白|あおじろ}かった","te":"{青白|あおじろ}くて","adv":"{青白|あおじろ}く"},"formsR":{"neg":"あおじろくない","past":"あおじろかった","te":"あおじろくて","adv":"あおじろく"}},{"kind":"adj","key":"当たり前","word":"当たり前","reading":"あたりまえ","wr":"{当|あ}たり{前|まえ}","zh":"理所当然","cnsrc":"课本","learned":"中級 L11","en":"natural, reasonable, obvious, usual, common, ordinary, commonplace, the norm","category":"judge","row":"あ","note":"","examples":[{"ex":"{約束|やくそく}を{守|まも}るのは{当|あ}たり{前|まえ}のことだ。","exz":"遵守约定是理所当然的事。","c":"","cz":"","tag":"新例句"}],"rows":[140],"otype":null,"type":"na","forms":{"neg":"{当|あ}たり{前|まえ}じゃない","past":"{当|あ}たり{前|まえ}だった","te":"{当|あ}たり{前|まえ}で","adv":"{当|あ}たり{前|まえ}に"},"formsR":{"neg":"あたりまえじゃない","past":"あたりまえだった","te":"あたりまえで","adv":"あたりまえに"}},{"kind":"adj","key":"厚かましい","word":"厚かましい","reading":"あつかましい","wr":"{厚|あつ}かましい","zh":"厚脸皮；不知羞耻","cnsrc":"自译","learned":null,"en":"impudent, shameless","category":"attitude","row":"あ","note":"","examples":[{"ex":"あんなことを{頼|たの}むなんて、{厚|あつ}かましい{人|ひと}だ。","exz":"居然拜托那种事，真是个厚脸皮的人。","c":"","cz":"","tag":"新例句"}],"rows":[142],"otype":null,"type":"i","forms":{"neg":"{厚|あつ}かましくない","past":"{厚|あつ}かましかった","te":"{厚|あつ}かましくて","adv":"{厚|あつ}かましく"},"formsR":{"neg":"あつかましくない","past":"あつかましかった","te":"あつかましくて","adv":"あつかましく"}},{"kind":"adj","key":"危うい","word":"危うい","reading":"あやうい","wr":"{危|あや}うい","zh":"危险；危急","cnsrc":"自译","learned":null,"en":"dangerous, critical","category":"judge","row":"あ","note":"","examples":[{"ex":"{一時|いちじ}は{命|いのち}が{危|あや}うい{状態|じょうたい}だった。","exz":"一度处于生命垂危的状态。","c":"","cz":"","tag":"新例句"}],"rows":[157],"otype":null,"type":"i","forms":{"neg":"{危|あや}うくない","past":"{危|あや}うかった","te":"{危|あや}うくて","adv":"{危|あや}うく"},"formsR":{"neg":"あやうくない","past":"あやうかった","te":"あやうくて","adv":"あやうく"}},{"kind":"adj","key":"怪しい","word":"怪しい","reading":"あやしい","wr":"{怪|あや}しい","zh":"可疑；奇怪","cnsrc":"自译","learned":null,"en":"suspicious, dubious, doubtful","category":"judge","row":"あ","note":"","examples":[{"ex":"{家|いえ}の{前|まえ}を{怪|あや}しい{男|おとこ}がうろうろしている。","exz":"家门前有个可疑的男人在转悠。","c":"","cz":"","tag":"新例句"}],"rows":[158],"otype":null,"type":"i","forms":{"neg":"{怪|あや}しくない","past":"{怪|あや}しかった","te":"{怪|あや}しくて","adv":"{怪|あや}しく"},"formsR":{"neg":"あやしくない","past":"あやしかった","te":"あやしくて","adv":"あやしく"}},{"kind":"adj","key":"荒い","word":"荒い","reading":"あらい","wr":"{荒|あら}い","zh":"粗暴；粗野；（波浪）汹涌","cnsrc":"自译","learned":null,"en":"rough, rude, wild","category":"manner","row":"あ","note":"","examples":[{"ex":"{彼|かれ}は{言葉遣|ことばづか}いが{荒|あら}い。","exz":"他说话很粗鲁。","c":"","cz":"","tag":"新例句"}],"rows":[159],"otype":null,"type":"i","forms":{"neg":"{荒|あら}くない","past":"{荒|あら}かった","te":"{荒|あら}くて","adv":"{荒|あら}く"},"formsR":{"neg":"あらくない","past":"あらかった","te":"あらくて","adv":"あらく"}},{"kind":"adj","key":"粗い","word":"粗い","reading":"あらい","wr":"{粗|あら}い","zh":"粗糙；稀疏","cnsrc":"自译","learned":null,"en":"coarse, rough","category":"look","row":"あ","note":"","examples":[{"ex":"このセーターは{編|あ}み{目|め}が{粗|あら}い。","exz":"这件毛衣的针脚很粗。","c":"","cz":"","tag":"新例句"}],"rows":[160],"otype":null,"type":"i","forms":{"neg":"{粗|あら}くない","past":"{粗|あら}かった","te":"{粗|あら}くて","adv":"{粗|あら}く"},"formsR":{"neg":"あらくない","past":"あらかった","te":"あらくて","adv":"あらく"}},{"kind":"adj","key":"有難い","word":"有難い","reading":"ありがたい","wr":"{有難|ありがた}い","zh":"值得感激；难得","cnsrc":"自译","learned":null,"en":"grateful, thankful, appreciated","category":"feel","row":"あ","note":"","examples":[{"ex":"{手伝|てつだ}ってもらえると{本当|ほんとう}に{有難|ありがた}い。","exz":"你能帮忙真是太感谢了。","c":"","cz":"","tag":"新例句"}],"rows":[166],"otype":null,"type":"i","forms":{"neg":"{有難|ありがた}くない","past":"{有難|ありがた}かった","te":"{有難|ありがた}くて","adv":"{有難|ありがた}く"},"formsR":{"neg":"ありがたくない","past":"ありがたかった","te":"ありがたくて","adv":"ありがたく"}},{"kind":"adj","key":"慌ただしい","word":"慌ただしい","reading":"あわただしい","wr":"{慌|あわ}ただしい","zh":"匆忙 / 慌张","cnsrc":"课本","learned":"中級 L11","en":"busy, hurried","category":"feel","row":"あ","note":"","examples":[{"ex":"{年末|ねんまつ}は{何|なに}かと{慌|あわ}ただしい。","exz":"年底总是各种忙乱。","c":"","cz":"","tag":"新例句"}],"rows":[169],"otype":null,"type":"i","forms":{"neg":"{慌|あわ}ただしくない","past":"{慌|あわ}ただしかった","te":"{慌|あわ}ただしくて","adv":"{慌|あわ}ただしく"},"formsR":{"neg":"あわただしくない","past":"あわただしかった","te":"あわただしくて","adv":"あわただしく"}},{"kind":"adj","key":"安易","word":"安易","reading":"あんい","wr":"{安易|あんい}","zh":"轻易 / 随意(的)","cnsrc":"课本","learned":"中級 L15","en":"easy-going","category":"manner","row":"あ","note":"","examples":[{"ex":"{安易|あんい}な{気持|きも}ちで{仕事|しごと}を{引|ひ}き{受|う}けるべきではない。","exz":"不应该轻率地接下工作。","c":"","cz":"","tag":"新例句"}],"rows":[171],"otype":null,"type":"na","forms":{"neg":"{安易|あんい}じゃない","past":"{安易|あんい}だった","te":"{安易|あんい}で","adv":"{安易|あんい}に"},"formsR":{"neg":"あんいじゃない","past":"あんいだった","te":"あんいで","adv":"あんいに"}},{"kind":"adj","key":"イコール","word":"イコール","reading":"イコール","wr":"イコール","zh":"相等；等于","cnsrc":"自译","learned":null,"en":"equal","category":"eval","row":"あ","note":"","examples":[{"ex":"{二|に}{足|た}す{三|さん}イコール{五|ご}。","exz":"二加三等于五。","c":"","cz":"","tag":"新例句"}],"rows":[184],"otype":null,"origin":{"w":"equal","lang":"eng","wasei":false,"via":"JMdict 释义印证"},"type":"na","forms":{"neg":"イコールじゃない","past":"イコールだった","te":"イコールで","adv":"イコールに"},"formsR":{"neg":"イコールじゃない","past":"イコールだった","te":"イコールで","adv":"イコールに"}},{"kind":"adj","key":"勇ましい","word":"勇ましい","reading":"いさましい","wr":"{勇|いさ}ましい","zh":"勇敢；英勇","cnsrc":"自译","learned":null,"en":"brave, valiant","category":"attitude","row":"あ","note":"","examples":[{"ex":"{勇|いさ}ましい{音楽|おんがく}に{合|あ}わせて{行進|こうしん}した。","exz":"随着雄壮的音乐行进。","c":"","cz":"","tag":"新例句"}],"rows":[186],"otype":null,"type":"i","forms":{"neg":"{勇|いさ}ましくない","past":"{勇|いさ}ましかった","te":"{勇|いさ}ましくて","adv":"{勇|いさ}ましく"},"formsR":{"neg":"いさましくない","past":"いさましかった","te":"いさましくて","adv":"いさましく"}},{"kind":"adj","key":"薄暗い","word":"薄暗い","reading":"うすぐらい","wr":"{薄暗|うすぐら}い","zh":"昏暗；微暗","cnsrc":"自译","learned":null,"en":"dim, gloomy","category":"look","row":"あ","note":"","examples":[{"ex":"{薄暗|うすぐら}い{部屋|へや}で{本|ほん}を{読|よ}むと{目|め}が{悪|わる}くなる。","exz":"在昏暗的房间里看书会伤眼睛。","c":"","cz":"","tag":"新例句"}],"rows":[223],"otype":null,"type":"i","forms":{"neg":"{薄暗|うすぐら}くない","past":"{薄暗|うすぐら}かった","te":"{薄暗|うすぐら}くて","adv":"{薄暗|うすぐら}く"},"formsR":{"neg":"うすぐらくない","past":"うすぐらかった","te":"うすぐらくて","adv":"うすぐらく"}},{"kind":"adj","key":"偉い","word":"偉い","reading":"えらい","wr":"{偉|えら}い","zh":"了不起","cnsrc":"课本","learned":"初中級 L13","en":"great, celebrated, remarkable","category":"eval","row":"あ","note":"","examples":[{"ex":"{一人|ひとり}で{全部|ぜんぶ}やり{遂|と}げるなんて、{偉|えら}いね。","exz":"一个人全部完成了，真了不起。","c":"","cz":"","tag":"新例句"}],"rows":[256],"otype":null,"type":"i","forms":{"neg":"{偉|えら}くない","past":"{偉|えら}かった","te":"{偉|えら}くて","adv":"{偉|えら}く"},"formsR":{"neg":"えらくない","past":"えらかった","te":"えらくて","adv":"えらく"}},{"kind":"adj","key":"おおざっぱ","word":"おおざっぱ","reading":"おおざっぱ","wr":"おおざっぱ","zh":"粗略；草率；大致","cnsrc":"自译","learned":null,"en":"rough (not precise), broad, sketchy","category":"manner","row":"あ","note":"","examples":[{"ex":"{彼|かれ}は{性格|せいかく}がおおざっぱだ。","exz":"他性格大大咧咧的。","c":"","cz":"","tag":"新例句"}],"rows":[277],"otype":null,"type":"na","forms":{"neg":"おおざっぱじゃない","past":"おおざっぱだった","te":"おおざっぱで","adv":"おおざっぱに"},"formsR":{"neg":"おおざっぱじゃない","past":"おおざっぱだった","te":"おおざっぱで","adv":"おおざっぱに"}},{"kind":"adj","key":"惜しい","word":"惜しい","reading":"おしい","wr":"{惜|お}しい","zh":"可惜；遗憾","cnsrc":"自译","learned":null,"en":"regrettable, disappointing","category":"feel","row":"あ","note":"","examples":[{"ex":"あと{一点|いってん}で{合格|ごうかく}だったのに、{惜|お}しい。","exz":"只差一分就及格了，真可惜。","c":"","cz":"","tag":"新例句"}],"rows":[297],"otype":null,"type":"i","forms":{"neg":"{惜|お}しくない","past":"{惜|お}しかった","te":"{惜|お}しくて","adv":"{惜|お}しく"},"formsR":{"neg":"おしくない","past":"おしかった","te":"おしくて","adv":"おしく"}},{"kind":"adj","key":"おめでたい","word":"おめでたい","reading":"おめでたい","wr":"おめでたい","zh":"可喜可贺；值得庆祝","cnsrc":"自译","learned":null,"en":"happy event, matter for congratulation","category":"feel","row":"あ","note":"","examples":[{"ex":"{結婚|けっこん}とはおめでたい{話|はなし}ですね。","exz":"结婚真是件喜事啊。","c":"","cz":"","tag":"新例句"}],"rows":[320],"otype":null,"type":"i","forms":{"neg":"おめでたくない","past":"おめでたかった","te":"おめでたくて","adv":"おめでたく"},"formsR":{"neg":"おめでたくない","past":"おめでたかった","te":"おめでたくて","adv":"おめでたく"}},{"kind":"adj","key":"思い掛けない","word":"思い掛けない","reading":"おもいがけない","wr":"{思|おも}い{掛|が}けない","zh":"意想不到；意外","cnsrc":"自译","learned":null,"en":"unexpected, casual","category":"judge","row":"あ","note":"","examples":[{"ex":"{思|おも}い{掛|が}けない{人|ひと}から{電話|でんわ}があった。","exz":"接到了一个意想不到的人打来的电话。","c":"","cz":"","tag":"新例句"}],"rows":[321],"otype":null,"type":"i","forms":{"neg":"{思|おも}い{掛|が}けなくない","past":"{思|おも}い{掛|が}けなかった","te":"{思|おも}い{掛|が}けなくて","adv":"{思|おも}い{掛|が}けなく"},"formsR":{"neg":"おもいがけなくない","past":"おもいがけなかった","te":"おもいがけなくて","adv":"おもいがけなく"}},{"kind":"adj","key":"重たい","word":"重たい","reading":"おもたい","wr":"{重|おも}たい","zh":"沉重；沉甸甸","cnsrc":"自译","learned":null,"en":"heavy, massive, serious","category":"look","row":"あ","note":"","examples":[{"ex":"{重|おも}たい{荷物|にもつ}を{二|に}{階|かい}まで{運|はこ}んだ。","exz":"把沉甸甸的行李搬到了二楼。","c":"","cz":"","tag":"新例句"}],"rows":[326],"otype":null,"type":"i","forms":{"neg":"{重|おも}たくない","past":"{重|おも}たかった","te":"{重|おも}たくて","adv":"{重|おも}たく"},"formsR":{"neg":"おもたくない","past":"おもたかった","te":"おもたくて","adv":"おもたく"}},{"kind":"adj","key":"格別","word":"格別","reading":"かくべつ","wr":"{格別|かくべつ}","zh":"格外；特别","cnsrc":"自译","learned":null,"en":"exceptional","category":"eval","row":"か","note":"","examples":[{"ex":"{山|やま}の{上|うえ}で{飲|の}むコーヒーは{格別|かくべつ}だ。","exz":"在山顶喝的咖啡格外好喝。","c":"","cz":"","tag":"新例句"}],"rows":[379],"otype":null,"type":"na","forms":{"neg":"{格別|かくべつ}じゃない","past":"{格別|かくべつ}だった","te":"{格別|かくべつ}で","adv":"{格別|かくべつ}に"},"formsR":{"neg":"かくべつじゃない","past":"かくべつだった","te":"かくべつで","adv":"かくべつに"}},{"kind":"adj","key":"過剰","word":"過剰","reading":"かじょう","wr":"{過剰|かじょう}","zh":"过剩；过度","cnsrc":"自译","learned":null,"en":"excess, over-","category":"degree","row":"か","note":"","examples":[{"ex":"{過剰|かじょう}な{包装|ほうそう}は{資源|しげん}の{無駄|むだ}だ。","exz":"过度包装是浪费资源。","c":"","cz":"","tag":"新例句"}],"rows":[398],"otype":null,"type":"na","forms":{"neg":"{過剰|かじょう}じゃない","past":"{過剰|かじょう}だった","te":"{過剰|かじょう}で","adv":"{過剰|かじょう}に"},"formsR":{"neg":"かじょうじゃない","past":"かじょうだった","te":"かじょうで","adv":"かじょうに"}},{"kind":"adj","key":"空っぽ","word":"空っぽ","reading":"からっぽ","wr":"{空|から}っぽ","zh":"空；空空的","cnsrc":"自译","learned":null,"en":"empty, vacant, hollow","category":"degree","row":"か","note":"","examples":[{"ex":"{財布|さいふ}の{中|なか}が{空|から}っぽになった。","exz":"钱包空空如也。","c":"","cz":"","tag":"新例句"}],"rows":[443],"otype":null,"type":"na","forms":{"neg":"{空|から}っぽじゃない","past":"{空|から}っぽだった","te":"{空|から}っぽで","adv":"{空|から}っぽに"},"formsR":{"neg":"からっぽじゃない","past":"からっぽだった","te":"からっぽで","adv":"からっぽに"}},{"kind":"adj","key":"清い","word":"清い","reading":"きよい","wr":"{清|きよ}い","zh":"纯洁；清澈","cnsrc":"自译","learned":null,"en":"clear, pure, noble","category":"look","row":"か","note":"","examples":[{"ex":"{彼女|かのじょ}は{清|きよ}い{心|こころ}を{持|も}っている。","exz":"她有一颗纯洁的心。","c":"","cz":"","tag":"新例句"}],"rows":[503],"otype":null,"type":"i","forms":{"neg":"{清|きよ}くない","past":"{清|きよ}かった","te":"{清|きよ}くて","adv":"{清|きよ}く"},"formsR":{"neg":"きよくない","past":"きよかった","te":"きよくて","adv":"きよく"}},{"kind":"adj","key":"くだらない","word":"くだらない","reading":"くだらない","wr":"くだらない","zh":"无聊；无价值","cnsrc":"自译","learned":null,"en":"good-for-nothing, stupid, worthless","category":"eval","row":"か","note":"","examples":[{"ex":"そんなくだらない{話|はなし}はやめよう。","exz":"别说那种无聊的话了。","c":"","cz":"","tag":"新例句"}],"rows":[537],"otype":null,"type":"i","forms":{"neg":"くだらなくない","past":"くだらなかった","te":"くだらなくて","adv":"くだらなく"},"formsR":{"neg":"くだらなくない","past":"くだらなかった","te":"くだらなくて","adv":"くだらなく"}},{"kind":"adj","key":"くどい","word":"くどい","reading":"くどい","wr":"くどい","zh":"啰嗦；（味道）腻","cnsrc":"自译","learned":null,"en":"verbose, importunate, heavy (taste)","category":"manner","row":"か","note":"","examples":[{"ex":"{彼|かれ}の{説明|せつめい}はくどくて{分|わ}かりにくい。","exz":"他的说明啰哩啰嗦，很难懂。","c":"","cz":"","tag":"新例句"}],"rows":[543],"otype":null,"type":"i","forms":{"neg":"くどくない","past":"くどかった","te":"くどくて","adv":"くどく"},"formsR":{"neg":"くどくない","past":"くどかった","te":"くどくて","adv":"くどく"}},{"kind":"adj","key":"下品","word":"下品","reading":"げひん","wr":"{下品|げひん}","zh":"下流；粗俗","cnsrc":"自译","learned":null,"en":"vulgar, indecent, coarse","category":"attitude","row":"か","note":"词表另有一行「下品」，这一行标了（な）。","examples":[{"ex":"{大|おお}きな{音|おと}を{立|た}てて{食|た}べるのは{下品|げひん}だ。","exz":"吃饭时发出很大的声音很不雅。","c":"","cz":"","tag":"新例句"},{"ex":"{下品|げひん}な{言葉|ことば}を{使|つか}ってはいけない。","exz":"不能说粗俗的话。","c":"","cz":"","tag":"新例句"}],"rows":[582,583],"otype":null,"type":"na","forms":{"neg":"{下品|げひん}じゃない","past":"{下品|げひん}だった","te":"{下品|げひん}で","adv":"{下品|げひん}に"},"formsR":{"neg":"げひんじゃない","past":"げひんだった","te":"げひんで","adv":"げひんに"}},{"kind":"adj","key":"煙い","word":"煙い","reading":"けむい","wr":"{煙|けむ}い","zh":"烟呛人；熏人","cnsrc":"自译","learned":null,"en":"smoky","category":"sense","row":"か","note":"","examples":[{"ex":"たき{火|び}の{煙|けむり}が{煙|けむ}い。","exz":"篝火的烟很呛。","c":"","cz":"","tag":"新例句"}],"rows":[584],"otype":null,"type":"i","forms":{"neg":"{煙|けむ}くない","past":"{煙|けむ}かった","te":"{煙|けむ}くて","adv":"{煙|けむ}く"},"formsR":{"neg":"けむくない","past":"けむかった","te":"けむくて","adv":"けむく"}},{"kind":"adj","key":"険しい","word":"険しい","reading":"けわしい","wr":"{険|けわ}しい","zh":"险峻；陡峭；严厉","cnsrc":"自译","learned":null,"en":"steep, rugged; severe","category":"look","row":"か","note":"","examples":[{"ex":"{険|けわ}しい{山道|やまみち}を{登|のぼ}った。","exz":"登上了险峻的山路。","c":"","cz":"","tag":"新例句"}],"rows":[585],"otype":null,"type":"i","forms":{"neg":"{険|けわ}しくない","past":"{険|けわ}しかった","te":"{険|けわ}しくて","adv":"{険|けわ}しく"},"formsR":{"neg":"けわしくない","past":"けわしかった","te":"けわしくて","adv":"けわしく"}},{"kind":"adj","key":"謙虚","word":"謙虚","reading":"けんきょ","wr":"{謙虚|けんきょ}","zh":"谦虚","cnsrc":"自译","learned":null,"en":"modesty, humble","category":"attitude","row":"か","note":"","examples":[{"ex":"{彼|かれ}は{成功|せいこう}しても{謙虚|けんきょ}だ。","exz":"他即使成功了也很谦虚。","c":"","cz":"","tag":"新例句"}],"rows":[588],"otype":null,"type":"na","forms":{"neg":"{謙虚|けんきょ}じゃない","past":"{謙虚|けんきょ}だった","te":"{謙虚|けんきょ}で","adv":"{謙虚|けんきょ}に"},"formsR":{"neg":"けんきょじゃない","past":"けんきょだった","te":"けんきょで","adv":"けんきょに"}},{"kind":"adj","key":"厳重","word":"厳重","reading":"げんじゅう","wr":"{厳重|げんじゅう}","zh":"严格；严密","cnsrc":"自译","learned":null,"en":"strict, severe, firm","category":"degree","row":"か","note":"","examples":[{"ex":"{貴重|きちょう}{品|ひん}は{厳重|げんじゅう}に{管理|かんり}されている。","exz":"贵重物品受到严格管理。","c":"","cz":"","tag":"新例句"}],"rows":[593],"otype":null,"type":"na","forms":{"neg":"{厳重|げんじゅう}じゃない","past":"{厳重|げんじゅう}だった","te":"{厳重|げんじゅう}で","adv":"{厳重|げんじゅう}に"},"formsR":{"neg":"げんじゅうじゃない","past":"げんじゅうだった","te":"げんじゅうで","adv":"げんじゅうに"}},{"kind":"adj","key":"懸命","word":"懸命","reading":"けんめい","wr":"{懸命|けんめい}","zh":"拼命；努力","cnsrc":"自译","learned":null,"en":"eagerness, strenuous","category":"attitude","row":"か","note":"","examples":[{"ex":"{彼|かれ}は{懸命|けんめい}に{働|はたら}いている。","exz":"他在拼命地工作。","c":"","cz":"","tag":"新例句"}],"rows":[599],"otype":null,"type":"na","forms":{"neg":"{懸命|けんめい}じゃない","past":"{懸命|けんめい}だった","te":"{懸命|けんめい}で","adv":"{懸命|けんめい}に"},"formsR":{"neg":"けんめいじゃない","past":"けんめいだった","te":"けんめいで","adv":"けんめいに"}},{"kind":"adj","key":"恋しい","word":"恋しい","reading":"こいしい","wr":"{恋|こい}しい","zh":"怀念；思慕","cnsrc":"自译","learned":null,"en":"dear, beloved; to miss","category":"feel","row":"か","note":"","examples":[{"ex":"{一人暮|ひとりぐ}らしを{始|はじ}めて、{家族|かぞく}が{恋|こい}しくなった。","exz":"开始一个人生活后，很想念家人。","c":"","cz":"","tag":"新例句"}],"rows":[606],"otype":null,"type":"i","forms":{"neg":"{恋|こい}しくない","past":"{恋|こい}しかった","te":"{恋|こい}しくて","adv":"{恋|こい}しく"},"formsR":{"neg":"こいしくない","past":"こいしかった","te":"こいしくて","adv":"こいしく"}},{"kind":"adj","key":"強引","word":"強引","reading":"ごういん","wr":"{強引|ごういん}","zh":"强行；硬来","cnsrc":"自译","learned":null,"en":"forcible, assertive, pushy","category":"manner","row":"か","note":"","examples":[{"ex":"{彼|かれ}は{強引|ごういん}に{話|はなし}を{進|すす}めた。","exz":"他强行推进了话题。","c":"","cz":"","tag":"新例句"}],"rows":[609],"otype":null,"type":"na","forms":{"neg":"{強引|ごういん}じゃない","past":"{強引|ごういん}だった","te":"{強引|ごういん}で","adv":"{強引|ごういん}に"},"formsR":{"neg":"ごういんじゃない","past":"ごういんだった","te":"ごういんで","adv":"ごういんに"}},{"kind":"adj","key":"高級","word":"高級","reading":"こうきゅう","wr":"{高級|こうきゅう}","zh":"高级；高档","cnsrc":"自译","learned":null,"en":"high class; first-rate","category":"eval","row":"か","note":"","examples":[{"ex":"{高級|こうきゅう}なホテルに{泊|と}まった。","exz":"住了高级酒店。","c":"","cz":"","tag":"新例句"}],"rows":[611],"otype":null,"type":"na","forms":{"neg":"{高級|こうきゅう}じゃない","past":"{高級|こうきゅう}だった","te":"{高級|こうきゅう}で","adv":"{高級|こうきゅう}に"},"formsR":{"neg":"こうきゅうじゃない","past":"こうきゅうだった","te":"こうきゅうで","adv":"こうきゅうに"}},{"kind":"adj","key":"公正","word":"公正","reading":"こうせい","wr":"{公正|こうせい}","zh":"公正；公平","cnsrc":"自译","learned":null,"en":"justice, fairness, impartiality","category":"judge","row":"か","note":"","examples":[{"ex":"{試合|しあい}は{公正|こうせい}に{行|おこな}われた。","exz":"比赛公正地进行了。","c":"","cz":"","tag":"新例句"}],"rows":[624],"otype":null,"type":"na","forms":{"neg":"{公正|こうせい}じゃない","past":"{公正|こうせい}だった","te":"{公正|こうせい}で","adv":"{公正|こうせい}に"},"formsR":{"neg":"こうせいじゃない","past":"こうせいだった","te":"こうせいで","adv":"こうせいに"}},{"kind":"adj","key":"高度","word":"高度","reading":"こうど","wr":"{高度|こうど}","zh":"高度；高级的","cnsrc":"自译","learned":null,"en":"altitude, height; advanced","category":"degree","row":"か","note":"","examples":[{"ex":"この{仕事|しごと}には{高度|こうど}な{技術|ぎじゅつ}が{必要|ひつよう}だ。","exz":"这份工作需要高超的技术。","c":"","cz":"","tag":"新例句"}],"rows":[635],"otype":null,"type":"na","forms":{"neg":"{高度|こうど}じゃない","past":"{高度|こうど}だった","te":"{高度|こうど}で","adv":"{高度|こうど}に"},"formsR":{"neg":"こうどじゃない","past":"こうどだった","te":"こうどで","adv":"こうどに"}},{"kind":"adj","key":"高等","word":"高等","reading":"こうとう","wr":"{高等|こうとう}","zh":"高等；高级","cnsrc":"自译","learned":null,"en":"high class, high grade","category":"eval","row":"か","note":"","examples":[{"ex":"{高等|こうとう}な{数学|すうがく}は{難|むずか}しい。","exz":"高等数学很难。","c":"","cz":"","tag":"新例句"}],"rows":[636],"otype":null,"type":"na","forms":{"neg":"{高等|こうとう}じゃない","past":"{高等|こうとう}だった","te":"{高等|こうとう}で","adv":"{高等|こうとう}に"},"formsR":{"neg":"こうとうじゃない","past":"こうとうだった","te":"こうとうで","adv":"こうとうに"}},{"kind":"adj","key":"逆さ","word":"逆さ","reading":"さかさ","wr":"{逆|さか}さ","zh":"颠倒；倒过来","cnsrc":"自译","learned":null,"en":"reverse, upside down","category":"look","row":"さ","note":"","examples":[{"ex":"{絵|え}が{逆|さか}さに{掛|か}かっている。","exz":"画挂倒了。","c":"","cz":"","tag":"新例句"}],"rows":[705],"otype":null,"type":"na","forms":{"neg":"{逆|さか}さじゃない","past":"{逆|さか}さだった","te":"{逆|さか}さで","adv":"{逆|さか}さに"},"formsR":{"neg":"さかさじゃない","past":"さかさだった","te":"さかさで","adv":"さかさに"}},{"kind":"adj","key":"逆様","word":"逆様","reading":"さかさま","wr":"{逆様|さかさま}","zh":"颠倒；倒；相反","cnsrc":"自译","learned":null,"en":"reverse, upside down","category":"look","row":"さ","note":"","examples":[{"ex":"コップを{逆様|さかさま}にして{乾|かわ}かした。","exz":"把杯子倒扣着晾干。","c":"","cz":"","tag":"新例句"}],"rows":[706],"otype":null,"type":"na","forms":{"neg":"{逆様|さかさま}じゃない","past":"{逆様|さかさま}だった","te":"{逆様|さかさま}で","adv":"{逆様|さかさま}に"},"formsR":{"neg":"さかさまじゃない","past":"さかさまだった","te":"さかさまで","adv":"さかさまに"}},{"kind":"adj","key":"騒がしい","word":"騒がしい","reading":"さわがしい","wr":"{騒|さわ}がしい","zh":"吵闹；嘈杂","cnsrc":"自译","learned":null,"en":"noisy","category":"sense","row":"さ","note":"","examples":[{"ex":"{教室|きょうしつ}が{騒|さわ}がしくて{先生|せんせい}の{声|こえ}が{聞|き}こえない。","exz":"教室里太吵，听不见老师的声音。","c":"","cz":"","tag":"新例句"}],"rows":[737],"otype":null,"type":"i","forms":{"neg":"{騒|さわ}がしくない","past":"{騒|さわ}がしかった","te":"{騒|さわ}がしくて","adv":"{騒|さわ}がしく"},"formsR":{"neg":"さわがしくない","past":"さわがしかった","te":"さわがしくて","adv":"さわがしく"}},{"kind":"adj","key":"さわやか","word":"さわやか","reading":"さわやか","wr":"さわやか","zh":"清爽；爽朗","cnsrc":"自译","learned":null,"en":"fresh, refreshing","category":"feel","row":"さ","note":"","examples":[{"ex":"{朝|あさ}の{空気|くうき}がさわやかだ。","exz":"早晨的空气很清爽。","c":"","cz":"","tag":"新例句"}],"rows":[738],"otype":null,"type":"na","forms":{"neg":"さわやかじゃない","past":"さわやかだった","te":"さわやかで","adv":"さわやかに"},"formsR":{"neg":"さわやかじゃない","past":"さわやかだった","te":"さわやかで","adv":"さわやかに"}},{"kind":"adj","key":"塩辛い","word":"塩辛い","reading":"しおからい","wr":"{塩辛|しおから}い","zh":"咸","cnsrc":"自译","learned":null,"en":"salty (taste)","category":"sense","row":"さ","note":"","examples":[{"ex":"このスープは{少|すこ}し{塩辛|しおから}い。","exz":"这汤有点咸。","c":"","cz":"","tag":"新例句"}],"rows":[753],"otype":null,"type":"i","forms":{"neg":"{塩辛|しおから}くない","past":"{塩辛|しおから}かった","te":"{塩辛|しおから}くて","adv":"{塩辛|しおから}く"},"formsR":{"neg":"しおからくない","past":"しおからかった","te":"しおからくて","adv":"しおからく"}},{"kind":"adj","key":"四角い","word":"四角い","reading":"しかくい","wr":"{四角|しかく}い","zh":"四方的；方形的","cnsrc":"自译","learned":null,"en":"square","category":"look","row":"さ","note":"","examples":[{"ex":"{四角|しかく}いテーブルを{買|か}った。","exz":"买了一张方桌。","c":"","cz":"","tag":"新例句"}],"rows":[756],"otype":null,"type":"i","forms":{"neg":"{四角|しかく}くない","past":"{四角|しかく}かった","te":"{四角|しかく}くて","adv":"{四角|しかく}く"},"formsR":{"neg":"しかくくない","past":"しかくかった","te":"しかくくて","adv":"しかくく"}},{"kind":"adj","key":"しつこい","word":"しつこい","reading":"しつこい","wr":"しつこい","zh":"纠缠不休；执拗；（味道）浓腻","cnsrc":"自译","learned":null,"en":"insistent, obstinate","category":"manner","row":"さ","note":"","examples":[{"ex":"{彼|かれ}はしつこく{同|おな}じ{質問|しつもん}をしてくる。","exz":"他纠缠不休地问同一个问题。","c":"","cz":"","tag":"新例句"}],"rows":[781],"otype":null,"type":"i","forms":{"neg":"しつこくない","past":"しつこかった","te":"しつこくて","adv":"しつこく"},"formsR":{"neg":"しつこくない","past":"しつこかった","te":"しつこくて","adv":"しつこく"}},{"kind":"adj","key":"地味","word":"地味","reading":"じみ","wr":"{地味|じみ}","zh":"朴素；不起眼","cnsrc":"自译","learned":null,"en":"plain, simple, subdued, sober","category":"look","row":"さ","note":"","examples":[{"ex":"{彼女|かのじょ}はいつも{地味|じみ}な{服|ふく}を{着|き}ている。","exz":"她总是穿着朴素的衣服。","c":"","cz":"","tag":"新例句"}],"rows":[804],"otype":null,"type":"na","forms":{"neg":"{地味|じみ}じゃない","past":"{地味|じみ}だった","te":"{地味|じみ}で","adv":"{地味|じみ}に"},"formsR":{"neg":"じみじゃない","past":"じみだった","te":"じみで","adv":"じみに"}},{"kind":"adj","key":"純情","word":"純情","reading":"じゅんじょう","wr":"{純情|じゅんじょう}","zh":"纯情；天真","cnsrc":"自译","learned":null,"en":"pure heart","category":"attitude","row":"さ","note":"","examples":[{"ex":"{彼|かれ}は{純情|じゅんじょう}な{青年|せいねん}だ。","exz":"他是个纯情的青年。","c":"","cz":"","tag":"新例句"}],"rows":[861],"otype":null,"type":"na","forms":{"neg":"{純情|じゅんじょう}じゃない","past":"{純情|じゅんじょう}だった","te":"{純情|じゅんじょう}で","adv":"{純情|じゅんじょう}に"},"formsR":{"neg":"じゅんじょうじゃない","past":"じゅんじょうだった","te":"じゅんじょうで","adv":"じゅんじょうに"}},{"kind":"adj","key":"純粋","word":"純粋","reading":"じゅんすい","wr":"{純粋|じゅんすい}","zh":"纯粹；纯真","cnsrc":"自译","learned":null,"en":"pure, genuine, unmixed","category":"attitude","row":"さ","note":"","examples":[{"ex":"{子|こ}どもの{純粋|じゅんすい}な{心|こころ}を{大切|たいせつ}にしたい。","exz":"想珍惜孩子纯真的心。","c":"","cz":"","tag":"新例句"}],"rows":[862],"otype":null,"type":"na","forms":{"neg":"{純粋|じゅんすい}じゃない","past":"{純粋|じゅんすい}だった","te":"{純粋|じゅんすい}で","adv":"{純粋|じゅんすい}に"},"formsR":{"neg":"じゅんすいじゃない","past":"じゅんすいだった","te":"じゅんすいで","adv":"じゅんすいに"}},{"kind":"adj","key":"消極的","word":"消極的","reading":"しょうきょくてき","wr":"{消極的|しょうきょくてき}","zh":"消极；被动","cnsrc":"自译","learned":null,"en":"passive","category":"attitude","row":"さ","note":"","examples":[{"ex":"{彼|かれ}は{何事|なにごと}にも{消極的|しょうきょくてき}だ。","exz":"他对什么事都很消极。","c":"","cz":"","tag":"新例句"}],"rows":[875],"otype":null,"type":"na","forms":{"neg":"{消極的|しょうきょくてき}じゃない","past":"{消極的|しょうきょくてき}だった","te":"{消極的|しょうきょくてき}で","adv":"{消極的|しょうきょくてき}に"},"formsR":{"neg":"しょうきょくてきじゃない","past":"しょうきょくてきだった","te":"しょうきょくてきで","adv":"しょうきょくてきに"}},{"kind":"adj","key":"上品","word":"上品","reading":"じょうひん","wr":"{上品|じょうひん}","zh":"文雅；高雅；有品位","cnsrc":"自译","learned":null,"en":"refined, elegant, well-mannered","category":"attitude","row":"さ","note":"","examples":[{"ex":"{彼女|かのじょ}は{話|はな}し{方|かた}が{上品|じょうひん}だ。","exz":"她说话很文雅。","c":"","cz":"","tag":"新例句"}],"rows":[890],"otype":null,"type":"na","forms":{"neg":"{上品|じょうひん}じゃない","past":"{上品|じょうひん}だった","te":"{上品|じょうひん}で","adv":"{上品|じょうひん}に"},"formsR":{"neg":"じょうひんじゃない","past":"じょうひんだった","te":"じょうひんで","adv":"じょうひんに"}},{"kind":"adj","key":"垂直","word":"垂直","reading":"すいちょく","wr":"{垂直|すいちょく}","zh":"垂直","cnsrc":"自译","learned":null,"en":"vertical, perpendicular","category":"look","row":"さ","note":"","examples":[{"ex":"{壁|かべ}に{垂直|すいちょく}に{線|せん}を{引|ひ}いた。","exz":"在墙上画了一条垂直线。","c":"","cz":"","tag":"新例句"}],"rows":[941],"otype":null,"type":"na","forms":{"neg":"{垂直|すいちょく}じゃない","past":"{垂直|すいちょく}だった","te":"{垂直|すいちょく}で","adv":"{垂直|すいちょく}に"},"formsR":{"neg":"すいちょくじゃない","past":"すいちょくだった","te":"すいちょくで","adv":"すいちょくに"}},{"kind":"adj","key":"水平","word":"水平","reading":"すいへい","wr":"{水平|すいへい}","zh":"水平","cnsrc":"自译","learned":null,"en":"level, horizontal","category":"look","row":"さ","note":"","examples":[{"ex":"{棚|たな}を{水平|すいへい}に{取|と}り{付|つ}けた。","exz":"把架子装得很水平。","c":"","cz":"","tag":"新例句"}],"rows":[947],"otype":null,"type":"na","forms":{"neg":"{水平|すいへい}じゃない","past":"{水平|すいへい}だった","te":"{水平|すいへい}で","adv":"{水平|すいへい}に"},"formsR":{"neg":"すいへいじゃない","past":"すいへいだった","te":"すいへいで","adv":"すいへいに"}},{"kind":"adj","key":"図々しい","word":"図々しい","reading":"ずうずうしい","wr":"{図々|ずうずう}しい","zh":"厚脸皮；无耻","cnsrc":"自译","learned":null,"en":"impudent, shameless","category":"attitude","row":"さ","note":"","examples":[{"ex":"{列|れつ}に{割|わ}り{込|こ}むなんて{図々|ずうずう}しい。","exz":"居然插队，真厚脸皮。","c":"","cz":"","tag":"新例句"}],"rows":[951],"otype":null,"type":"i","forms":{"neg":"{図々|ずうずう}しくない","past":"{図々|ずうずう}しかった","te":"{図々|ずうずう}しくて","adv":"{図々|ずうずう}しく"},"formsR":{"neg":"ずうずうしくない","past":"ずうずうしかった","te":"ずうずうしくて","adv":"ずうずうしく"}},{"kind":"adj","key":"素直","word":"素直","reading":"すなお","wr":"{素直|すなお}","zh":"坦率；老实；听话","cnsrc":"自译","learned":null,"en":"obedient, meek, docile","category":"attitude","row":"さ","note":"","examples":[{"ex":"{彼女|かのじょ}は{素直|すなお}に{謝|あやま}った。","exz":"她老老实实地道了歉。","c":"","cz":"","tag":"新例句"}],"rows":[973],"otype":null,"type":"na","forms":{"neg":"{素直|すなお}じゃない","past":"{素直|すなお}だった","te":"{素直|すなお}で","adv":"{素直|すなお}に"},"formsR":{"neg":"すなおじゃない","past":"すなおだった","te":"すなおで","adv":"すなおに"}},{"kind":"adj","key":"スマート","word":"スマート","reading":"スマート","wr":"スマート","zh":"苗条；潇洒；（做法）漂亮","cnsrc":"自译","learned":null,"en":"smart, stylish, slim","category":"look","row":"さ","note":"","examples":[{"ex":"{彼|かれ}はスマートな{服装|ふくそう}をしている。","exz":"他穿着很潇洒。","c":"","cz":"","tag":"新例句"}],"rows":[977],"otype":null,"origin":{"w":"smart","lang":"eng","wasei":false,"via":"JMdict 释义印证"},"type":"na","forms":{"neg":"スマートじゃない","past":"スマートだった","te":"スマートで","adv":"スマートに"},"formsR":{"neg":"スマートじゃない","past":"スマートだった","te":"スマートで","adv":"スマートに"}},{"kind":"adj","key":"すまない","word":"すまない","reading":"すまない","wr":"すまない","zh":"对不起；过意不去","cnsrc":"自译","learned":null,"en":"sorry (phrase)","category":"feel","row":"さ","note":"","examples":[{"ex":"{遅|おそ}くなってすまない。","exz":"来晚了，对不起。","c":"","cz":"","tag":"新例句"}],"rows":[979],"otype":null,"type":"i","forms":{"neg":"すまなくない","past":"すまなかった","te":"すまなくて","adv":"すまなく"},"formsR":{"neg":"すまなくない","past":"すまなかった","te":"すまなくて","adv":"すまなく"}},{"kind":"adj","key":"狡い","word":"狡い","reading":"ずるい","wr":"{狡|ずる}い","zh":"狡猾；不公平","cnsrc":"自译","learned":null,"en":"sly, cunning","category":"attitude","row":"さ","note":"","examples":[{"ex":"{自分|じぶん}だけ{休|やす}むなんてずるい。","exz":"只有你一个人休息，太不公平了。","c":"","cz":"","tag":"新例句"}],"rows":[986],"otype":null,"type":"i","forms":{"neg":"{狡|ずる}くない","past":"{狡|ずる}かった","te":"{狡|ずる}くて","adv":"{狡|ずる}く"},"formsR":{"neg":"ずるくない","past":"ずるかった","te":"ずるくて","adv":"ずるく"}},{"kind":"adj","key":"騒々しい","word":"騒々しい","reading":"そうぞうしい","wr":"{騒々|そうぞう}しい","zh":"吵闹；喧嚣","cnsrc":"自译","learned":null,"en":"noisy, boisterous","category":"sense","row":"さ","note":"","examples":[{"ex":"{外|そと}が{騒々|そうぞう}しくて{眠|ねむ}れない。","exz":"外面吵吵闹闹的睡不着。","c":"","cz":"","tag":"新例句"}],"rows":[1054],"otype":null,"type":"i","forms":{"neg":"{騒々|そうぞう}しくない","past":"{騒々|そうぞう}しかった","te":"{騒々|そうぞう}しくて","adv":"{騒々|そうぞう}しく"},"formsR":{"neg":"そうぞうしくない","past":"そうぞうしかった","te":"そうぞうしくて","adv":"そうぞうしく"}},{"kind":"adj","key":"そそっかしい","word":"そそっかしい","reading":"そそっかしい","wr":"そそっかしい","zh":"冒失；粗心大意","cnsrc":"自译","learned":null,"en":"careless, thoughtless","category":"manner","row":"さ","note":"","examples":[{"ex":"そそっかしい{性格|せいかく}で、よく{忘|わす}れ{物|もの}をする。","exz":"性格冒失，经常丢三落四。","c":"","cz":"","tag":"新例句"}],"rows":[1069],"otype":null,"type":"i","forms":{"neg":"そそっかしくない","past":"そそっかしかった","te":"そそっかしくて","adv":"そそっかしく"},"formsR":{"neg":"そそっかしくない","past":"そそっかしかった","te":"そそっかしくて","adv":"そそっかしく"}},{"kind":"adj","key":"卒直","word":"卒直","reading":"そっちょく","wr":"{卒直|そっちょく}","zh":"坦率；直率（率直的另一写法）","cnsrc":"自译","learned":null,"en":"frank, candid, honest","category":"attitude","row":"さ","note":"","examples":[{"ex":"{卒直|そっちょく}な{感想|かんそう}を{聞|き}かせてください。","exz":"请告诉我你坦率的感想。","c":"","cz":"","tag":"新例句"}],"rows":[1070],"otype":null,"type":"na","forms":{"neg":"{卒直|そっちょく}じゃない","past":"{卒直|そっちょく}だった","te":"{卒直|そっちょく}で","adv":"{卒直|そっちょく}に"},"formsR":{"neg":"そっちょくじゃない","past":"そっちょくだった","te":"そっちょくで","adv":"そっちょくに"}},{"kind":"adj","key":"率直","word":"率直","reading":"そっちょく","wr":"{率直|そっちょく}","zh":"坦率；直率","cnsrc":"自译","learned":null,"en":"frank, candid, straightforward, openhearted, direct, outspoken","category":"attitude","row":"さ","note":"","examples":[{"ex":"{率直|そっちょく}に{言|い}って、その{計画|けいかく}には{反対|はんたい}だ。","exz":"坦率地说，我反对那个计划。","c":"","cz":"","tag":"新例句"}],"rows":[1071],"otype":null,"type":"na","forms":{"neg":"{率直|そっちょく}じゃない","past":"{率直|そっちょく}だった","te":"{率直|そっちょく}で","adv":"{率直|そっちょく}に"},"formsR":{"neg":"そっちょくじゃない","past":"そっちょくだった","te":"そっちょくで","adv":"そっちょくに"}},{"kind":"adj","key":"妥当","word":"妥当","reading":"だとう","wr":"{妥当|だとう}","zh":"妥当；恰当","cnsrc":"自译","learned":null,"en":"proper, appropriate","category":"judge","row":"た","note":"","examples":[{"ex":"その{判断|はんだん}は{妥当|だとう}だと{思|おも}う。","exz":"我认为那个判断很妥当。","c":"","cz":"","tag":"新例句"}],"rows":[1124],"otype":null,"type":"na","forms":{"neg":"{妥当|だとう}じゃない","past":"{妥当|だとう}だった","te":"{妥当|だとう}で","adv":"{妥当|だとう}に"},"formsR":{"neg":"だとうじゃない","past":"だとうだった","te":"だとうで","adv":"だとうに"}},{"kind":"adj","key":"頼もしい","word":"頼もしい","reading":"たのもしい","wr":"{頼|たの}もしい","zh":"可靠；靠得住","cnsrc":"自译","learned":null,"en":"reliable, promising","category":"eval","row":"た","note":"","examples":[{"ex":"{彼|かれ}は{頼|たの}もしいリーダーだ。","exz":"他是可靠的领导。","c":"","cz":"","tag":"新例句"}],"rows":[1126],"otype":null,"type":"i","forms":{"neg":"{頼|たの}もしくない","past":"{頼|たの}もしかった","te":"{頼|たの}もしくて","adv":"{頼|たの}もしく"},"formsR":{"neg":"たのもしくない","past":"たのもしかった","te":"たのもしくて","adv":"たのもしく"}},{"kind":"adj","key":"だらしない","word":"だらしない","reading":"だらしない","wr":"だらしない","zh":"散漫；邋遢；没出息","cnsrc":"自译","learned":null,"en":"slovenly, loose, a slut","category":"manner","row":"た","note":"","examples":[{"ex":"{部屋|へや}が{散|ち}らかっていてだらしない。","exz":"房间乱七八糟，太邋遢了。","c":"","cz":"","tag":"新例句"}],"rows":[1132],"otype":null,"type":"i","forms":{"neg":"だらしなくない","past":"だらしなかった","te":"だらしなくて","adv":"だらしなく"},"formsR":{"neg":"だらしなくない","past":"だらしなかった","te":"だらしなくて","adv":"だらしなく"}},{"kind":"adj","key":"力強い","word":"力強い","reading":"ちからづよい","wr":"{力強|ちからづよ}い","zh":"强有力；有信心","cnsrc":"自译","learned":null,"en":"powerful, strong, vigorous","category":"eval","row":"た","note":"","examples":[{"ex":"{選手|せんしゅ}たちは{力強|ちからづよ}く{走|はし}った。","exz":"选手们奔跑得强劲有力。","c":"","cz":"","tag":"新例句"}],"rows":[1152],"otype":null,"type":"i","forms":{"neg":"{力強|ちからづよ}くない","past":"{力強|ちからづよ}かった","te":"{力強|ちからづよ}くて","adv":"{力強|ちからづよ}く"},"formsR":{"neg":"ちからづよくない","past":"ちからづよかった","te":"ちからづよくて","adv":"ちからづよく"}},{"kind":"adj","key":"茶色い","word":"茶色い","reading":"ちゃいろい","wr":"{茶色|ちゃいろ}い","zh":"茶色","cnsrc":"课本","learned":"初級 L8","en":"brown","category":"look","row":"た","note":"","examples":[{"ex":"{茶色|ちゃいろ}いかばんを{持|も}っている。","exz":"拿着一个棕色的包。","c":"","cz":"","tag":"新例句"}],"rows":[1163],"otype":null,"type":"i","forms":{"neg":"{茶色|ちゃいろ}くない","past":"{茶色|ちゃいろ}かった","te":"{茶色|ちゃいろ}くて","adv":"{茶色|ちゃいろ}く"},"formsR":{"neg":"ちゃいろくない","past":"ちゃいろかった","te":"ちゃいろくて","adv":"ちゃいろく"}},{"kind":"adj","key":"強気","word":"強気","reading":"つよき","wr":"{強気|つよき}","zh":"强硬；坚决","cnsrc":"自译","learned":null,"en":"firm, strong","category":"attitude","row":"た","note":"","examples":[{"ex":"{彼|かれ}はいつも{強気|つよき}な{発言|はつげん}をする。","exz":"他总是说话很强硬。","c":"","cz":"","tag":"新例句"}],"rows":[1226],"otype":null,"type":"na","forms":{"neg":"{強気|つよき}じゃない","past":"{強気|つよき}だった","te":"{強気|つよき}で","adv":"{強気|つよき}に"},"formsR":{"neg":"つよきじゃない","past":"つよきだった","te":"つよきで","adv":"つよきに"}},{"kind":"adj","key":"的確","word":"的確","reading":"てきかく","wr":"{的確|てきかく}","zh":"准确；恰当","cnsrc":"自译","learned":null,"en":"precise, accurate","category":"judge","row":"た","note":"","examples":[{"ex":"{彼|かれ}は{的確|てきかく}な{判断|はんだん}を{下|くだ}した。","exz":"他做出了准确的判断。","c":"","cz":"","tag":"新例句"}],"rows":[1247],"otype":null,"type":"na","forms":{"neg":"{的確|てきかく}じゃない","past":"{的確|てきかく}だった","te":"{的確|てきかく}で","adv":"{的確|てきかく}に"},"formsR":{"neg":"てきかくじゃない","past":"てきかくだった","te":"てきかくで","adv":"てきかくに"}},{"kind":"adj","key":"適確","word":"適確","reading":"てきかく","wr":"{適確|てきかく}","zh":"准确；恰当（另一写法）","cnsrc":"自译","learned":null,"en":"precise, accurate","category":"judge","row":"た","note":"","examples":[{"ex":"{適確|てきかく}な{指示|しじ}のおかげで{早|はや}く{終|お}わった。","exz":"多亏指示准确，很快就完成了。","c":"","cz":"","tag":"新例句"}],"rows":[1248],"otype":null,"type":"na","forms":{"neg":"{適確|てきかく}じゃない","past":"{適確|てきかく}だった","te":"{適確|てきかく}で","adv":"{適確|てきかく}に"},"formsR":{"neg":"てきかくじゃない","past":"てきかくだった","te":"てきかくで","adv":"てきかくに"}},{"kind":"adj","key":"凸凹","word":"凸凹","reading":"でこぼこ","wr":"{凸凹|でこぼこ}","zh":"凹凸不平；坑坑洼洼","cnsrc":"自译","learned":null,"en":"unevenness, roughness, ruggedness","category":"look","row":"た","note":"","examples":[{"ex":"この{道|みち}はでこぼこで{歩|ある}きにくい。","exz":"这条路坑坑洼洼，不好走。","c":"","cz":"","tag":"新例句"}],"rows":[1250],"otype":null,"type":"na","forms":{"neg":"{凸凹|でこぼこ}じゃない","past":"{凸凹|でこぼこ}だった","te":"{凸凹|でこぼこ}で","adv":"{凸凹|でこぼこ}に"},"formsR":{"neg":"でこぼこじゃない","past":"でこぼこだった","te":"でこぼこで","adv":"でこぼこに"}},{"kind":"adj","key":"手頃","word":"手頃","reading":"てごろ","wr":"{手頃|てごろ}","zh":"合适；正合适（价格、大小）","cnsrc":"自译","learned":null,"en":"moderate, handy","category":"degree","row":"た","note":"","examples":[{"ex":"{手頃|てごろ}な{値段|ねだん}のパソコンを{探|さが}している。","exz":"在找价格合适的电脑。","c":"","cz":"","tag":"新例句"}],"rows":[1251],"otype":null,"type":"na","forms":{"neg":"{手頃|てごろ}じゃない","past":"{手頃|てごろ}だった","te":"{手頃|てごろ}で","adv":"{手頃|てごろ}に"},"formsR":{"neg":"てごろじゃない","past":"てごろだった","te":"てごろで","adv":"てごろに"}},{"kind":"adj","key":"手ごろ","word":"手ごろ","reading":"てごろ","wr":"{手|て}ごろ","zh":"合适；正好（假名写法）","cnsrc":"自译","learned":null,"en":"handy, convenient suitable, reasoanble, moderate","category":"degree","row":"た","note":"","examples":[{"ex":"このかばんは{手|て}ごろな{大|おお}きさだ。","exz":"这个包大小正合适。","c":"","cz":"","tag":"新例句"}],"rows":[1252],"otype":null,"type":"na","forms":{"neg":"{手|て}ごろじゃない","past":"{手|て}ごろだった","te":"{手|て}ごろで","adv":"{手|て}ごろに"},"formsR":{"neg":"てごろじゃない","past":"てごろだった","te":"てごろで","adv":"てごろに"}},{"kind":"adj","key":"でたらめ","word":"でたらめ","reading":"でたらめ","wr":"でたらめ","zh":"胡说八道；荒唐；随便","cnsrc":"自译","learned":null,"en":"irresponsible utterance, nonsense; random","category":"judge","row":"た","note":"","examples":[{"ex":"{彼|かれ}の{話|はなし}はでたらめだ。","exz":"他说的全是胡说八道。","c":"","cz":"","tag":"新例句"}],"rows":[1254],"otype":null,"type":"na","forms":{"neg":"でたらめじゃない","past":"でたらめだった","te":"でたらめで","adv":"でたらめに"},"formsR":{"neg":"でたらめじゃない","past":"でたらめだった","te":"でたらめで","adv":"でたらめに"}},{"kind":"adj","key":"透明","word":"透明","reading":"とうめい","wr":"{透明|とうめい}","zh":"透明","cnsrc":"自译","learned":null,"en":"transparency, cleanness","category":"look","row":"た","note":"","examples":[{"ex":"{透明|とうめい}なガラスのコップを{買|か}った。","exz":"买了透明的玻璃杯。","c":"","cz":"","tag":"新例句"}],"rows":[1298],"otype":null,"type":"na","forms":{"neg":"{透明|とうめい}じゃない","past":"{透明|とうめい}だった","te":"{透明|とうめい}で","adv":"{透明|とうめい}に"},"formsR":{"neg":"とうめいじゃない","past":"とうめいだった","te":"とうめいで","adv":"とうめいに"}},{"kind":"adj","key":"特殊","word":"特殊","reading":"とくしゅ","wr":"{特殊|とくしゅ}","zh":"特殊；特别","cnsrc":"自译","learned":null,"en":"special, unique","category":"judge","row":"た","note":"","examples":[{"ex":"これは{特殊|とくしゅ}な{材料|ざいりょう}で{作|つく}られている。","exz":"这是用特殊材料制成的。","c":"","cz":"","tag":"新例句"}],"rows":[1306],"otype":null,"type":"na","forms":{"neg":"{特殊|とくしゅ}じゃない","past":"{特殊|とくしゅ}だった","te":"{特殊|とくしゅ}で","adv":"{特殊|とくしゅ}に"},"formsR":{"neg":"とくしゅじゃない","past":"とくしゅだった","te":"とくしゅで","adv":"とくしゅに"}},{"kind":"adj","key":"傾らか","word":"傾らか","reading":"なだらか","wr":"{傾|なだ}らか","zh":"平缓；坡度小","cnsrc":"自译","learned":null,"en":"gradual, gentle","category":"look","row":"な","note":"","examples":[{"ex":"なだらかな{坂|さか}を{上|のぼ}った。","exz":"爬上了平缓的坡。","c":"","cz":"","tag":"新例句"}],"rows":[1347],"otype":null,"type":"na","forms":{"neg":"{傾|なだ}らかじゃない","past":"{傾|なだ}らかだった","te":"{傾|なだ}らかで","adv":"{傾|なだ}らかに"},"formsR":{"neg":"なだらかじゃない","past":"なだらかだった","te":"なだらかで","adv":"なだらかに"}},{"kind":"adj","key":"懐かしい","word":"懐かしい","reading":"なつかしい","wr":"{懐|なつ}かしい","zh":"怀念","cnsrc":"课本","learned":"中級 L14","en":"dear, desired, missed","category":"feel","row":"な","note":"","examples":[{"ex":"この{歌|うた}を{聞|き}くと{学生|がくせい}{時代|じだい}が{懐|なつ}かしい。","exz":"一听这首歌就怀念学生时代。","c":"","cz":"","tag":"新例句"}],"rows":[1348],"otype":null,"type":"i","forms":{"neg":"{懐|なつ}かしくない","past":"{懐|なつ}かしかった","te":"{懐|なつ}かしくて","adv":"{懐|なつ}かしく"},"formsR":{"neg":"なつかしくない","past":"なつかしかった","te":"なつかしくて","adv":"なつかしく"}},{"kind":"adj","key":"斜め","word":"斜め","reading":"ななめ","wr":"{斜|なな}め","zh":"斜向","cnsrc":"课本","learned":"中級 L4","en":"diagonal, oblique","category":"look","row":"な","note":"","examples":[{"ex":"{絵|え}が{斜|なな}めに{掛|か}かっている。","exz":"画挂歪了。","c":"","cz":"","tag":"新例句"}],"rows":[1350],"otype":null,"type":"na","forms":{"neg":"{斜|なな}めじゃない","past":"{斜|なな}めだった","te":"{斜|なな}めで","adv":"{斜|なな}めに"},"formsR":{"neg":"ななめじゃない","past":"ななめだった","te":"ななめで","adv":"ななめに"}},{"kind":"adj","key":"生意気","word":"生意気","reading":"なまいき","wr":"{生意気|なまいき}","zh":"狂妄；自大","cnsrc":"自译","learned":null,"en":"impertinent, impudent","category":"attitude","row":"な","note":"词表另有一行「生意気」，这一行写作「生意気な」。","examples":[{"ex":"{子|こ}どもが{生意気|なまいき}なことを{言|い}う。","exz":"小孩说话很狂妄。","c":"","cz":"","tag":"新例句"},{"ex":"{生意気|なまいき}な{態度|たいど}をとってはいけない。","exz":"不能摆出狂妄的态度。","c":"","cz":"","tag":"新例句"}],"rows":[1355,1356],"otype":null,"type":"na","forms":{"neg":"{生意気|なまいき}じゃない","past":"{生意気|なまいき}だった","te":"{生意気|なまいき}で","adv":"{生意気|なまいき}に"},"formsR":{"neg":"なまいきじゃない","past":"なまいきだった","te":"なまいきで","adv":"なまいきに"}},{"kind":"adj","key":"憎い","word":"憎い","reading":"にくい","wr":"{憎|にく}い","zh":"可恨；可憎","cnsrc":"自译","learned":null,"en":"hateful, abominable, detestable","category":"feel","row":"な","note":"","examples":[{"ex":"{約束|やくそく}を{破|やぶ}った{彼|かれ}が{憎|にく}い。","exz":"恨死了失约的他。","c":"","cz":"","tag":"新例句"}],"rows":[1369],"otype":null,"type":"i","forms":{"neg":"{憎|にく}くない","past":"{憎|にく}かった","te":"{憎|にく}くて","adv":"{憎|にく}く"},"formsR":{"neg":"にくくない","past":"にくかった","te":"にくくて","adv":"にくく"}},{"kind":"adj","key":"憎らしい","word":"憎らしい","reading":"にくらしい","wr":"{憎|にく}らしい","zh":"可憎；讨厌","cnsrc":"自译","learned":null,"en":"odious, hateful","category":"feel","row":"な","note":"","examples":[{"ex":"あの{人|ひと}の{態度|たいど}は{本当|ほんとう}に{憎|にく}らしい。","exz":"那个人的态度真让人讨厌。","c":"","cz":"","tag":"新例句"}],"rows":[1371],"otype":null,"type":"i","forms":{"neg":"{憎|にく}らしくない","past":"{憎|にく}らしかった","te":"{憎|にく}らしくて","adv":"{憎|にく}らしく"},"formsR":{"neg":"にくらしくない","past":"にくらしかった","te":"にくらしくて","adv":"にくらしく"}},{"kind":"adj","key":"鈍い","word":"鈍い","reading":"にぶい","wr":"{鈍|にぶ}い","zh":"钝；迟钝","cnsrc":"自译","learned":null,"en":"dull (e.g., a knife), thickheaded, slow (opposite of fast), stupid","category":"eval","row":"な","note":"","examples":[{"ex":"このナイフは{切|き}れ{味|あじ}が{鈍|にぶ}い。","exz":"这把刀很钝。","c":"","cz":"","tag":"新例句"}],"rows":[1379],"otype":null,"type":"i","forms":{"neg":"{鈍|にぶ}くない","past":"{鈍|にぶ}かった","te":"{鈍|にぶ}くて","adv":"{鈍|にぶ}く"},"formsR":{"neg":"にぶくない","past":"にぶかった","te":"にぶくて","adv":"にぶく"}},{"kind":"adj","key":"俄","word":"俄","reading":"にわか","wr":"{俄|にわか}","zh":"突然；骤然","cnsrc":"自译","learned":null,"en":"sudden, abrupt, unexpected","category":"judge","row":"な","note":"","examples":[{"ex":"{空|そら}がにわかに{暗|くら}くなった。","exz":"天空骤然暗了下来。","c":"","cz":"","tag":"新例句"}],"rows":[1384],"otype":null,"type":"na","forms":{"neg":"{俄|にわか}じゃない","past":"{俄|にわか}だった","te":"{俄|にわか}で","adv":"{俄|にわか}に"},"formsR":{"neg":"にわかじゃない","past":"にわかだった","te":"にわかで","adv":"にわかに"}},{"kind":"adj","key":"鈍い（のろい）","word":"鈍い","reading":"のろい","wr":"{鈍|のろ}い","zh":"慢；迟钝","cnsrc":"自译","learned":null,"en":"dull (e.g., a knife), slow (opposite of fast), stupid","category":"eval","row":"な","note":"","examples":[{"ex":"{彼|かれ}は{仕事|しごと}がのろい。","exz":"他干活很慢。","c":"","cz":"","tag":"新例句"}],"rows":[1407],"otype":null,"type":"i","forms":{"neg":"{鈍|のろ}くない","past":"{鈍|のろ}かった","te":"{鈍|のろ}くて","adv":"{鈍|のろ}く"},"formsR":{"neg":"のろくない","past":"のろかった","te":"のろくて","adv":"のろく"}},{"kind":"adj","key":"呑気","word":"呑気","reading":"のんき","wr":"{呑気|のんき}","zh":"悠闲；无忧无虑；漫不经心","cnsrc":"自译","learned":null,"en":"carefree, optimistic, careless","category":"attitude","row":"な","note":"","examples":[{"ex":"{試験|しけん}の{前|まえ}なのに{弟|おとうと}は{呑気|のんき}に{寝|ね}ている。","exz":"快考试了弟弟还悠闲地睡大觉。","c":"","cz":"","tag":"新例句"}],"rows":[1409],"otype":null,"type":"na","forms":{"neg":"{呑気|のんき}じゃない","past":"{呑気|のんき}だった","te":"{呑気|のんき}で","adv":"{呑気|のんき}に"},"formsR":{"neg":"のんきじゃない","past":"のんきだった","te":"のんきで","adv":"のんきに"}},{"kind":"adj","key":"ばからしい","word":"ばからしい","reading":"ばからしい","wr":"ばからしい","zh":"无聊；愚蠢；不值得","cnsrc":"自译","learned":null,"en":"absurd","category":"eval","row":"は","note":"","examples":[{"ex":"こんなことで{怒|おこ}るのはばからしい。","exz":"为这种事生气太不值得了。","c":"","cz":"","tag":"新例句"}],"rows":[1419],"otype":null,"type":"i","forms":{"neg":"ばからしくない","past":"ばからしかった","te":"ばからしくて","adv":"ばからしく"},"formsR":{"neg":"ばからしくない","past":"ばからしかった","te":"ばからしくて","adv":"ばからしく"}},{"kind":"adj","key":"派手","word":"派手","reading":"はで","wr":"{派手|はで}","zh":"华丽 / 鲜艳(的)","cnsrc":"课本","learned":"中級 L11","en":"showy, loud, flashy, gaudy","category":"look","row":"は","note":"","examples":[{"ex":"{派手|はで}な{色|いろ}の{服|ふく}を{着|き}ている。","exz":"穿着颜色鲜艳的衣服。","c":"","cz":"","tag":"新例句"}],"rows":[1446],"otype":null,"type":"na","forms":{"neg":"{派手|はで}じゃない","past":"{派手|はで}だった","te":"{派手|はで}で","adv":"{派手|はで}に"},"formsR":{"neg":"はでじゃない","past":"はでだった","te":"はでで","adv":"はでに"}},{"kind":"adj","key":"甚だしい","word":"甚だしい","reading":"はなはだしい","wr":"{甚|はなは}だしい","zh":"非常；过分；厉害","cnsrc":"自译","learned":null,"en":"extreme, excessive, terrible","category":"degree","row":"は","note":"","examples":[{"ex":"{彼|かれ}の{誤解|ごかい}は{甚|はなは}だしい。","exz":"他的误解非常严重。","c":"","cz":"","tag":"新例句"}],"rows":[1451],"otype":null,"type":"i","forms":{"neg":"{甚|はなは}だしくない","past":"{甚|はなは}だしかった","te":"{甚|はなは}だしくて","adv":"{甚|はなは}だしく"},"formsR":{"neg":"はなはだしくない","past":"はなはだしかった","te":"はなはだしくて","adv":"はなはだしく"}},{"kind":"adj","key":"卑怯","word":"卑怯","reading":"ひきょう","wr":"{卑怯|ひきょう}","zh":"卑鄙；胆怯","cnsrc":"自译","learned":null,"en":"cowardice, meanness, unfairness","category":"attitude","row":"は","note":"","examples":[{"ex":"うそをつくのは{卑怯|ひきょう}だ。","exz":"撒谎是卑鄙的。","c":"","cz":"","tag":"新例句"}],"rows":[1487],"otype":null,"type":"na","forms":{"neg":"{卑怯|ひきょう}じゃない","past":"{卑怯|ひきょう}だった","te":"{卑怯|ひきょう}で","adv":"{卑怯|ひきょう}に"},"formsR":{"neg":"ひきょうじゃない","past":"ひきょうだった","te":"ひきょうで","adv":"ひきょうに"}},{"kind":"adj","key":"不規則","word":"不規則","reading":"ふきそく","wr":"{不規則|ふきそく}","zh":"不规则 / 无规律(的)","cnsrc":"课本","learned":"中級 L12","en":"irregularity, unsteadiness","category":"judge","row":"は","note":"","examples":[{"ex":"{不規則|ふきそく}な{生活|せいかつ}は{体|からだ}に{悪|わる}い。","exz":"不规律的生活对身体不好。","c":"","cz":"","tag":"新例句"}],"rows":[1545],"otype":null,"type":"na","forms":{"neg":"{不規則|ふきそく}じゃない","past":"{不規則|ふきそく}だった","te":"{不規則|ふきそく}で","adv":"{不規則|ふきそく}に"},"formsR":{"neg":"ふきそくじゃない","past":"ふきそくだった","te":"ふきそくで","adv":"ふきそくに"}},{"kind":"adj","key":"不潔","word":"不潔","reading":"ふけつ","wr":"{不潔|ふけつ}","zh":"不干净；肮脏","cnsrc":"自译","learned":null,"en":"unclean, dirty","category":"look","row":"は","note":"","examples":[{"ex":"{不潔|ふけつ}な{手|て}で{食|た}べてはいけない。","exz":"不能用脏手吃东西。","c":"","cz":"","tag":"新例句"}],"rows":[1555],"otype":null,"type":"na","forms":{"neg":"{不潔|ふけつ}じゃない","past":"{不潔|ふけつ}だった","te":"{不潔|ふけつ}で","adv":"{不潔|ふけつ}に"},"formsR":{"neg":"ふけつじゃない","past":"ふけつだった","te":"ふけつで","adv":"ふけつに"}},{"kind":"adj","key":"物騒","word":"物騒","reading":"ぶっそう","wr":"{物騒|ぶっそう}","zh":"不安全；危险","cnsrc":"自译","learned":null,"en":"dangerous, disturbed, insecure","category":"judge","row":"は","note":"","examples":[{"ex":"{最近|さいきん}この{辺|あた}りは{物騒|ぶっそう}だ。","exz":"最近这一带不太平。","c":"","cz":"","tag":"新例句"}],"rows":[1571],"otype":null,"type":"na","forms":{"neg":"{物騒|ぶっそう}じゃない","past":"{物騒|ぶっそう}だった","te":"{物騒|ぶっそう}で","adv":"{物騒|ぶっそう}に"},"formsR":{"neg":"ぶっそうじゃない","past":"ぶっそうだった","te":"ぶっそうで","adv":"ぶっそうに"}},{"kind":"adj","key":"フリー","word":"フリー","reading":"フリー","wr":"フリー","zh":"自由；免费；自由职业","cnsrc":"自译","learned":null,"en":"free","category":"judge","row":"は","note":"","examples":[{"ex":"{彼|かれ}はフリーのカメラマンだ。","exz":"他是自由摄影师。","c":"","cz":"","tag":"新例句"}],"rows":[1584],"otype":null,"origin":{"w":"free","lang":"eng","wasei":false,"via":"JMdict 释义印证"},"type":"na","forms":{"neg":"フリーじゃない","past":"フリーだった","te":"フリーで","adv":"フリーに"},"formsR":{"neg":"フリーじゃない","past":"フリーだった","te":"フリーで","adv":"フリーに"}},{"kind":"adj","key":"平気","word":"平気","reading":"へいき","wr":"{平気|へいき}","zh":"无所谓、不在乎","cnsrc":"课本","learned":"中級 L8","en":"coolness, calmness, unconcern","category":"attitude","row":"は","note":"","examples":[{"ex":"{彼|かれ}は{寒|さむ}くても{平気|へいき}な{顔|かお}をしている。","exz":"他冷也一副若无其事的样子。","c":"","cz":"","tag":"新例句"}],"rows":[1609],"otype":null,"type":"na","forms":{"neg":"{平気|へいき}じゃない","past":"{平気|へいき}だった","te":"{平気|へいき}で","adv":"{平気|へいき}に"},"formsR":{"neg":"へいきじゃない","past":"へいきだった","te":"へいきで","adv":"へいきに"}},{"kind":"adj","key":"平凡","word":"平凡","reading":"へいぼん","wr":"{平凡|へいぼん}","zh":"平凡","cnsrc":"自译","learned":null,"en":"common, ordinary","category":"eval","row":"は","note":"","examples":[{"ex":"{平凡|へいぼん}な{毎日|まいにち}だが、{幸|しあわ}せだ。","exz":"每天虽平凡但很幸福。","c":"","cz":"","tag":"新例句"}],"rows":[1613],"otype":null,"type":"na","forms":{"neg":"{平凡|へいぼん}じゃない","past":"{平凡|へいぼん}だった","te":"{平凡|へいぼん}で","adv":"{平凡|へいぼん}に"},"formsR":{"neg":"へいぼんじゃない","past":"へいぼんだった","te":"へいぼんで","adv":"へいぼんに"}},{"kind":"adj","key":"別々","word":"別々","reading":"べつべつ","wr":"{別々|べつべつ}","zh":"各自；分别","cnsrc":"自译","learned":null,"en":"separately, individually","category":"judge","row":"は","note":"","examples":[{"ex":"{二人|ふたり}は{別々|べつべつ}に{帰|かえ}った。","exz":"两人分头回去了。","c":"","cz":"","tag":"新例句"}],"rows":[1619],"otype":null,"type":"na","forms":{"neg":"{別々|べつべつ}じゃない","past":"{別々|べつべつ}だった","te":"{別々|べつべつ}で","adv":"{別々|べつべつ}に"},"formsR":{"neg":"べつべつじゃない","past":"べつべつだった","te":"べつべつで","adv":"べつべつに"}},{"kind":"adj","key":"膨大","word":"膨大","reading":"ぼうだい","wr":"{膨大|ぼうだい}","zh":"庞大；巨大","cnsrc":"自译","learned":null,"en":"enormous, extensive","category":"degree","row":"は","note":"","examples":[{"ex":"{膨大|ぼうだい}な{資料|しりょう}を{整理|せいり}した。","exz":"整理了大量资料。","c":"","cz":"","tag":"新例句"}],"rows":[1637],"otype":null,"type":"na","forms":{"neg":"{膨大|ぼうだい}じゃない","past":"{膨大|ぼうだい}だった","te":"{膨大|ぼうだい}で","adv":"{膨大|ぼうだい}に"},"formsR":{"neg":"ぼうだいじゃない","past":"ぼうだいだった","te":"ぼうだいで","adv":"ぼうだいに"}},{"kind":"adj","key":"朗らか","word":"朗らか","reading":"ほがらか","wr":"{朗|ほが}らか","zh":"开朗；明朗","cnsrc":"自译","learned":null,"en":"bright, cheerful, melodious","category":"feel","row":"は","note":"词表另有一行「朗らか」，这一行写作「朗らか(な)」。","examples":[{"ex":"{彼女|かのじょ}は{朗|ほが}らかな{人|ひと}だ。","exz":"她是个开朗的人。","c":"","cz":"","tag":"新例句"},{"ex":"{朗|ほが}らかに{笑|わら}う{声|こえ}が{聞|き}こえる。","exz":"听到爽朗的笑声。","c":"","cz":"","tag":"新例句"}],"rows":[1644,1645],"otype":null,"type":"na","forms":{"neg":"{朗|ほが}らかじゃない","past":"{朗|ほが}らかだった","te":"{朗|ほが}らかで","adv":"{朗|ほが}らかに"},"formsR":{"neg":"ほがらかじゃない","past":"ほがらかだった","te":"ほがらかで","adv":"ほがらかに"}},{"kind":"adj","key":"真っ暗","word":"真っ暗","reading":"まっくら","wr":"{真|ま}っ{暗|くら}","zh":"漆黑；黑暗","cnsrc":"自译","learned":null,"en":"total darkness","category":"look","row":"ま","note":"","examples":[{"ex":"{停電|ていでん}で{部屋|へや}が{真|ま}っ{暗|くら}になった。","exz":"停电后房间一片漆黑。","c":"","cz":"","tag":"新例句"}],"rows":[1681],"otype":null,"type":"na","forms":{"neg":"{真|ま}っ{暗|くら}じゃない","past":"{真|ま}っ{暗|くら}だった","te":"{真|ま}っ{暗|くら}で","adv":"{真|ま}っ{暗|くら}に"},"formsR":{"neg":"まっくらじゃない","past":"まっくらだった","te":"まっくらで","adv":"まっくらに"}},{"kind":"adj","key":"真っ黒","word":"真っ黒","reading":"まっくろ","wr":"{真|ま}っ{黒|くろ}","zh":"乌黑；漆黑","cnsrc":"自译","learned":null,"en":"pitch black","category":"look","row":"ま","note":"","examples":[{"ex":"{日焼|ひや}けして{顔|かお}が{真|ま}っ{黒|くろ}だ。","exz":"晒得脸黝黑。","c":"","cz":"","tag":"新例句"}],"rows":[1682],"otype":null,"type":"na","forms":{"neg":"{真|ま}っ{黒|くろ}じゃない","past":"{真|ま}っ{黒|くろ}だった","te":"{真|ま}っ{黒|くろ}で","adv":"{真|ま}っ{黒|くろ}に"},"formsR":{"neg":"まっくろじゃない","past":"まっくろだった","te":"まっくろで","adv":"まっくろに"}},{"kind":"adj","key":"真っ青","word":"真っ青","reading":"まっさお","wr":"{真|ま}っ{青|さお}","zh":"深蓝；（脸色）苍白","cnsrc":"自译","learned":null,"en":"deep blue, ghastly pale","category":"look","row":"ま","note":"","examples":[{"ex":"{彼|かれ}は{顔|かお}が{真|ま}っ{青|さお}になった。","exz":"他脸色变得煞白。","c":"","cz":"","tag":"新例句"}],"rows":[1683],"otype":null,"type":"na","forms":{"neg":"{真|ま}っ{青|さお}じゃない","past":"{真|ま}っ{青|さお}だった","te":"{真|ま}っ{青|さお}で","adv":"{真|ま}っ{青|さお}に"},"formsR":{"neg":"まっさおじゃない","past":"まっさおだった","te":"まっさおで","adv":"まっさおに"}},{"kind":"adj","key":"真っ白","word":"真っ白","reading":"まっしろ","wr":"{真|ま}っ{白|しろ}","zh":"雪白；纯白","cnsrc":"自译","learned":null,"en":"pure white","category":"look","row":"ま","note":"","examples":[{"ex":"{外|そと}は{雪|ゆき}で{真|ま}っ{白|しろ}だ。","exz":"外面被雪覆盖，一片雪白。","c":"","cz":"","tag":"新例句"}],"rows":[1685],"otype":null,"type":"na","forms":{"neg":"{真|ま}っ{白|しろ}じゃない","past":"{真|ま}っ{白|しろ}だった","te":"{真|ま}っ{白|しろ}で","adv":"{真|ま}っ{白|しろ}に"},"formsR":{"neg":"まっしろじゃない","past":"まっしろだった","te":"まっしろで","adv":"まっしろに"}},{"kind":"adj","key":"稀","word":"稀","reading":"まれ","wr":"{稀|まれ}","zh":"稀少；罕见","cnsrc":"自译","learned":null,"en":"rare, seldom","category":"degree","row":"ま","note":"","examples":[{"ex":"このような{事故|じこ}はまれだ。","exz":"这种事故很少见。","c":"","cz":"","tag":"新例句"}],"rows":[1694],"otype":null,"type":"na","forms":{"neg":"{稀|まれ}じゃない","past":"{稀|まれ}だった","te":"{稀|まれ}で","adv":"{稀|まれ}に"},"formsR":{"neg":"まれじゃない","past":"まれだった","te":"まれで","adv":"まれに"}},{"kind":"adj","key":"みじめ","word":"みじめ","reading":"みじめ","wr":"みじめ","zh":"凄惨；悲惨","cnsrc":"自译","learned":null,"en":"sad, pitiful, wretched","category":"feel","row":"ま","note":"","examples":[{"ex":"{試合|しあい}に{負|ま}けてみじめな{気持|きも}ちになった。","exz":"输了比赛，心里很难受。","c":"","cz":"","tag":"新例句"}],"rows":[1706],"otype":null,"type":"na","forms":{"neg":"みじめじゃない","past":"みじめだった","te":"みじめで","adv":"みじめに"},"formsR":{"neg":"みじめじゃない","past":"みじめだった","te":"みじめで","adv":"みじめに"}},{"kind":"adj","key":"惨め","word":"惨め","reading":"みじめ","wr":"{惨|みじ}め","zh":"凄惨；可怜（的）","cnsrc":"自译","learned":null,"en":"miserable, wretched, unhappy, sad, pitiable","category":"feel","row":"ま","note":"词表另有一行「みじめ」，这一行写作「惨めな」。","examples":[{"ex":"{雨|あめ}にぬれて{惨|みじ}めな{姿|すがた}になった。","exz":"被雨淋得狼狈不堪。","c":"","cz":"","tag":"新例句"}],"rows":[1707],"otype":null,"type":"na","forms":{"neg":"{惨|みじ}めじゃない","past":"{惨|みじ}めだった","te":"{惨|みじ}めで","adv":"{惨|みじ}めに"},"formsR":{"neg":"みじめじゃない","past":"みじめだった","te":"みじめで","adv":"みじめに"}},{"kind":"adj","key":"みっともない","word":"みっともない","reading":"みっともない","wr":"みっともない","zh":"不像样；丢人","cnsrc":"自译","learned":null,"en":"shameful, indecent","category":"eval","row":"ま","note":"","examples":[{"ex":"{人前|ひとまえ}で{泣|な}くのはみっともない。","exz":"在人前哭很丢人。","c":"","cz":"","tag":"新例句"}],"rows":[1714],"otype":null,"type":"i","forms":{"neg":"みっともなくない","past":"みっともなかった","te":"みっともなくて","adv":"みっともなく"},"formsR":{"neg":"みっともなくない","past":"みっともなかった","te":"みっともなくて","adv":"みっともなく"}},{"kind":"adj","key":"醜い","word":"醜い","reading":"みにくい","wr":"{醜|みにく}い","zh":"丑陋；难看","cnsrc":"自译","learned":null,"en":"ugly","category":"eval","row":"ま","note":"","examples":[{"ex":"{醜|みにく}いけんかはやめなさい。","exz":"别再进行难看的争吵了。","c":"","cz":"","tag":"新例句"}],"rows":[1718],"otype":null,"type":"i","forms":{"neg":"{醜|みにく}くない","past":"{醜|みにく}かった","te":"{醜|みにく}くて","adv":"{醜|みにく}く"},"formsR":{"neg":"みにくくない","past":"みにくかった","te":"みにくくて","adv":"みにくく"}},{"kind":"adj","key":"蒸し暑い","word":"蒸し暑い","reading":"むしあつい","wr":"{蒸|む}し{暑|あつ}い","zh":"闷热","cnsrc":"课本","learned":"中級 L6","en":"humid, sultry","category":"sense","row":"ま","note":"","examples":[{"ex":"{今日|きょう}は{蒸|む}し{暑|あつ}い。","exz":"今天闷热。","c":"","cz":"","tag":"新例句"}],"rows":[1732],"otype":null,"type":"i","forms":{"neg":"{蒸|む}し{暑|あつ}くない","past":"{蒸|む}し{暑|あつ}かった","te":"{蒸|む}し{暑|あつ}くて","adv":"{蒸|む}し{暑|あつ}く"},"formsR":{"neg":"むしあつくない","past":"むしあつかった","te":"むしあつくて","adv":"むしあつく"}},{"kind":"adj","key":"めちゃくちゃ","word":"めちゃくちゃ","reading":"めちゃくちゃ","wr":"めちゃくちゃ","zh":"乱七八糟；不合理","cnsrc":"自译","learned":null,"en":"absurd, messed up, wrecked","category":"judge","row":"ま","note":"","examples":[{"ex":"{部屋|へや}がめちゃくちゃになっている。","exz":"房间乱七八糟。","c":"","cz":"","tag":"新例句"}],"rows":[1754],"otype":null,"type":"na","forms":{"neg":"めちゃくちゃじゃない","past":"めちゃくちゃだった","te":"めちゃくちゃで","adv":"めちゃくちゃに"},"formsR":{"neg":"めちゃくちゃじゃない","past":"めちゃくちゃだった","te":"めちゃくちゃで","adv":"めちゃくちゃに"}},{"kind":"adj","key":"めでたい","word":"めでたい","reading":"めでたい","wr":"めでたい","zh":"可喜可贺","cnsrc":"自译","learned":null,"en":"happy, propitious, joyous","category":"feel","row":"ま","note":"","examples":[{"ex":"{結婚|けっこん}はめでたいことだ。","exz":"结婚是可喜可贺的事。","c":"","cz":"","tag":"新例句"}],"rows":[1756],"otype":null,"type":"i","forms":{"neg":"めでたくない","past":"めでたかった","te":"めでたくて","adv":"めでたく"},"formsR":{"neg":"めでたくない","past":"めでたかった","te":"めでたくて","adv":"めでたく"}},{"kind":"adj","key":"面倒臭い","word":"面倒臭い","reading":"めんどうくさい","wr":"{面倒臭|めんどうくさ}い","zh":"非常麻烦；嫌麻烦","cnsrc":"自译","learned":null,"en":"bother to do, tiresome","category":"feel","row":"ま","note":"","examples":[{"ex":"{料理|りょうり}するのが{面倒臭|めんどうくさ}い。","exz":"做饭太麻烦了。","c":"","cz":"","tag":"新例句"}],"rows":[1763],"otype":null,"type":"i","forms":{"neg":"{面倒臭|めんどうくさ}くない","past":"{面倒臭|めんどうくさ}かった","te":"{面倒臭|めんどうくさ}くて","adv":"{面倒臭|めんどうくさ}く"},"formsR":{"neg":"めんどうくさくない","past":"めんどうくさかった","te":"めんどうくさくて","adv":"めんどうくさく"}},{"kind":"adj","key":"申し訳ない","word":"申し訳ない","reading":"もうしわけない","wr":"{申|もう}し{訳|わけ}ない","zh":"实在抱歉；对不起","cnsrc":"自译","learned":null,"en":"inexcusable, I am sorry","category":"feel","row":"ま","note":"","examples":[{"ex":"{遅|おく}れて{申|もう}し{訳|わけ}ない。","exz":"迟到了，真抱歉。","c":"","cz":"","tag":"新例句"}],"rows":[1767],"otype":null,"type":"i","forms":{"neg":"{申|もう}し{訳|わけ}なくない","past":"{申|もう}し{訳|わけ}なかった","te":"{申|もう}し{訳|わけ}なくて","adv":"{申|もう}し{訳|わけ}なく"},"formsR":{"neg":"もうしわけなくない","past":"もうしわけなかった","te":"もうしわけなくて","adv":"もうしわけなく"}},{"kind":"adj","key":"モダン","word":"モダン","reading":"モダン","wr":"モダン","zh":"现代；摩登","cnsrc":"自译","learned":null,"en":"modern","category":"look","row":"ま","note":"","examples":[{"ex":"モダンなデザインの{家|いえ}に{住|す}みたい。","exz":"想住设计时尚的房子。","c":"","cz":"","tag":"新例句"}],"rows":[1774],"otype":null,"origin":{"w":"modern","lang":"eng","wasei":false,"via":"JMdict 释义印证"},"type":"na","forms":{"neg":"モダンじゃない","past":"モダンだった","te":"モダンで","adv":"モダンに"},"formsR":{"neg":"モダンじゃない","past":"モダンだった","te":"モダンで","adv":"モダンに"}},{"kind":"adj","key":"物凄い","word":"物凄い","reading":"ものすごい","wr":"{物凄|ものすご}い","zh":"非常；惊人","cnsrc":"自译","learned":null,"en":"earth-shattering, staggering, to a very great extent","category":"degree","row":"ま","note":"","examples":[{"ex":"{物凄|ものすご}い{音|おと}がした。","exz":"发出了惊人的巨响。","c":"","cz":"","tag":"新例句"}],"rows":[1781],"otype":null,"type":"i","forms":{"neg":"{物凄|ものすご}くない","past":"{物凄|ものすご}かった","te":"{物凄|ものすご}くて","adv":"{物凄|ものすご}く"},"formsR":{"neg":"ものすごくない","past":"ものすごかった","te":"ものすごくて","adv":"ものすごく"}},{"kind":"adj","key":"やかましい","word":"やかましい","reading":"やかましい","wr":"やかましい","zh":"爱挑剔；吵闹","cnsrc":"自译","learned":null,"en":"to be fussy, to be overly critical","category":"manner","row":"や","note":"","examples":[{"ex":"{父|ちち}は{礼儀|れいぎ}にやかましい。","exz":"父亲对礼节很讲究。","c":"","cz":"","tag":"新例句"}],"rows":[1789],"otype":null,"type":"i","forms":{"neg":"やかましくない","past":"やかましかった","te":"やかましくて","adv":"やかましく"},"formsR":{"neg":"やかましくない","past":"やかましかった","te":"やかましくて","adv":"やかましく"}},{"kind":"adj","key":"喧しい","word":"喧しい","reading":"やかましい","wr":"{喧|やかま}しい","zh":"吵闹；嘈杂","cnsrc":"自译","learned":null,"en":"noisy, loud, clamorous, boisterous","category":"sense","row":"や","note":"","examples":[{"ex":"{工事|こうじ}の{音|おと}が{喧|やかま}しい。","exz":"施工的声音很吵。","c":"","cz":"","tag":"新例句"}],"rows":[1790],"otype":null,"type":"i","forms":{"neg":"{喧|やかま}しくない","past":"{喧|やかま}しかった","te":"{喧|やかま}しくて","adv":"{喧|やかま}しく"},"formsR":{"neg":"やかましくない","past":"やかましかった","te":"やかましくて","adv":"やかましく"}},{"kind":"adj","key":"やむをえない","word":"やむをえない","reading":"やむをえない","wr":"やむをえない","zh":"不得已；没办法","cnsrc":"自译","learned":null,"en":"cannot be helped, unavoidable","category":"judge","row":"や","note":"","examples":[{"ex":"{雨|あめ}なら{中止|ちゅうし}もやむをえない。","exz":"如果下雨，取消也是不得已的。","c":"","cz":"","tag":"新例句"}],"rows":[1808],"otype":null,"type":"i","forms":{"neg":"やむをえなくない","past":"やむをえなかった","te":"やむをえなくて","adv":"やむをえなく"},"formsR":{"neg":"やむをえなくない","past":"やむをえなかった","te":"やむをえなくて","adv":"やむをえなく"}},{"kind":"adj","key":"軟らかい","word":"軟らかい","reading":"やわらかい","wr":"{軟|やわ}らかい","zh":"柔软；软和","cnsrc":"自译","learned":null,"en":"soft, tender, limp","category":"sense","row":"や","note":"","examples":[{"ex":"このパンは{軟|やわ}らかい。","exz":"这个面包很软。","c":"","cz":"","tag":"新例句"}],"rows":[1809],"otype":null,"type":"i","forms":{"neg":"{軟|やわ}らかくない","past":"{軟|やわ}らかかった","te":"{軟|やわ}らかくて","adv":"{軟|やわ}らかく"},"formsR":{"neg":"やわらかくない","past":"やわらかかった","te":"やわらかくて","adv":"やわらかく"}},{"kind":"adj","key":"緩い","word":"緩い","reading":"ゆるい","wr":"{緩|ゆる}い","zh":"松；宽松；缓慢","cnsrc":"自译","learned":null,"en":"loose, lenient, slow","category":"sense","row":"や","note":"","examples":[{"ex":"このズボンはウエストが{緩|ゆる}い。","exz":"这条裤子腰很松。","c":"","cz":"","tag":"新例句"}],"rows":[1826],"otype":null,"type":"i","forms":{"neg":"{緩|ゆる}くない","past":"{緩|ゆる}かった","te":"{緩|ゆる}くて","adv":"{緩|ゆる}く"},"formsR":{"neg":"ゆるくない","past":"ゆるかった","te":"ゆるくて","adv":"ゆるく"}},{"kind":"adj","key":"幼稚","word":"幼稚","reading":"ようち","wr":"{幼稚|ようち}","zh":"幼稚","cnsrc":"自译","learned":null,"en":"infancy, childish, infantile","category":"attitude","row":"や","note":"","examples":[{"ex":"{彼|かれ}の{考|かんが}えは{幼稚|ようち}だ。","exz":"他的想法很幼稚。","c":"","cz":"","tag":"新例句"}],"rows":[1833],"otype":null,"type":"na","forms":{"neg":"{幼稚|ようち}じゃない","past":"{幼稚|ようち}だった","te":"{幼稚|ようち}で","adv":"{幼稚|ようち}に"},"formsR":{"neg":"ようちじゃない","past":"ようちだった","te":"ようちで","adv":"ようちに"}},{"kind":"adj","key":"余計","word":"余計","reading":"よけい","wr":"{余計|よけい}","zh":"多余(的)","cnsrc":"课本","learned":"中級 L15","en":"too much, unnecessary, abundance, surplus, excess, superfluity","category":"degree","row":"や","note":"","examples":[{"ex":"{余計|よけい}なことを{言|い}わないでください。","exz":"请不要说多余的话。","c":"","cz":"","tag":"新例句"}],"rows":[1843],"otype":null,"type":"na","forms":{"neg":"{余計|よけい}じゃない","past":"{余計|よけい}だった","te":"{余計|よけい}で","adv":"{余計|よけい}に"},"formsR":{"neg":"よけいじゃない","past":"よけいだった","te":"よけいで","adv":"よけいに"}},{"kind":"adj","key":"乱暴","word":"乱暴","reading":"らんぼう","wr":"{乱暴|らんぼう}","zh":"粗暴；乱来","cnsrc":"自译","learned":null,"en":"rude, violent, rough","category":"manner","row":"ら","note":"","examples":[{"ex":"{物|もの}を{乱暴|らんぼう}に{扱|あつか}ってはいけない。","exz":"不能粗暴地对待东西。","c":"","cz":"","tag":"新例句"}],"rows":[1861],"otype":null,"type":"na","forms":{"neg":"{乱暴|らんぼう}じゃない","past":"{乱暴|らんぼう}だった","te":"{乱暴|らんぼう}で","adv":"{乱暴|らんぼう}に"},"formsR":{"neg":"らんぼうじゃない","past":"らんぼうだった","te":"らんぼうで","adv":"らんぼうに"}},{"kind":"adj","key":"若々しい","word":"若々しい","reading":"わかわかしい","wr":"{若々|わかわか}しい","zh":"精神矍铄、年轻有活力","cnsrc":"课本","learned":"中級 L7","en":"youthful, young","category":"look","row":"わ","note":"","examples":[{"ex":"{祖母|そぼ}はいつも{若々|わかわか}しい。","exz":"祖母总是很年轻。","c":"","cz":"","tag":"新例句"}],"rows":[1898],"otype":null,"type":"i","forms":{"neg":"{若々|わかわか}しくない","past":"{若々|わかわか}しかった","te":"{若々|わかわか}しくて","adv":"{若々|わかわか}しく"},"formsR":{"neg":"わかわかしくない","past":"わかわかしかった","te":"わかわかしくて","adv":"わかわかしく"}}],"stats":{"cards":127,"learned":13,"loan":4,"ex":130,"zhself":114,"rows":130,"topcat":["look",0.205],"other":0},"pairs":[]};
+/* ---------- shared helpers ---------- */
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function toHira(s){ return String(s).replace(/[\u30a1-\u30f6]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0x60); }); }
+var RB = /\{([^{}|]+)\|([^{}|]+)\}/g;
+function ruby(s){ return esc(s).replace(RB, "<ruby>$1<rt>$2</rt></ruby>"); }
+function plain(s){ return String(s).replace(RB, "$1"); }
+function yomi(s){ return String(s).replace(RB, "$2"); }
+function hasKanji(s){ return /[\u4e00-\u9fff々]/.test(s); }
+function norm(s){ return toHira(String(s).toLowerCase()).replace(/[～~\s（）()・]/g, ""); }
+/* text spoken for a ruby string: the hiragana from the ruby (exact textbook reading),
+   except a kanji counter right after a digit keeps its kanji (TTS then applies 3日→みっか etc.) */
+function sayOf(s){
+  return String(s).replace(/([0-9０-９])\{([^{}|]+)\|([^{}|]+)\}/g, "$1$2").replace(RB, "$2").replace(/[～〜（）()／]/g, "").trim();
+}
+function sayBtn(text, label){
+  text = String(text || "").replace(/[～〜（）()／]/g, "").trim();
+  return '<button type="button" class="say" data-say="' + esc(text) + '" aria-label="朗读 ' + esc(label || text) + '">🔊</button>';
+}
+function srcBadge(lesson, kind){ return lesson ? ' <span class="badge tb">' + kind + ' 第' + esc(lesson) + '课</span>' : ""; }
+function lessonLine(r){
+  var s = r.lessons && r.lessons.length ? "<b>" + r.lessons.map(function(n){ return "第" + n + "课"; }).join("、") + "</b>" : (r.book ? "" : "—（补充词）");
+  if (r.also && r.also.length) s += '<span class="also">另见：' + r.also.map(function(a){ return "第" + a.lesson + "课「" + esc(a.text) + "」"; }).join("；") + "</span>";
+  return s;
+}
+function colBlock(r){
+  if (!r.col || !r.col.length) return "";
+  return '<div class="cols">' + r.col.map(function(c){
+    return '<div class="col"><div class="cphrase">' + ruby(c.c) + sayBtn(sayOf(c.c), plain(c.c)) + '<span class="cz">' + esc(c.cz) + "</span>" + srcBadge(c.csrc, "课本短语") + "</div>" +
+      '<div class="ex">' + ruby(c.ex) + sayBtn(sayOf(c.ex), plain(c.ex)) + (c.src ? srcBadge(c.src, "课本例句") : ' <span class="badge nw">新例句</span>') + '</div><div class="exz">' + esc(c.exz) + "</div></div>";
+  }).join("") + "</div>";
+}
+function bookBadge(r){
+  return '<span class="badge ' + (r.book ? "book" : "extra") + '">' + (r.book ? "课本" : "书里没有") + "</span>" +
+    (!r.book && r.shokyu ? '<span class="badge nw">初級学过</span>' : "");
+}
+function store(k, v){ try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+function load(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+</script>
+<script>
+/* N2 card renderer (shared by verb / adj / noun) */
+var KIND = "adj";
+var GCOLOR = {"5":"#2563eb","1":"#059669","s":"#db2777","k":"#d97706","z":"#c026d3"};
+var GNAME = {"5":"五段（Ⅰ类）","1":"一段（Ⅱ类）","s":"サ变（～する）","k":"カ变（来る）","z":"サ变（～ずる）"};
+var TCOLOR = {"i":"#e11d48","na":"#0d9488"};
+var LANGNAME = {"eng":"英语","fre":"法语","ger":"德语","dut":"荷兰语","por":"葡萄牙语","ita":"意大利语"};
+var VFORMS = [["dict","辞書形"],["masu","ます形"],["te","て形"]];
+var AFORMS = [["neg","否定"],["past","过去"],["te","て形"],["adv","副词形"]];
+function originBlock(r){
+  var o = r.origin; if (!o) return "";
+  var tag = o.lang === "eng" ? (o.wasei ? "和制英语" : "英语") : (LANGNAME[o.lang] || o.lang);
+  return '<div class="origin" lang="' + (o.lang === "eng" ? "en" : "") + '"><span class="olab">🌐 原词</span><b>' + esc(o.w) + '</b><span class="otag' + (o.lang === "eng" && !o.wasei ? "" : " oforeign") + '">' + tag + "</span></div>";
+}
+function learnBadge(r){
+  return (r.learned ? '<span class="badge book">学过 ' + esc(r.learned) + "</span>" : '<span class="badge newword">没学过</span>') +
+    '<span class="badge ' + (r.cnsrc === "课本" ? "tb" : "self") + '">' + (r.cnsrc === "课本" ? "课本中文" : "自译") + "</span>";
+}
+function exBlock(r){
+  if (!r.examples || !r.examples.length) return "";
+  return '<div class="cols">' + r.examples.map(function(x){
+    return '<div class="col">' + (x.c ? '<div class="cphrase">' + ruby(x.c) + sayBtn(sayOf(x.c), plain(x.c)) + '<span class="cz">' + esc(x.cz) + "</span></div>" : "") +
+      '<div class="ex">' + ruby(x.ex) + sayBtn(sayOf(x.ex), plain(x.ex)) + ' <span class="badge nw">' + esc(x.tag) + '</span></div><div class="exz">' + esc(x.exz) + "</div></div>";
+  }).join("") + "</div>";
+}
+function formsBlock(r, list){
+  return '<div class="forms">' + list.map(function(f){
+    return '<div class="field"><div class="fv"><span class="label">' + f[1] + '</span><span class="formvalue">' + ruby(r.forms[f[0]]) + "</span></div>" + sayBtn(r.formsR[f[0]], plain(r.forms[f[0]])) + "</div>";
+  }).join("") + "</div>";
+}
+function head(r){
+  return '<div class="top"><div><div class="word">' + ruby(r.wr) + sayBtn(r.reading, r.word) + "</div></div>";
+}
+var APP = {
+  types: KIND === "verb" ? [{id:"5",name:GNAME["5"],color:GCOLOR["5"]},{id:"1",name:GNAME["1"],color:GCOLOR["1"]},{id:"s",name:"サ变",color:GCOLOR.s},{id:"vi",name:"自动词",color:"#0369a1"},{id:"vt",name:"他动词",color:"#b45309"}]
+       : KIND === "adj" ? [{id:"i",name:"い形容词",color:TCOLOR.i},{id:"na",name:"な形容词",color:TCOLOR.na}]
+       : [{id:"s",name:"可加「する」",color:"#7c3aed"},{id:"loan",name:"🌐 外来语",color:"#0891b2"}],
+  typeMatch: function(r, t){
+    if (KIND === "verb") return t === "vi" ? r.vt.indexOf("自") >= 0 : t === "vt" ? r.vt.indexOf("他") >= 0 : t === "s" ? (r.group === "s" || r.group === "z") : r.group === t;
+    if (KIND === "adj") return r.type === t;
+    return t === "s" ? !!r.suru : !!r.origin;
+  },
+  otherName: "其他（副词・寒暄…）",
+  pairTitle: function(){ return ""; },
+  statsHtml: function(s){
+    return '<span class="stat">共 ' + s.cards + ' 张（词表 ' + s.rows + ' 行）</span><span class="stat">学过 ' + s.learned + '</span><span class="stat">没学过 ' + (s.cards - s.learned) +
+      '</span>' + (s.loan ? '<span class="stat">🌐 外来语 ' + s.loan + "</span>" : "") + '<span class="stat">新例句 ' + s.ex + "</span>";
+  },
+  hayParts: function(r){
+    var p = [r.word, r.reading, r.zh, r.en || "", r.origin ? r.origin.w : "", r.learned ? "学过" : "没学过", r.cnsrc];
+    if (r.forms) for (var k in r.forms) p.push(plain(r.forms[k]), r.formsR[k]);
+    if (r.group) p.push(GNAME[r.group], r.vt ? r.vt + "动词" : "");
+    return p;
+  },
+  card: function(r){
+    var c = catById.get(r.category) || {color:"#64748b"}, badges = learnBadge(r), forms = "";
+    if (r.kind === "verb") {
+      badges = '<span class="badge" style="color:#fff;background:' + GCOLOR[r.group] + '">' + esc(GNAME[r.group]) + "</span>" +
+        (r.vt ? '<span class="badge vt">' + (r.vt === "自他" ? "自他两用" : r.vt + "动词") + "</span>" : "") + badges;
+      forms = formsBlock(r, VFORMS);
+    } else if (r.kind === "adj") {
+      badges = '<span class="badge" style="color:#fff;background:' + TCOLOR[r.type] + '">' + (r.type === "na" ? "な形容词" : "い形容词") + "</span>" + badges;
+      forms = formsBlock(r, AFORMS);
+    } else if (r.suru) badges = '<span class="badge suru">＋する</span>' + badges;
+    return '<article class="card" style="--c:' + c.color + '" data-key="' + esc(r.key) + '">' + head(r) +
+      '<div class="badges">' + badges + "</div></div>" + originBlock(r) +
+      '<div class="meaning">' + esc(r.zh) + "</div>" + (r.en ? '<div class="en" lang="en">' + esc(r.en) + "</div>" : "") + forms +
+      (r.note ? '<div class="cardnote">' + esc(r.note) + "</div>" : "") + exBlock(r) + "</article>";
+  },
+  ocard: function(r){
+    return '<article class="card ocard" style="--c:#64748b" data-key="' + esc(r.key) + '">' + head(r) + '<div class="badges">' + learnBadge(r) + "</div></div>" + originBlock(r) +
+      '<div class="meaning">' + esc(r.zh) + "</div>" + (r.en ? '<div class="en" lang="en">' + esc(r.en) + "</div>" : "") +
+      (r.note ? '<div class="cardnote">' + esc(r.note) + "</div>" : "") + exBlock(r) + "</article>";
+  }
+};
+
+</script>
+<script>
+/* ---------- shared app shell (sections, filter, search, theme, big font) ---------- */
+const byKey = new Map(DATA.records.map(function(x){ return [x.key, x]; }));
+const catById = new Map(DATA.categories.map(function(c){ return [c.id, c]; }));
+const pairOf = new Map();
+DATA.pairs.forEach(function(p){ pairOf.set(p.a, p); pairOf.set(p.b, p); });
+const state = {cat:"all", row:"", q:"", onlyNew:false, type:"all"};
+function pairBlock(p, va, vb){
+  var a = byKey.get(p.a), b = byKey.get(p.b);
+  return '<div class="pair' + (va && vb ? "" : " solo") + '">' +
+    '<div class="pairtitle">↔ ' + esc(APP.pairTitle(p)) + '</div>' +
+    '<div class="paircards">' + (va ? APP.card(a) : "") + '<div class="arrow" aria-hidden="true">↔</div>' + (vb ? APP.card(b) : "") + "</div>" +
+    '<p class="pairnote">' + esc(p.explanation) + "</p></div>";
+}
+function hay(r){
+  var parts = APP.hayParts(r).concat([r.note || ""]);
+  (r.lessons || []).forEach(function(l){ parts.push("第" + l + "课"); });
+  (r.also || []).forEach(function(a){ parts.push(a.text); });
+  (r.col || []).forEach(function(c){ parts.push(plain(c.c), yomi(c.c), c.cz, plain(c.ex), yomi(c.ex), c.exz); });
+  (r.examples || []).forEach(function(c){ parts.push(plain(c.ex), yomi(c.ex), c.exz); });
+  return norm(parts.join(" "));
+}
+var HAY = new Map(), CORE = new Map();
+DATA.records.forEach(function(r){ HAY.set(r.key, hay(r)); CORE.set(r.key, norm(APP.hayParts(r).join(" "))); });
+function match(r){
+  if (state.onlyNew && r.learned) return false;
+  if (state.type !== "all" && !APP.typeMatch(r, state.type)) return false;
+  if (state.row && r.row !== state.row) return false;
+  if (!state.q) return true;
+  return (state.q.length <= 1 ? CORE : HAY).get(r.key).indexOf(state.q) !== -1;
+}
+var SECTIONS = [];
+function renderSection(S){
+  var html = "";
+  if (S.other) {
+    DATA.otherTypes.forEach(function(t){
+      var rs = S.matched.filter(function(r){ return r.otype === t.id; });
+      if (rs.length) html += '<div class="ogroup"><h3>' + t.icon + " " + esc(t.name) + " · " + rs.length + '</h3><div class="ogrid">' + rs.map(APP.ocard).join("") + "</div></div>";
+    });
+  } else {
+    if (APP.sectionTop) html += APP.sectionTop(S.id, state);
+    var set = new Set(S.matched.map(function(r){ return r.key; })), done = new Set(), singles = [];
+    S.matched.forEach(function(r){
+      if (done.has(r.key)) return;
+      var p = pairOf.get(r.key);
+      if (p) { done.add(p.a); done.add(p.b); html += pairBlock(p, set.has(p.a), set.has(p.b)); }
+      else singles.push(r);
+    });
+    html += '<div class="grid">' + singles.map(APP.card).join("") + "</div>";
+  }
+  S.inside.innerHTML = html;
+  S.rendered = true;
+}
+function build(){
+  document.getElementById("stats").innerHTML = APP.statsHtml(DATA.stats);
+  var hasOther = !!(DATA.otherTypes && DATA.otherTypes.length);
+  var otherDef = {id:"other", icon:"💬", name:APP.otherName || "其他", color:"#64748b"};
+  var chips = [{id:"all", icon:"✦", name:"全部"}].concat(DATA.categories, hasOther ? [otherDef] : []);
+  document.getElementById("chips").innerHTML = chips.map(function(c){
+    return '<button type="button" class="chip' + (c.id === "all" ? " active" : "") + '" data-cat="' + c.id + '">' + c.icon + " " + esc(c.name) + "</button>";
+  }).join("");
+  var l = '<button type="button" class="chip active" data-row="">全部五十音</button>';
+  "あかさたなはまやらわ".split("").forEach(function(k){ l += '<button type="button" class="chip" data-row="' + k + '">' + k + "行</button>"; });
+  document.getElementById("lchips").innerHTML = l;
+  document.getElementById("tchips").innerHTML = [{id:"all", name:"全部类型"}].concat(APP.types).map(function(t){
+    return '<button type="button" class="chip' + (t.id === "all" ? " active" : "") + '" data-type="' + t.id + '"' + (t.color ? ' style="--tc:' + t.color + '"' : "") + ">" + esc(t.name) + "</button>";
+  }).join("");
+  var content = document.getElementById("content");
+  var defs = DATA.categories.map(function(c){ return {id:c.id, name:c.name, icon:c.icon, color:c.color, other:false}; });
+  if (hasOther) defs.push({id:"other", name:otherDef.name, icon:otherDef.icon, color:otherDef.color, other:true});
+  defs.forEach(function(d){
+    var det = document.createElement("details");
+    det.className = "section"; det.id = "cat-" + d.id; det.dataset.cat = d.id; det.style.setProperty("--c", d.color);
+    det.innerHTML = "<summary><span>" + d.icon + "</span><span>" + esc(d.name) + '</span><span class="count"></span><span class="caret">⌄</span></summary><div class="inside"></div>';
+    content.appendChild(det);
+    var S = {id:d.id, other:d.other, el:det, inside:det.querySelector(".inside"), count:det.querySelector(".count"), rendered:false, dirty:true, matched:[],
+             records:DATA.records.filter(function(r){ return d.other ? r.kind === "other" : (r.kind !== "other" && r.category === d.id); })};
+    det.addEventListener("toggle", function(){ if (det.open && (S.dirty || !S.rendered)) { renderSection(S); S.dirty = false; } });
+    SECTIONS.push(S);
+  });
+  var h = decodeURIComponent((location.hash || "").slice(1)), o = (location.search.match(/[?&]open=([a-z]+)/) || [])[1];
+  SECTIONS.forEach(function(S){ if (h === "cat-" + S.id || o === S.id || o === "all") S.el.open = true; });
+  filter();
+}
+function filter(){
+  var total = 0, autoOpen = !!(state.q || state.row || state.onlyNew || state.type !== "all");
+  SECTIONS.forEach(function(S){
+    var catOK = state.cat === "all" || state.cat === S.id;
+    S.matched = catOK ? S.records.filter(match) : [];
+    total += S.matched.length;
+    S.el.classList.toggle("hidden", S.matched.length === 0);
+    S.count.textContent = S.matched.length + (S.other ? " 条" : " 张");
+    S.dirty = true;
+    if (S.matched.length && (autoOpen || state.cat === S.id)) S.el.open = true;
+    if (S.el.open) { renderSection(S); S.dirty = false; }
+  });
+  document.getElementById("empty").classList.toggle("hidden", total > 0);
+  document.getElementById("resultText").textContent = "显示 " + total + " 条";
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest(".chip");
+  if (!b) return;
+  if (b.dataset.row !== undefined) {
+    state.row = b.dataset.row;
+    document.querySelectorAll("#lchips .chip").forEach(function(x){ x.classList.toggle("active", x === b); });
+    filter(); return;
+  }
+  if (b.dataset.type !== undefined) {
+    state.type = b.dataset.type;
+    document.querySelectorAll("#tchips .chip").forEach(function(x){ x.classList.toggle("active", x === b); });
+    filter(); return;
+  }
+  state.cat = b.dataset.cat;
+  document.querySelectorAll("#chips .chip").forEach(function(x){ x.classList.toggle("active", x === b); });
+  filter();
+  if (state.cat !== "all") {
+    var el = document.getElementById("cat-" + state.cat);
+    if (el && el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+});
+var timer = null;
+document.getElementById("q").addEventListener("input", function(e){
+  clearTimeout(timer);
+  timer = setTimeout(function(){ state.q = norm(e.target.value); filter(); }, 150);
+});
+document.getElementById("onlyNew").addEventListener("change", function(e){ state.onlyNew = e.target.checked; store("n2_onlyNew", e.target.checked ? "1" : null); filter(); });
+if (load("n2_onlyNew") === "1") { document.getElementById("onlyNew").checked = true; state.onlyNew = true; }
+document.getElementById("showCol").addEventListener("change", function(e){ document.body.classList.toggle("hide-col", !e.target.checked); });
+document.getElementById("showEx").addEventListener("change", function(e){ document.body.classList.toggle("hide-ex", !e.target.checked); });
+document.getElementById("foldBtn").addEventListener("click", function(){ SECTIONS.forEach(function(S){ S.el.open = false; }); });
+var THEMES = [["auto","🌓 自动"],["dark","🌙 深色"],["light","☀️ 浅色"]];
+function applyTheme(t){
+  if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+  document.getElementById("themeBtn").textContent = THEMES.filter(function(x){ return x[0] === t; })[0][1];
+}
+var theme = load("n2Theme") || "auto"; applyTheme(theme);
+document.getElementById("themeBtn").addEventListener("click", function(){
+  var i = THEMES.map(function(x){ return x[0]; }).indexOf(theme);
+  theme = THEMES[(i + 1) % 3][0]; applyTheme(theme); store("n2Theme", theme);
+});
+function applyBig(on){ document.documentElement.classList.toggle("big", on); document.getElementById("bigBtn").setAttribute("aria-pressed", on ? "true" : "false"); }
+var big = load("n2Big") === "1"; applyBig(big);
+document.getElementById("bigBtn").addEventListener("click", function(){ big = !big; applyBig(big); store("n2Big", big ? "1" : null); });
+
+/* ---------- click-to-speak (Web Speech API, offline system voices) ---------- */
+var TTS = {
+  ok: typeof window !== "undefined" && "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance !== "undefined",
+  voice: null, hasJa: false, voicesLoaded: false, rate: load("n2TtsRate") === "0.7" ? 0.7 : 1.0,
+  btn: null, u: null, watch: null, noteShown: false
+};
+var UA = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+function pickVoice(){
+  if (!TTS.ok) return 0;
+  var vs = [];
+  try { vs = window.speechSynthesis.getVoices() || []; } catch (e) {}
+  if (vs.length) TTS.voicesLoaded = true;
+  var ja = vs.filter(function(v){ return /^ja([-_]|$)/i.test(v.lang || "") || /日本語|Japanese/i.test(v.name || ""); });
+  TTS.hasJa = ja.length > 0;
+  function find(rx){ for (var i = 0; i < ja.length; i++) if (rx.test(ja[i].name || "")) return ja[i]; return null; }
+  TTS.voice = find(/Kyoko/i) || find(/Otoya/i) || find(/Google\s*日本語|Google.*Japanese/i) ||
+    ja.filter(function(v){ return /^ja[-_]JP$/i.test(v.lang || "") && v.localService; })[0] ||
+    ja.filter(function(v){ return /^ja[-_]JP$/i.test(v.lang || ""); })[0] || ja[0] || null;
+  return ja.length;
+}
+function noteText(kind){
+  if (kind === "api") return "当前浏览器不支持发音，请用 Safari / Chrome 打开（微信内置浏览器可能不支持）。";
+  var s = "没有找到日语语音，暂时无法发音。";
+  if (/Android/i.test(UA)) s += "安卓手机：设置 → 系统 → 语言和输入法 → 文字转语音（TTS）输出 → 安装「日语」语音数据，然后重新打开本页。";
+  else if (/iPhone|iPad|iPod|Macintosh/i.test(UA)) s += "iPhone：设置 → 辅助功能 → 朗读内容 → 声音 → 日语，下载 Kyoko 或 Otoya。";
+  return s + "也可以换 Safari / Chrome 打开（微信内置浏览器可能不支持）。";
+}
+function showNote(kind, force){
+  if (TTS.noteShown && !force) return;
+  TTS.noteShown = true;
+  document.getElementById("ttsNoteText").textContent = noteText(kind);
+  document.getElementById("ttsNote").classList.remove("hidden");
+}
+document.getElementById("ttsNoteClose").addEventListener("click", function(){
+  document.getElementById("ttsNote").classList.add("hidden"); store("n2TtsNoteSeen", "1");
+});
+function unmark(){
+  if (TTS.btn) { TTS.btn.classList.remove("speaking"); TTS.btn.removeAttribute("aria-pressed"); }
+  TTS.btn = null; TTS.u = null;
+  if (TTS.watch) { clearInterval(TTS.watch); TTS.watch = null; }
+}
+/* must run synchronously inside the click handler (iOS Safari only allows speech started by a user gesture) */
+function speak(text, btn){
+  text = String(text || "").trim();
+  if (!text) return false;
+  if (!TTS.ok) { showNote("api", true); return false; }
+  var ss = window.speechSynthesis;
+  var again = TTS.btn === btn && (ss.speaking || ss.pending);
+  if (ss.speaking || ss.pending) ss.cancel();      // cancel the previous utterance before starting a new one
+  unmark();
+  if (again) return false;                          // tapping the active button again just stops it
+  if (!TTS.voice) pickVoice();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = "ja-JP";
+  if (TTS.voice) u.voice = TTS.voice;
+  u.rate = TTS.rate; u.pitch = 1; u.volume = 1;
+  TTS.u = u; TTS.btn = btn || null;
+  if (btn) { btn.classList.add("speaking"); btn.setAttribute("aria-pressed", "true"); }
+  u.onend = function(){ if (TTS.u === u) unmark(); };
+  u.onerror = function(ev){
+    if (TTS.u === u) unmark();
+    var er = ev && ev.error;
+    if (er && !/interrupted|canceled|cancelled/.test(er)) showNote("voice", true);
+  };
+  if (ss.paused) ss.resume();
+  ss.speak(u);
+  var started = Date.now();
+  TTS.watch = setInterval(function(){   // some browsers never fire onend: clear the highlight when speech stops
+    if (TTS.u !== u) return;
+    if (!ss.speaking && !ss.pending && Date.now() - started > 600) unmark();
+  }, 300);
+  if (TTS.voicesLoaded && !TTS.hasJa) showNote("voice", true);
+  return true;
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest(".say");
+  if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  speak(b.getAttribute("data-say"), b);
+}, true);
+function applyRate(){
+  var b = document.getElementById("rateBtn");
+  b.textContent = TTS.rate < 1 ? "🐢 慢速" : "🔊 正常";
+  b.setAttribute("aria-pressed", TTS.rate < 1 ? "true" : "false");
+}
+applyRate();
+document.getElementById("rateBtn").addEventListener("click", function(){
+  TTS.rate = TTS.rate < 1 ? 1.0 : 0.7; store("n2TtsRate", TTS.rate < 1 ? "0.7" : null); applyRate();
+});
+if (TTS.ok) {
+  pickVoice();
+  var ss0 = window.speechSynthesis;
+  if (ss0.addEventListener) ss0.addEventListener("voiceschanged", pickVoice);
+  else ss0.onvoiceschanged = pickVoice;
+  setTimeout(function(){ pickVoice(); if (TTS.voicesLoaded && !TTS.hasJa && load("n2TtsNoteSeen") !== "1") showNote("voice"); }, 1500);
+} else if (load("n2TtsNoteSeen") !== "1") {
+  showNote("api");
+}
+build();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register(new URL("../sw.js", location.href)).catch(function () {});
+}
+</script>
+
+</body>
+</html>

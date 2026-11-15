@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#be185d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>初中级 形容词复习</title>
+<style>
+:root{
+  --bg:#f4f6fb; --panel:#fff; --ink:#172033; --muted:#5f6b7a; --line:#e2e6ef;
+  --accent:#be185d; --accent-ink:#fff; --soft:#eef2ff;
+  --extra:#b45309; --extra-bg:#fff7ed; --pair:#6d28d9; --pair-bg:#f5f3ff;
+  --col:#0f766e; --col-bg:#f0fdfa; --irr:#fef3c7; --say:#0369a1; --say-bg:#e0f2fe;
+  --shadow:0 8px 24px rgba(23,32,51,.06); --tap:46px;
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a; --panel:#1e293b; --ink:#f1f5f9; --muted:#94a3b8; --line:#334155;
+  --accent:#f9a8d4; --accent-ink:#0f172a; --soft:#1e2a4a;
+  --extra:#fdba74; --extra-bg:#3b2714; --pair:#c4b5fd; --pair-bg:#2e1065;
+  --col:#5eead4; --col-bg:#0b2e2b; --irr:#4a3b0b; --say:#7dd3fc; --say-bg:#0c3049; --shadow:none;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a; --panel:#1e293b; --ink:#f1f5f9; --muted:#94a3b8; --line:#334155;
+    --accent:#f9a8d4; --accent-ink:#0f172a; --soft:#1e2a4a;
+    --extra:#fdba74; --extra-bg:#3b2714; --pair:#c4b5fd; --pair-bg:#2e1065;
+    --col:#5eead4; --col-bg:#0b2e2b; --irr:#4a3b0b; --say:#7dd3fc; --say-bg:#0c3049; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark} :root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+html{font-size:17px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html.big{font-size:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans CJK JP","PingFang SC","Noto Sans SC",sans-serif}
+button,input{font:inherit}
+header{padding:20px max(16px,env(safe-area-inset-right)) 14px max(16px,env(safe-area-inset-left));background:linear-gradient(135deg,#831843,#be185d 55%,#ea580c);color:#fff}
+h1{font-size:clamp(22px,6.4vw,32px);line-height:1.25;margin:0 0 6px}
+header p{margin:0;opacity:.92;font-size:.9rem}
+.stats{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.stat{background:#ffffff22;border:1px solid #ffffff3a;border-radius:999px;padding:4px 10px;font-weight:700;font-size:.78rem}
+.toolbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:9px max(12px,env(safe-area-inset-left)) 5px}
+.search{width:100%;min-height:var(--tap);border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);padding:10px 14px;outline:none;font-size:16px}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.chips{display:flex;gap:7px;overflow:auto;padding:7px 0 1px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:999px;white-space:nowrap;min-height:40px;cursor:pointer;font-size:.88rem}
+.chip.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:750}
+.lchips .chip{min-width:44px;padding:6px 10px;text-align:center}
+.tchips .chip.active{background:var(--tc,var(--accent));border-color:var(--tc,var(--accent));color:#fff}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:4px 10px;padding-top:4px;font-size:.84rem;color:var(--muted);flex-wrap:wrap}
+.toggles{display:flex;gap:2px 12px;flex-wrap:wrap}
+.toggle{display:flex;align-items:center;gap:6px;min-height:36px;cursor:pointer;white-space:nowrap}
+.toggle input{width:20px;height:20px;accent-color:var(--accent)}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.tbtn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;min-height:38px;padding:4px 10px;cursor:pointer;font-size:.84rem;white-space:nowrap}
+.tbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:800}
+main{max-width:980px;margin:0 auto;padding:10px max(12px,env(safe-area-inset-left)) 88px}
+.legend{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:11px 14px;margin:4px 0 12px;box-shadow:var(--shadow);font-size:.86rem;line-height:1.9}
+.subbar{padding:2px max(12px,env(safe-area-inset-left)) 0}
+.ttsnote{position:fixed;z-index:50;left:10px;right:10px;bottom:max(12px,env(safe-area-inset-bottom));max-width:640px;margin:0 auto;box-shadow:0 8px 30px rgba(0,0,0,.25);background:#fff7ed;color:#7c2d12;border:1px solid #fdba74;border-radius:12px;padding:10px 12px;font-size:.86rem;display:flex;gap:8px;align-items:flex-start}
+:root[data-theme="dark"] .ttsnote{background:#3b2714;color:#fed7aa}
+.ttsnote button{margin-left:auto;flex:0 0 auto}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:1px 8px;font-size:.7rem;font-weight:800;white-space:nowrap;line-height:1.6;vertical-align:middle}
+.badge.book{color:var(--accent);background:var(--soft)}
+.badge.extra{color:var(--extra);background:var(--extra-bg);border:1px solid color-mix(in srgb,var(--extra) 35%,transparent)}
+.badge.tb{color:var(--col);background:var(--col-bg);border:1px solid color-mix(in srgb,var(--col) 30%,transparent);font-size:.66rem;padding:0 6px}
+.badge.nw{color:var(--muted);background:var(--bg);border:1px solid var(--line);font-size:.66rem;padding:0 6px}
+.badge.otype{color:var(--muted);background:var(--bg);border:1px solid var(--line)}
+.badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+details.section{margin:10px 0;background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--c,var(--accent));border-radius:18px;overflow:hidden;box-shadow:var(--shadow);scroll-margin-top:230px}
+summary{list-style:none;cursor:pointer;min-height:56px;padding:13px 16px;display:flex;align-items:center;gap:8px;font-size:1.06rem;font-weight:850}
+summary::-webkit-details-marker{display:none}
+.caret{margin-left:auto;color:var(--muted);transition:transform .18s}
+details[open]>summary .caret{transform:rotate(180deg)}
+.count{color:var(--muted);font-size:.8rem;font-weight:650}
+.inside{padding:0 10px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px}
+.card{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--c,var(--accent));border-radius:16px;padding:12px 12px 11px;min-width:0}
+.card.extra-card{border-style:dashed;border-left-style:solid;background:color-mix(in srgb,var(--extra-bg) 55%,var(--bg))}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.word{font-size:1.5rem;font-weight:860;line-height:1.35;overflow-wrap:anywhere}
+.kana{display:block;margin-top:1px;color:var(--muted);font-size:.95rem;font-weight:700;letter-spacing:.04em}
+.meaning{font-size:1.1rem;font-weight:800;color:var(--c,var(--accent));margin:6px 0 7px;line-height:1.45}
+.meta{font-size:.84rem;color:var(--muted);margin-top:6px}
+.meta b{color:var(--ink);font-weight:750}
+.also{display:block;font-size:.78rem;color:var(--muted);margin-top:2px}
+.cardnote{margin:7px 0 0;font-size:.8rem;color:var(--muted);background:var(--panel);border-radius:8px;padding:6px 8px}
+.forms{display:grid;grid-template-columns:1fr;gap:5px}
+@media (min-width:700px){.forms{grid-template-columns:1fr 1fr}}
+.field{background:var(--panel);border-radius:10px;padding:4px 6px 4px 9px;min-width:0;display:flex;align-items:center;gap:6px}
+.field .fv{flex:1;min-width:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:0 8px}
+.field .fv .label{flex:0 0 5.4em}
+.label{display:block;color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.04em}
+.formvalue{font-size:1rem;font-weight:700;overflow-wrap:anywhere}
+.fr{font-size:.78rem;color:var(--muted);line-height:1.3;font-weight:600}
+.cols{margin-top:9px;border-top:1px dashed var(--line);padding-top:6px}
+.col{background:var(--panel);border-left:3px solid var(--col);border-radius:8px;padding:6px 9px;margin-top:6px}
+.cphrase{font-size:1.06rem;font-weight:800;line-height:2.05}
+.cz{font-size:.8rem;font-weight:600;color:var(--muted);margin-left:4px}
+.ex{font-size:1rem;line-height:2.15;margin-top:1px}
+.exz{font-size:.86rem;color:var(--muted);line-height:1.5}
+body.hide-ex .ex, body.hide-ex .exz{display:none}
+body.hide-col .cols{display:none}
+ruby{ruby-position:over}
+rt{font-size:.56em;font-weight:600;color:var(--muted);letter-spacing:0}
+.say{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;border:1px solid color-mix(in srgb,var(--say) 35%,transparent);background:var(--say-bg);color:var(--say);border-radius:999px;min-width:34px;height:30px;padding:0 6px;margin:0 3px;font-size:.92rem;line-height:1;cursor:pointer;flex:0 0 auto;-webkit-tap-highlight-color:transparent}
+.say.speaking{background:var(--say);color:#fff;border-color:var(--say);animation:pulse 1s ease-in-out infinite}
+.word .say{height:34px;min-width:38px;font-size:1rem}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--say) 45%,transparent)}50%{box-shadow:0 0 0 6px transparent}}
+.pair{border:2px solid color-mix(in srgb,var(--pair) 42%,var(--line));border-radius:18px;padding:10px;background:var(--pair-bg);margin:0 0 12px}
+.pairtitle{display:flex;align-items:center;gap:8px;color:var(--pair);font-weight:850;margin:0 2px 8px;font-size:.88rem}
+.paircards{display:grid;grid-template-columns:1fr 36px 1fr;align-items:stretch;gap:6px}
+.paircards .card{background:var(--panel)}
+.paircards .card .col,.paircards .card .cardnote,.paircards .card .field{background:var(--bg)}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--pair);font-size:22px;font-weight:900}
+.pairnote{font-size:.88rem;color:var(--muted);margin:8px 4px 2px}
+.pair.solo .arrow{display:none}
+.pair.solo .paircards{grid-template-columns:1fr}
+.ogroup h3{margin:8px 4px 6px;font-size:.95rem;color:var(--muted)}
+.ogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:8px;margin-bottom:8px}
+.ocard{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.oword{font-size:1.15rem;font-weight:820}
+.ozh{font-weight:750;color:var(--accent);font-size:.95rem}
+.empty{text-align:center;color:var(--muted);padding:40px 12px}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:8px 12px 28px}
+@media (max-width:640px){
+  .paircards{grid-template-columns:1fr}
+  .arrow{height:26px;transform:rotate(90deg)}
+}
+.nana{font-size:.9rem;color:var(--muted);font-weight:700}
+
+
+/* site chrome: home link + prevent horizontal overflow */
+html{overflow-x:hidden;max-width:100%}
+body{max-width:100%}
+img,svg,video,canvas{max-width:100%;height:auto}
+.site-home{display:inline-flex;align-items:center;min-height:48px;padding:0 8px 0 0;margin:0 0 2px;color:#fff;font-weight:700;font-size:16px;line-height:1.2;text-decoration:none;letter-spacing:.02em}
+.site-home:hover{text-decoration:underline}
+.site-home:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
+
+</style>
+</head>
+<body>
+<header>
+  <a class="site-home" href="../index.html">← 首页</a>
+  <h1>できる日本語 初中級<br>形容词复习</h1>
+  <p>い形容词／な形容词 · 否定・过去形 · 反义词对 · 搭配＋例句 · 🔊 点击朗读</p>
+  <div class="stats" id="stats"></div>
+</header>
+<div class="toolbar">
+  <input id="q" class="search" type="search" placeholder="搜索：日语／平假名／片假名／中文／例句…" autocomplete="off" enterkeyhint="search" aria-label="搜索">
+  <div class="chips" id="chips" aria-label="分类"></div>
+  <div class="chips lchips" id="lchips" aria-label="课次"></div>
+</div>
+<div class="subbar">
+  <div class="chips tchips" id="tchips" aria-label="类型"></div>
+  <div class="controls">
+    <div class="toggles">
+      <label class="toggle"><input id="showExtras" type="checkbox" checked>书里没有</label>
+      <label class="toggle"><input id="showCol" type="checkbox" checked>搭配</label>
+      <label class="toggle"><input id="showEx" type="checkbox" checked>例句</label>
+    </div>
+    <div class="btns">
+      <button type="button" class="tbtn" id="rateBtn" aria-label="朗读速度">🔊 正常</button>
+      <button type="button" class="tbtn" id="bigBtn" aria-pressed="false">A+ 大字</button>
+      <button type="button" class="tbtn" id="themeBtn">🌓 自动</button>
+    </div>
+  </div>
+  <div class="controls"><span id="resultText"></span><button type="button" class="tbtn" id="foldBtn">全部收起</button></div>
+</div>
+<div id="ttsNote" class="ttsnote hidden" role="status"><span id="ttsNoteText"></span><button type="button" class="tbtn" id="ttsNoteClose">知道了</button></div>
+<main>
+  <div class="legend"><b>颜色</b>＝意思分类　<span class="badge" style="color:#fff;background:#e11d48">い</span> い形容词　<span class="badge" style="color:#fff;background:#0d9488">な</span> な形容词　<span class="badge book">课本</span> 初中級词表里的词　<span class="badge extra">书里没有</span> 为了凑成反义词补充的词（虚线卡片）<br>
+<b>🔊</b> 点一下朗读，再点一下停止；上方「🔊正常／🐢慢速」切换语速。词和变形读假名，句子读注音假名。<br>
+<span class="badge tb">课本例句 第N课</span> 课本里的原句　<span class="badge nw">新写例句</span> 补充例句　<b>↔</b> 反义词成对排列<br>
+<b>い形容词</b>：～い → ～くない／～かった／～くて／～く　（いい → よくない）　<b>な形容词</b>：～じゃない／～だった／～で／～に／～な＋名词</div>
+  <div id="content"></div>
+  <div id="empty" class="empty hidden">没有匹配的词</div>
+</main>
+<footer>单文件离线版 · できる日本語 初中級【第2版】第1〜15课 · 词表与课本例句来自 ALC 官方免费资料</footer>
+<script>
+const DATA = {"app":"adj","categories":[{"id":"feel","name":"心情・感受","icon":"💗","color":"#db2777"},{"id":"skill","name":"能力・评价・速度","icon":"⭐","color":"#2563eb"},{"id":"attitude","name":"性格・态度","icon":"🙂","color":"#16a34a"},{"id":"thing","name":"东西・外观・环境","icon":"📦","color":"#0891b2"},{"id":"cook","name":"做饭・味道・火候","icon":"🍳","color":"#ea580c"},{"id":"judge","name":"情况・判断","icon":"⚖️","color":"#7c3aed"}],"typeNames":{"i":"い形容词","na":"な形容词","ii":"い形容词（～いい型）"},"records":[{"key":"つまらない","word":"つまらない","reading":"つまらない","type":"i","zh":"无聊","category":"feel","book":true,"shokyu":false,"note":"","lessons":[1],"also":[],"forms":{"neg":{"w":"つまらなくない","r":"つまらなくない"},"past":{"w":"つまらなかった","r":"つまらなかった"},"pastneg":{"w":"つまらなくなかった","r":"つまらなくなかった"},"te":{"w":"つまらなくて","r":"つまらなくて"},"adv":{"w":"つまらなく","r":"つまらなく"},"attr":{"w":"つまらない～","r":"つまらない～"}},"col":[{"c":"{1人|ひとり}で{食|た}べるのはつまらない","cz":"一个人吃饭没意思","ex":"{1人|ひとり}でご{飯|はん}を{食|た}べるのはつまらないです。","exz":"一个人吃饭很没意思。","src":"1","csrc":""},{"c":"つまらない{映画|えいが}","cz":"无聊的电影","ex":"その{映画|えいが}はつまらなかったです。","exz":"那部电影很无聊。","src":"","csrc":""}]},{"key":"おもしろい","word":"おもしろい","reading":"おもしろい","type":"i","zh":"有意思、有趣","category":"feel","book":false,"shokyu":true,"note":"反义词：つまらない","lessons":[],"also":[],"forms":{"neg":{"w":"おもしろくない","r":"おもしろくない"},"past":{"w":"おもしろかった","r":"おもしろかった"},"pastneg":{"w":"おもしろくなかった","r":"おもしろくなかった"},"te":{"w":"おもしろくて","r":"おもしろくて"},"adv":{"w":"おもしろく","r":"おもしろく"},"attr":{"w":"おもしろい～","r":"おもしろい～"}},"col":[{"c":"おもしろい{本|ほん}","cz":"有趣的书","ex":"この{本|ほん}はとてもおもしろいです。","exz":"这本书非常有意思。","src":"","csrc":""}]},{"key":"うれしい","word":"うれしい","reading":"うれしい","type":"i","zh":"高兴","category":"feel","book":true,"shokyu":false,"note":"","lessons":[2,8],"also":[],"forms":{"neg":{"w":"うれしくない","r":"うれしくない"},"past":{"w":"うれしかった","r":"うれしかった"},"pastneg":{"w":"うれしくなかった","r":"うれしくなかった"},"te":{"w":"うれしくて","r":"うれしくて"},"adv":{"w":"うれしく","r":"うれしく"},"attr":{"w":"うれしい～","r":"うれしい～"}},"col":[{"c":"とてもうれしい","cz":"非常高兴","ex":"{国|くに}の{父|ちち}に{言|い}われたみたいでとてもうれしかったです。","exz":"就像被老家的父亲这么说了一样，非常高兴。","src":"11","csrc":""},{"c":"いちばんうれしかったこと","cz":"最高兴的事","ex":"{日本|にほん}へ{来|き}ていちばんうれしかったことはどんなことですか。","exz":"来日本以后最高兴的事是什么？","src":"8","csrc":""}]},{"key":"悲しい","word":"悲しい","reading":"かなしい","type":"i","zh":"悲伤、伤心、难过","category":"feel","book":true,"shokyu":false,"note":"","lessons":[3],"also":[],"forms":{"neg":{"w":"悲しくない","r":"かなしくない"},"past":{"w":"悲しかった","r":"かなしかった"},"pastneg":{"w":"悲しくなかった","r":"かなしくなかった"},"te":{"w":"悲しくて","r":"かなしくて"},"adv":{"w":"悲しく","r":"かなしく"},"attr":{"w":"悲しい～","r":"かなしい～"}},"col":[{"c":"{悲|かな}しいとき","cz":"难过的时候","ex":"{私|わたし}は{悲|かな}しいときや{悩|なや}んだときに、{映画|えいが}をよく{見|み}ます。","exz":"我难过或烦恼的时候常看电影。","src":"3","csrc":""},{"c":"{悲|かな}しい{話|はなし}","cz":"悲伤的故事","ex":"これはとても{悲|かな}しい{話|はなし}です。","exz":"这是一个非常悲伤的故事。","src":"","csrc":""}]},{"key":"恥ずかしい","word":"恥ずかしい","reading":"はずかしい","type":"i","zh":"害羞、不好意思","category":"feel","book":true,"shokyu":false,"note":"","lessons":[2,9,14],"also":[],"forms":{"neg":{"w":"恥ずかしくない","r":"はずかしくない"},"past":{"w":"恥ずかしかった","r":"はずかしかった"},"pastneg":{"w":"恥ずかしくなかった","r":"はずかしくなかった"},"te":{"w":"恥ずかしくて","r":"はずかしくて"},"adv":{"w":"恥ずかしく","r":"はずかしく"},"attr":{"w":"恥ずかしい～","r":"はずかしい～"}},"col":[{"c":"{少|すこ}し{恥|は}ずかしい","cz":"有点不好意思","ex":"{私|わたし}は{少|すこ}し{恥|は}ずかしかったです。","exz":"我有点不好意思。","src":"2","csrc":""},{"c":"{恥|は}ずかしくても","cz":"即使不好意思也…","ex":"だから、{恥|は}ずかしくてもあいさつの{練習|れんしゅう}を{毎日|まいにち}しようと{思|おも}っています。","exz":"所以，即使不好意思，我也打算每天练习打招呼。","src":"9","csrc":""}]},{"key":"気持ちいい","word":"気持ちいい","reading":"きもちいい","type":"ii","zh":"舒服、舒畅","category":"feel","book":true,"shokyu":false,"note":"","lessons":[8],"also":[],"forms":{"neg":{"w":"気持ちよくない","r":"きもちよくない"},"past":{"w":"気持ちよかった","r":"きもちよかった"},"pastneg":{"w":"気持ちよくなかった","r":"きもちよくなかった"},"te":{"w":"気持ちよくて","r":"きもちよくて"},"adv":{"w":"気持ちよく","r":"きもちよく"},"attr":{"w":"気持ちいい～","r":"きもちいい～"}},"col":[{"c":"{押|お}すと{気持|きも}ちいい","cz":"一按很舒服","ex":"あ、{足|あし}のここを{押|お}すと、{気持|きも}ちいいよ。","exz":"啊，按脚的这里很舒服哦。","src":"12","csrc":""},{"c":"{気持|きも}ちいい{朝|あさ}","cz":"舒服的早晨","ex":"{今日|きょう}は{晴|は}れて、{気持|きも}ちいい{朝|あさ}ですね。","exz":"今天天晴，早上真舒服啊。","src":"","csrc":""}]},{"key":"大好き","word":"大好き","reading":"だいすき","type":"na","zh":"非常喜欢（的）","category":"feel","book":true,"shokyu":false,"note":"","lessons":[1],"also":[],"forms":{"neg":{"w":"大好きじゃない","r":"だいすきじゃない"},"past":{"w":"大好きだった","r":"だいすきだった"},"pastneg":{"w":"大好きじゃなかった","r":"だいすきじゃなかった"},"te":{"w":"大好きで","r":"だいすきで"},"adv":{"w":"大好きに","r":"だいすきに"},"attr":{"w":"大好きな～","r":"だいすきな～"}},"col":[{"c":"～が{大好|だいす}き","cz":"非常喜欢～","ex":"りんごが{大好|だいす}きなので、とてもうれしいです。","exz":"我非常喜欢苹果，所以特别高兴。","src":"8","csrc":""},{"c":"{大好|だいす}きな{食|た}べ{物|もの}","cz":"最喜欢的食物","ex":"{私|わたし}の{大好|だいす}きな{食|た}べ{物|もの}はすしです。","exz":"我最喜欢的食物是寿司。","src":"","csrc":""}]},{"key":"嫌","word":"嫌","reading":"いや","type":"na","zh":"不喜欢（的）、不乐意（的）","category":"feel","book":true,"shokyu":false,"note":"「嫌い」（讨厌）是另一个词","lessons":[13],"also":[],"forms":{"neg":{"w":"嫌じゃない","r":"いやじゃない"},"past":{"w":"嫌だった","r":"いやだった"},"pastneg":{"w":"嫌じゃなかった","r":"いやじゃなかった"},"te":{"w":"嫌で","r":"いやで"},"adv":{"w":"嫌に","r":"いやに"},"attr":{"w":"嫌な～","r":"いやな～"}},"col":[{"c":"～のは{嫌|いや}だ","cz":"不愿意～","ex":"{雨|あめ}の{日|ひ}に{出|で}かけるのは{嫌|いや}です。","exz":"我不愿意下雨天出门。","src":"","csrc":""},{"c":"{嫌|いや}なこと","cz":"讨厌的事","ex":"{嫌|いや}なことは{早|はや}く{忘|わす}れましょう。","exz":"讨厌的事早点忘掉吧。","src":"","csrc":""}]},{"key":"好き","word":"好き","reading":"すき","type":"na","zh":"喜欢","category":"feel","book":false,"shokyu":true,"note":"对照：嫌（不愿意、讨厌）","lessons":[],"also":[],"forms":{"neg":{"w":"好きじゃない","r":"すきじゃない"},"past":{"w":"好きだった","r":"すきだった"},"pastneg":{"w":"好きじゃなかった","r":"すきじゃなかった"},"te":{"w":"好きで","r":"すきで"},"adv":{"w":"好きに","r":"すきに"},"attr":{"w":"好きな～","r":"すきな～"}},"col":[{"c":"～が{好|す}き","cz":"喜欢～","ex":"{私|わたし}は{日本|にほん}の{音楽|おんがく}が{好|す}きです。","exz":"我喜欢日本音乐。","src":"","csrc":""}]},{"key":"不安","word":"不安","reading":"ふあん","type":"na","zh":"不安、担心","category":"feel","book":true,"shokyu":false,"note":"反义：安心（见动词「安心する」）","lessons":[15],"also":[],"forms":{"neg":{"w":"不安じゃない","r":"ふあんじゃない"},"past":{"w":"不安だった","r":"ふあんだった"},"pastneg":{"w":"不安じゃなかった","r":"ふあんじゃなかった"},"te":{"w":"不安で","r":"ふあんで"},"adv":{"w":"不安に","r":"ふあんに"},"attr":{"w":"不安な～","r":"ふあんな～"}},"col":[{"c":"～のが{不安|ふあん}","cz":"对～感到不安","ex":"{一人|ひとり}で{旅行|りょこう}するのは{少|すこ}し{不安|ふあん}です。","exz":"一个人去旅行有点不安。","src":"","csrc":""},{"c":"{不安|ふあん}になる","cz":"变得不安","ex":"{試験|しけん}が{近|ちか}くなって、{不安|ふあん}になりました。","exz":"考试临近，心里不安起来了。","src":"","csrc":""}]},{"key":"気楽","word":"気楽","reading":"きらく","type":"na","zh":"轻松、安闲","category":"feel","book":true,"shokyu":false,"note":"","lessons":[15],"also":[],"forms":{"neg":{"w":"気楽じゃない","r":"きらくじゃない"},"past":{"w":"気楽だった","r":"きらくだった"},"pastneg":{"w":"気楽じゃなかった","r":"きらくじゃなかった"},"te":{"w":"気楽で","r":"きらくで"},"adv":{"w":"気楽に","r":"きらくに"},"attr":{"w":"気楽な～","r":"きらくな～"}},"col":[{"c":"{気楽|きらく}に{話|はな}す","cz":"轻松地聊","ex":"{気楽|きらく}に{話|はな}してください。","exz":"请随便聊聊，别紧张。","src":"","csrc":""},{"c":"{一人暮|ひとりぐ}らしは{気楽|きらく}だ","cz":"一个人住很自在","ex":"{一人暮|ひとりぐ}らしは{気楽|きらく}です。","exz":"一个人住很自在。","src":"","csrc":""}]},{"key":"得意","word":"得意","reading":"とくい","type":"na","zh":"拿手（的）、擅长（的）","category":"skill","book":true,"shokyu":false,"note":"","lessons":[1],"also":[],"forms":{"neg":{"w":"得意じゃない","r":"とくいじゃない"},"past":{"w":"得意だった","r":"とくいだった"},"pastneg":{"w":"得意じゃなかった","r":"とくいじゃなかった"},"te":{"w":"得意で","r":"とくいで"},"adv":{"w":"得意に","r":"とくいに"},"attr":{"w":"得意な～","r":"とくいな～"}},"col":[{"c":"～が{得意|とくい}","cz":"擅长～","ex":"{人|ひと}の{名前|なまえ}を{覚|おぼ}えるのが{得意|とくい}です。","exz":"我擅长记人名。","src":"1","csrc":""},{"c":"{得意|とくい}な{科目|かもく}","cz":"拿手的科目","ex":"{得意|とくい}な{科目|かもく}は{数学|すうがく}です。","exz":"我拿手的科目是数学。","src":"","csrc":""}]},{"key":"苦手","word":"苦手","reading":"にがて","type":"na","zh":"不擅长（的）","category":"skill","book":true,"shokyu":false,"note":"也可表示「不太喜欢、怕」：苦手な食べ物","lessons":[1],"also":[],"forms":{"neg":{"w":"苦手じゃない","r":"にがてじゃない"},"past":{"w":"苦手だった","r":"にがてだった"},"pastneg":{"w":"苦手じゃなかった","r":"にがてじゃなかった"},"te":{"w":"苦手で","r":"にがてで"},"adv":{"w":"苦手に","r":"にがてに"},"attr":{"w":"苦手な～","r":"にがてな～"}},"col":[{"c":"～が{苦手|にがて}","cz":"不擅长～","ex":"{朝|あさ}{早|はや}く{起|お}きるのが{苦手|にがて}です。","exz":"我不擅长早起。","src":"1","csrc":""},{"c":"{苦手|にがて}な{食|た}べ{物|もの}","cz":"不爱吃的东西","ex":"{苦手|にがて}な{食|た}べ{物|もの}はありますか。","exz":"你有不爱吃的东西吗？","src":"","csrc":""}]},{"key":"遅い","word":"遅い","reading":"おそい","type":"i","zh":"慢","category":"skill","book":true,"shokyu":false,"note":"也表示（时间）晚：夜遅く＝到深夜","lessons":[1],"also":[],"forms":{"neg":{"w":"遅くない","r":"おそくない"},"past":{"w":"遅かった","r":"おそかった"},"pastneg":{"w":"遅くなかった","r":"おそくなかった"},"te":{"w":"遅くて","r":"おそくて"},"adv":{"w":"遅く","r":"おそく"},"attr":{"w":"遅い～","r":"おそい～"}},"col":[{"c":"{食|た}べるのが{遅|おそ}い","cz":"吃得慢","ex":"ご{飯|はん}を{食|た}べるのが{遅|おそ}いです。","exz":"我吃饭慢。","src":"1","csrc":""},{"c":"{夜|よる}{遅|おそ}くまで","cz":"到深夜","ex":"{昨日|きのう}は{夜|よる}{遅|おそ}くまで{勉強|べんきょう}しました。","exz":"昨天学习到很晚。","src":"","csrc":""}]},{"key":"速い","word":"速い","reading":"はやい","type":"i","zh":"快","category":"skill","book":true,"shokyu":false,"note":"","lessons":[1],"also":[],"forms":{"neg":{"w":"速くない","r":"はやくない"},"past":{"w":"速かった","r":"はやかった"},"pastneg":{"w":"速くなかった","r":"はやくなかった"},"te":{"w":"速くて","r":"はやくて"},"adv":{"w":"速く","r":"はやく"},"attr":{"w":"速い～","r":"はやい～"}},"col":[{"c":"{走|はし}るのが{速|はや}い","cz":"跑得快","ex":"{走|はし}るのが{速|はや}いです。","exz":"我跑得快。","src":"1","csrc":""},{"c":"アナウンスが{速|はや}い","cz":"广播说得快","ex":"{駅|えき}のアナウンスが{速|はや}くて、よくわかりませんでした。","exz":"车站广播说得太快，没听懂。","src":"5","csrc":""}]},{"key":"無理","word":"無理","reading":"むり","type":"na","zh":"不可能（的）、难以做到（的）；勉强、过度","category":"skill","book":true,"shokyu":false,"note":"第11课「無理（を）しないで」＝别勉强、别太累","lessons":[1,11],"also":[],"forms":{"neg":{"w":"無理じゃない","r":"むりじゃない"},"past":{"w":"無理だった","r":"むりだった"},"pastneg":{"w":"無理じゃなかった","r":"むりじゃなかった"},"te":{"w":"無理で","r":"むりで"},"adv":{"w":"無理に","r":"むりに"},"attr":{"w":"無理な～","r":"むりな～"}},"col":[{"c":"～のは{無理|むり}","cz":"～是做不到的","ex":"{1人|ひとり}でこの{荷物|にもつ}を{持|も}って{行|い}くのは{無理|むり}です。","exz":"一个人把这些行李拿去是做不到的。","src":"1","csrc":""},{"c":"{無理|むり}をしない","cz":"不勉强、别太累","ex":"あんまり{無理|むり}（を）しないでね。","exz":"别太勉强自己哦。","src":"11","csrc":""}]},{"key":"うまい","word":"うまい","reading":"うまい","type":"i","zh":"好","category":"skill","book":true,"shokyu":false,"note":"这里是「（做得）好、高明」；口语里也表示「好吃」","lessons":[10],"also":[],"forms":{"neg":{"w":"うまくない","r":"うまくない"},"past":{"w":"うまかった","r":"うまかった"},"pastneg":{"w":"うまくなかった","r":"うまくなかった"},"te":{"w":"うまくて","r":"うまくて"},"adv":{"w":"うまく","r":"うまく"},"attr":{"w":"うまい～","r":"うまい～"}},"col":[{"c":"うまく{説明|せつめい}する","cz":"说明得好、讲清楚","ex":"ホテルの{人|ひと}に{料金|りょうきん}が{違|ちが}うとうまく{説明|せつめい}できなくて、{大変|たいへん}だった。","exz":"没能跟酒店的人讲清楚费用不对，好辛苦。","src":"10","csrc":""},{"c":"うまくいく","cz":"顺利","ex":"{仕事|しごと}がうまくいきました。","exz":"工作很顺利。","src":"","csrc":""}]},{"key":"下手","word":"下手","reading":"へた","type":"na","zh":"不擅长、笨拙","category":"skill","book":false,"shokyu":true,"note":"反义词：うまい、上手","lessons":[],"also":[],"forms":{"neg":{"w":"下手じゃない","r":"へたじゃない"},"past":{"w":"下手だった","r":"へただった"},"pastneg":{"w":"下手じゃなかった","r":"へたじゃなかった"},"te":{"w":"下手で","r":"へたで"},"adv":{"w":"下手に","r":"へたに"},"attr":{"w":"下手な～","r":"へたな～"}},"col":[{"c":"{歌|うた}が{下手|へた}","cz":"唱歌不好","ex":"{私|わたし}は{歌|うた}が{下手|へた}です。","exz":"我唱歌不好。","src":"","csrc":""}]},{"key":"正しい","word":"正しい","reading":"ただしい","type":"i","zh":"正确","category":"skill","book":true,"shokyu":false,"note":"","lessons":[3],"also":[],"forms":{"neg":{"w":"正しくない","r":"ただしくない"},"past":{"w":"正しかった","r":"ただしかった"},"pastneg":{"w":"正しくなかった","r":"ただしくなかった"},"te":{"w":"正しくて","r":"ただしくて"},"adv":{"w":"正しく","r":"ただしく"},"attr":{"w":"正しい～","r":"ただしい～"}},"col":[{"c":"{答|こた}えが{正|ただ}しい","cz":"答案正确","ex":"{答|こた}えが{正|ただ}しいかどうか、{確認|かくにん}します。","exz":"确认答案是否正确。","src":"3","csrc":""},{"c":"{正|ただ}しく{使|つか}う","cz":"正确地使用","ex":"{敬語|けいご}を{正|ただ}しく{使|つか}うのは{難|むずか}しいです。","exz":"正确使用敬语很难。","src":"","csrc":""}]},{"key":"偉い","word":"偉い","reading":"えらい","type":"i","zh":"了不起","category":"skill","book":true,"shokyu":false,"note":"","lessons":[13],"also":[],"forms":{"neg":{"w":"偉くない","r":"えらくない"},"past":{"w":"偉かった","r":"えらかった"},"pastneg":{"w":"偉くなかった","r":"えらくなかった"},"te":{"w":"偉くて","r":"えらくて"},"adv":{"w":"偉く","r":"えらく"},"attr":{"w":"偉い～","r":"えらい～"}},"col":[{"c":"それは{偉|えら}い","cz":"真了不起","ex":"それは{偉|えら}いね。","exz":"那真了不起啊。","src":"13","csrc":""},{"c":"{毎日|まいにち}{勉強|べんきょう}して{偉|えら}い","cz":"每天学习真了不起","ex":"{毎日|まいにち}{早|はや}く{起|お}きて{勉強|べんきょう}して、{偉|えら}いですね。","exz":"每天早起学习，真了不起。","src":"","csrc":""}]},{"key":"素晴らしい","word":"素晴らしい","reading":"すばらしい","type":"i","zh":"精彩的、出色的、好","category":"skill","book":true,"shokyu":false,"note":"","lessons":[14],"also":[],"forms":{"neg":{"w":"素晴らしくない","r":"すばらしくない"},"past":{"w":"素晴らしかった","r":"すばらしかった"},"pastneg":{"w":"素晴らしくなかった","r":"すばらしくなかった"},"te":{"w":"素晴らしくて","r":"すばらしくて"},"adv":{"w":"素晴らしく","r":"すばらしく"},"attr":{"w":"素晴らしい～","r":"すばらしい～"}},"col":[{"c":"{素晴|すば}らしい{景色|けしき}","cz":"很棒的景色","ex":"{山|やま}の{上|うえ}から{見|み}た{景色|けしき}は{素晴|すば}らしかったです。","exz":"从山顶看到的景色太美了。","src":"","csrc":""},{"c":"{素晴|すば}らしい{作品|さくひん}","cz":"出色的作品","ex":"これは{本当|ほんとう}に{素晴|すば}らしい{作品|さくひん}ですね。","exz":"这真是出色的作品啊。","src":"","csrc":""}]},{"key":"素敵","word":"素敵","reading":"すてき","type":"na","zh":"漂亮（的）","category":"skill","book":true,"shokyu":false,"note":"","lessons":[8],"also":[],"forms":{"neg":{"w":"素敵じゃない","r":"すてきじゃない"},"past":{"w":"素敵だった","r":"すてきだった"},"pastneg":{"w":"素敵じゃなかった","r":"すてきじゃなかった"},"te":{"w":"素敵で","r":"すてきで"},"adv":{"w":"素敵に","r":"すてきに"},"attr":{"w":"素敵な～","r":"すてきな～"}},"col":[{"c":"{素敵|すてき}なテーブル","cz":"漂亮的桌子","ex":"わあ、{素敵|すてき}なテーブルですね。","exz":"哇，好漂亮的桌子啊。","src":"8","csrc":""},{"c":"{素敵|すてき}な{人|ひと}","cz":"很好的人","ex":"{山田|やまだ}さんは{優|やさ}しくて{素敵|すてき}な{人|ひと}です。","exz":"山田先生又温柔又好。","src":"","csrc":""}]},{"key":"丁寧","word":"丁寧","reading":"ていねい","type":"na","zh":"很有礼貌","category":"attitude","book":true,"shokyu":false,"note":"也表示「仔细、认真」：丁寧に書く","lessons":[9],"also":[],"forms":{"neg":{"w":"丁寧じゃない","r":"ていねいじゃない"},"past":{"w":"丁寧だった","r":"ていねいだった"},"pastneg":{"w":"丁寧じゃなかった","r":"ていねいじゃなかった"},"te":{"w":"丁寧で","r":"ていねいで"},"adv":{"w":"丁寧に","r":"ていねいに"},"attr":{"w":"丁寧な～","r":"ていねいな～"}},"col":[{"c":"{丁寧|ていねい}に{断|ことわ}る","cz":"礼貌地拒绝","ex":"{丁寧|ていねい}にお{断|ことわ}りしてください。","exz":"请礼貌地拒绝。","src":"9","csrc":""},{"c":"{丁寧|ていねい}に{書|か}く","cz":"认真地写","ex":"はっきり{見|み}えるように、{注文|ちゅうもん}は{丁寧|ていねい}に{書|か}いてください。","exz":"为了能看清楚，点单请认真写。","src":"9","csrc":""}]},{"key":"失礼","word":"失礼","reading":"しつれい","type":"na","zh":"失礼（的）、不礼貌（的）","category":"attitude","book":true,"shokyu":false,"note":"「失礼します」＝告辞了；打扰了","lessons":[7],"also":[],"forms":{"neg":{"w":"失礼じゃない","r":"しつれいじゃない"},"past":{"w":"失礼だった","r":"しつれいだった"},"pastneg":{"w":"失礼じゃなかった","r":"しつれいじゃなかった"},"te":{"w":"失礼で","r":"しつれいで"},"adv":{"w":"失礼に","r":"しつれいに"},"attr":{"w":"失礼な～","r":"しつれいな～"}},"col":[{"c":"～のは{失礼|しつれい}だ","cz":"～是不礼貌的","ex":"{初|はじ}めて{会|あ}った{人|ひと}に{年齢|ねんれい}を{聞|き}くのは{失礼|しつれい}です。","exz":"问初次见面的人的年龄是不礼貌的。","src":"","csrc":""},{"c":"{失礼|しつれい}します","cz":"告辞了；打扰了","ex":"あ、そろそろ{失礼|しつれい}します。","exz":"啊，我差不多该告辞了。","src":"7","csrc":""}]},{"key":"厳しい","word":"厳しい","reading":"きびしい","type":"i","zh":"严格、严厉","category":"attitude","book":true,"shokyu":false,"note":"","lessons":[13],"also":[],"forms":{"neg":{"w":"厳しくない","r":"きびしくない"},"past":{"w":"厳しかった","r":"きびしかった"},"pastneg":{"w":"厳しくなかった","r":"きびしくなかった"},"te":{"w":"厳しくて","r":"きびしくて"},"adv":{"w":"厳しく","r":"きびしく"},"attr":{"w":"厳しい～","r":"きびしい～"}},"col":[{"c":"{親|おや}が{厳|きび}しい","cz":"父母严格","ex":"うちの{親|おや}は{厳|きび}しかったんだ。","exz":"我家父母以前很严。","src":"13","csrc":""},{"c":"{厳|きび}しい{先生|せんせい}","cz":"严厉的老师","ex":"{高校|こうこう}の{先生|せんせい}はとても{厳|きび}しかったです。","exz":"高中的老师非常严厉。","src":"","csrc":""}]},{"key":"優しい","word":"優しい","reading":"やさしい","type":"i","zh":"温柔、亲切","category":"attitude","book":false,"shokyu":true,"note":"反义词：厳しい","lessons":[],"also":[],"forms":{"neg":{"w":"優しくない","r":"やさしくない"},"past":{"w":"優しかった","r":"やさしかった"},"pastneg":{"w":"優しくなかった","r":"やさしくなかった"},"te":{"w":"優しくて","r":"やさしくて"},"adv":{"w":"優しく","r":"やさしく"},"attr":{"w":"優しい～","r":"やさしい～"}},"col":[{"c":"{優|やさ}しい{人|ひと}","cz":"温柔的人","ex":"ホストファミリーのお{母|かあ}さんはとても{優|やさ}しいです。","exz":"寄宿家庭的妈妈非常温柔。","src":"","csrc":""}]},{"key":"積極的","word":"積極的","reading":"せっきょくてき","type":"na","zh":"积极的","category":"attitude","book":true,"shokyu":false,"note":"","lessons":[15],"also":[],"forms":{"neg":{"w":"積極的じゃない","r":"せっきょくてきじゃない"},"past":{"w":"積極的だった","r":"せっきょくてきだった"},"pastneg":{"w":"積極的じゃなかった","r":"せっきょくてきじゃなかった"},"te":{"w":"積極的で","r":"せっきょくてきで"},"adv":{"w":"積極的に","r":"せっきょくてきに"},"attr":{"w":"積極的な～","r":"せっきょくてきな～"}},"col":[{"c":"{積極的|せっきょくてき}に{質問|しつもん}する","cz":"积极提问","ex":"{授業|じゅぎょう}では{積極的|せっきょくてき}に{質問|しつもん}しましょう。","exz":"上课时积极提问吧。","src":"","csrc":""},{"c":"{積極的|せっきょくてき}な{性格|せいかく}","cz":"积极的性格","ex":"{姉|あね}はとても{積極的|せっきょくてき}な{性格|せいかく}です。","exz":"姐姐性格很积极。","src":"","csrc":""}]},{"key":"消極的","word":"消極的","reading":"しょうきょくてき","type":"na","zh":"消极（的）","category":"attitude","book":false,"shokyu":false,"note":"反义词：積極的","lessons":[],"also":[],"forms":{"neg":{"w":"消極的じゃない","r":"しょうきょくてきじゃない"},"past":{"w":"消極的だった","r":"しょうきょくてきだった"},"pastneg":{"w":"消極的じゃなかった","r":"しょうきょくてきじゃなかった"},"te":{"w":"消極的で","r":"しょうきょくてきで"},"adv":{"w":"消極的に","r":"しょうきょくてきに"},"attr":{"w":"消極的な～","r":"しょうきょくてきな～"}},"col":[{"c":"{消極的|しょうきょくてき}な{態度|たいど}","cz":"消极的态度","ex":"{彼|かれ}は{会議|かいぎ}でいつも{消極的|しょうきょくてき}です。","exz":"他在会上总是很消极。","src":"","csrc":""}]},{"key":"熱心","word":"熱心","reading":"ねっしん","type":"na","zh":"热心（的）","category":"attitude","book":true,"shokyu":false,"note":"","lessons":[13],"also":[],"forms":{"neg":{"w":"熱心じゃない","r":"ねっしんじゃない"},"past":{"w":"熱心だった","r":"ねっしんだった"},"pastneg":{"w":"熱心じゃなかった","r":"ねっしんじゃなかった"},"te":{"w":"熱心で","r":"ねっしんで"},"adv":{"w":"熱心に","r":"ねっしんに"},"attr":{"w":"熱心な～","r":"ねっしんな～"}},"col":[{"c":"{教育|きょういく}に{熱心|ねっしん}","cz":"热心于教育","ex":"{私|わたし}の{両親|りょうしん}は{教育|きょういく}には{熱心|ねっしん}だったけど、そんなに{厳|きび}しくなかった。","exz":"我父母很重视教育，不过并没那么严。","src":"13","csrc":""},{"c":"{熱心|ねっしん}に{練習|れんしゅう}する","cz":"认真练习","ex":"{彼|かれ}は{毎日|まいにち}{熱心|ねっしん}にピアノを{練習|れんしゅう}しています。","exz":"他每天认真练钢琴。","src":"","csrc":""}]},{"key":"親しい","word":"親しい","reading":"したしい","type":"i","zh":"亲切、亲密","category":"attitude","book":true,"shokyu":false,"note":"","lessons":[11],"also":[],"forms":{"neg":{"w":"親しくない","r":"したしくない"},"past":{"w":"親しかった","r":"したしかった"},"pastneg":{"w":"親しくなかった","r":"したしくなかった"},"te":{"w":"親しくて","r":"したしくて"},"adv":{"w":"親しく","r":"したしく"},"attr":{"w":"親しい～","r":"したしい～"}},"col":[{"c":"{親|した}しくなる","cz":"变得亲近","ex":"でも、{近所|きんじょ}の{八百屋|やおや}のおじさんと{親|した}しくなって、{寂|さび}しくなくなりました。","exz":"不过和附近蔬菜店的大叔熟了以后，就不寂寞了。","src":"11","csrc":""},{"c":"{親|した}しい{友達|ともだち}","cz":"亲密的朋友","ex":"{彼|かれ}とは{高校|こうこう}からの{親|した}しい{友達|ともだち}です。","exz":"他是我高中以来的好朋友。","src":"","csrc":""}]},{"key":"一生懸命","word":"一生懸命","reading":"いっしょうけんめい","type":"na","zh":"拼命地、努力","category":"attitude","book":true,"shokyu":false,"note":"常用「一生懸命（に）＋动词」","lessons":[3],"also":[],"forms":{"neg":{"w":"一生懸命じゃない","r":"いっしょうけんめいじゃない"},"past":{"w":"一生懸命だった","r":"いっしょうけんめいだった"},"pastneg":{"w":"一生懸命じゃなかった","r":"いっしょうけんめいじゃなかった"},"te":{"w":"一生懸命で","r":"いっしょうけんめいで"},"adv":{"w":"一生懸命に","r":"いっしょうけんめいに"},"attr":{"w":"一生懸命な～","r":"いっしょうけんめいな～"}},"col":[{"c":"{一生懸命|いっしょうけんめい}{勉強|べんきょう}する","cz":"拼命学习","ex":"それで、{今|いま}、{日本語|にほんご}を{一生懸命|いっしょうけんめい}、{勉強|べんきょう}しています。","exz":"所以现在正拼命学日语。","src":"3","csrc":""},{"c":"{一生懸命|いっしょうけんめい}に{働|はたら}く","cz":"拼命工作","ex":"{父|ちち}は{家族|かぞく}のために{一生懸命|いっしょうけんめい}に{働|はたら}いています。","exz":"父亲为了家人拼命工作。","src":"","csrc":""}]},{"key":"自由","word":"自由","reading":"じゆう","type":"na","zh":"自由（的）","category":"attitude","book":true,"shokyu":false,"note":"","lessons":[13],"also":[],"forms":{"neg":{"w":"自由じゃない","r":"じゆうじゃない"},"past":{"w":"自由だった","r":"じゆうだった"},"pastneg":{"w":"自由じゃなかった","r":"じゆうじゃなかった"},"te":{"w":"自由で","r":"じゆうで"},"adv":{"w":"自由に","r":"じゆうに"},"attr":{"w":"自由な～","r":"じゆうな～"}},"col":[{"c":"{自由|じゆう}に{遊|あそ}ぶ","cz":"自由地玩","ex":"{私|わたし}が{親|おや}だったら、{子|こ}どもをもっと{自由|じゆう}に{遊|あそ}ばせるのに。","exz":"如果我是父母，会让孩子更自由地玩。","src":"13","csrc":""},{"c":"{自由|じゆう}な{時間|じかん}","cz":"自由时间","ex":"{大学|だいがく}{生|せい}は{自由|じゆう}な{時間|じかん}が{多|おお}いです。","exz":"大学生自由时间多。","src":"","csrc":""}]},{"key":"重い","word":"重い","reading":"おもい","type":"i","zh":"重","category":"thing","book":true,"shokyu":false,"note":"","lessons":[2],"also":[],"forms":{"neg":{"w":"重くない","r":"おもくない"},"past":{"w":"重かった","r":"おもかった"},"pastneg":{"w":"重くなかった","r":"おもくなかった"},"te":{"w":"重くて","r":"おもくて"},"adv":{"w":"重く","r":"おもく"},"attr":{"w":"重い～","r":"おもい～"}},"col":[{"c":"{重|おも}そう","cz":"看起来很重","ex":"でも、{重|おも}そうです。","exz":"不过，看起来很重。","src":"2","csrc":""},{"c":"{荷物|にもつ}が{重|おも}い","cz":"行李重","ex":"この{荷物|にもつ}はとても{重|おも}いです。","exz":"这件行李很重。","src":"","csrc":""}]},{"key":"軽い","word":"軽い","reading":"かるい","type":"i","zh":"轻","category":"thing","book":true,"shokyu":false,"note":"","lessons":[2],"also":[],"forms":{"neg":{"w":"軽くない","r":"かるくない"},"past":{"w":"軽かった","r":"かるかった"},"pastneg":{"w":"軽くなかった","r":"かるくなかった"},"te":{"w":"軽くて","r":"かるくて"},"adv":{"w":"軽く","r":"かるく"},"attr":{"w":"軽い～","r":"かるい～"}},"col":[{"c":"{軽|かる}いかばん","cz":"轻的包","ex":"{大|おお}きくて、{軽|かる}いかばんを{買|か}いたい。","exz":"想买又大又轻的包。","src":"2","csrc":""},{"c":"{小|ちい}さくて{軽|かる}い","cz":"又小又轻","ex":"わあ、{小|ちい}さくて{軽|かる}いですね。","exz":"哇，又小又轻啊。","src":"2","csrc":""}]},{"key":"明るい","word":"明るい","reading":"あかるい","type":"i","zh":"明亮","category":"thing","book":true,"shokyu":false,"note":"也可形容性格开朗：明るい性格","lessons":[8],"also":[],"forms":{"neg":{"w":"明るくない","r":"あかるくない"},"past":{"w":"明るかった","r":"あかるかった"},"pastneg":{"w":"明るくなかった","r":"あかるくなかった"},"te":{"w":"明るくて","r":"あかるくて"},"adv":{"w":"明るく","r":"あかるく"},"attr":{"w":"明るい～","r":"あかるい～"}},"col":[{"c":"{明|あか}るい{部屋|へや}","cz":"明亮的房间","ex":"{明|あか}るくていい{部屋|へや}です。","exz":"是一间明亮的好房间。","src":"8","csrc":""},{"c":"{明|あか}るい{性格|せいかく}","cz":"开朗的性格","ex":"{姉|あね}は{明|あか}るい{性格|せいかく}です。","exz":"姐姐性格开朗。","src":"","csrc":""}]},{"key":"暗い","word":"暗い","reading":"くらい","type":"i","zh":"暗、黑","category":"thing","book":false,"shokyu":true,"note":"反义词：明るい","lessons":[],"also":[],"forms":{"neg":{"w":"暗くない","r":"くらくない"},"past":{"w":"暗かった","r":"くらかった"},"pastneg":{"w":"暗くなかった","r":"くらくなかった"},"te":{"w":"暗くて","r":"くらくて"},"adv":{"w":"暗く","r":"くらく"},"attr":{"w":"暗い～","r":"くらい～"}},"col":[{"c":"{夜|よる}は{暗|くら}い","cz":"晚上很黑","ex":"{夜|よる}は{暗|くら}いから、{気|き}をつけてね。","exz":"晚上很黑，小心点哦。","src":"","csrc":""}]},{"key":"汚い","word":"汚い","reading":"きたない","type":"i","zh":"脏","category":"thing","book":true,"shokyu":false,"note":"","lessons":[15],"also":[],"forms":{"neg":{"w":"汚くない","r":"きたなくない"},"past":{"w":"汚かった","r":"きたなかった"},"pastneg":{"w":"汚くなかった","r":"きたなくなかった"},"te":{"w":"汚くて","r":"きたなくて"},"adv":{"w":"汚く","r":"きたなく"},"attr":{"w":"汚い～","r":"きたない～"}},"col":[{"c":"{水|みず}が{汚|きたな}くなる","cz":"水变脏","ex":"ニュースで{聞|き}いたんだけど、この{川|かわ}の{水|みず}がとても{汚|きたな}くなったんだって。","exz":"我在新闻上听说，这条河的水变得很脏了。","src":"15","csrc":""},{"c":"{汚|きたな}い{部屋|へや}","cz":"脏房间","ex":"{部屋|へや}が{汚|きたな}いから、{掃除|そうじ}します。","exz":"房间脏了，要打扫一下。","src":"","csrc":""}]},{"key":"きれい","word":"きれい","reading":"きれい","type":"na","zh":"干净；漂亮","category":"thing","book":false,"shokyu":true,"note":"反义词：汚い（脏）","lessons":[],"also":[],"forms":{"neg":{"w":"きれいじゃない","r":"きれいじゃない"},"past":{"w":"きれいだった","r":"きれいだった"},"pastneg":{"w":"きれいじゃなかった","r":"きれいじゃなかった"},"te":{"w":"きれいで","r":"きれいで"},"adv":{"w":"きれいに","r":"きれいに"},"attr":{"w":"きれいな～","r":"きれいな～"}},"col":[{"c":"きれいな{水|みず}","cz":"干净的水","ex":"この{川|かわ}の{水|みず}はとてもきれいです。","exz":"这条河的水很干净。","src":"","csrc":""}]},{"key":"丸い","word":"丸い","reading":"まるい","type":"i","zh":"圆、圆形","category":"thing","book":true,"shokyu":false,"note":"","lessons":[4,10],"also":[],"forms":{"neg":{"w":"丸くない","r":"まるくない"},"past":{"w":"丸かった","r":"まるかった"},"pastneg":{"w":"丸くなかった","r":"まるくなかった"},"te":{"w":"丸くて","r":"まるくて"},"adv":{"w":"丸く","r":"まるく"},"attr":{"w":"丸い～","r":"まるい～"}},"col":[{"c":"{丸|まる}い{食|た}べ{物|もの}","cz":"圆的食物","ex":"たこ{焼|や}きは{小|ちい}さくて{丸|まる}い{食|た}べ{物|もの}で、{中|なか}にタコやネギなどが{入|はい}っています。","exz":"章鱼烧是又小又圆的食物，里面有章鱼和葱等。","src":"4","csrc":""},{"c":"{白|しろ}くて{丸|まる}い{形|かたち}","cz":"白色的圆形","ex":"このくらいの{大|おお}きさで、{白|しろ}くて{丸|まる}い{形|かたち}。","exz":"大概这么大，白色的圆形。","src":"10","csrc":""}]},{"key":"丈夫","word":"丈夫","reading":"じょうぶ","type":"na","zh":"结实（的）","category":"thing","book":true,"shokyu":false,"note":"「大丈夫」（没关系）是另一个词","lessons":[2],"also":[],"forms":{"neg":{"w":"丈夫じゃない","r":"じょうぶじゃない"},"past":{"w":"丈夫だった","r":"じょうぶだった"},"pastneg":{"w":"丈夫じゃなかった","r":"じょうぶじゃなかった"},"te":{"w":"丈夫で","r":"じょうぶで"},"adv":{"w":"丈夫に","r":"じょうぶに"},"attr":{"w":"丈夫な～","r":"じょうぶな～"}},"col":[{"c":"{丈夫|じょうぶ}そう","cz":"看起来很结实","ex":"{丈夫|じょうぶ}そうですね。","exz":"看起来很结实呢。","src":"2","csrc":""},{"c":"{丈夫|じょうぶ}なかばん","cz":"结实的包","ex":"{丈夫|じょうぶ}なかばんがほしいです。","exz":"想要一个结实的包。","src":"","csrc":""}]},{"key":"温暖","word":"温暖","reading":"おんだん","type":"na","zh":"温暖的","category":"thing","book":true,"shokyu":false,"note":"温暖化＝（气候）变暖","lessons":[15],"also":[],"forms":{"neg":{"w":"温暖じゃない","r":"おんだんじゃない"},"past":{"w":"温暖だった","r":"おんだんだった"},"pastneg":{"w":"温暖じゃなかった","r":"おんだんじゃなかった"},"te":{"w":"温暖で","r":"おんだんで"},"adv":{"w":"温暖に","r":"おんだんに"},"attr":{"w":"温暖な～","r":"おんだんな～"}},"col":[{"c":"{温暖|おんだん}な{気候|きこう}","cz":"温暖的气候","ex":"{沖縄|おきなわ}は{温暖|おんだん}な{気候|きこう}です。","exz":"冲绳气候温暖。","src":"","csrc":""},{"c":"{地球|ちきゅう}の{温暖化|おんだんか}","cz":"全球变暖","ex":"{地球|ちきゅう}の{温暖化|おんだんか}について{調|しら}べて{発表|はっぴょう}するのはどうですか。","exz":"调查一下全球变暖再发表怎么样？","src":"15","csrc":""}]},{"key":"薄い","word":"薄い","reading":"うすい","type":"i","zh":"薄；（味道）淡","category":"cook","book":true,"shokyu":false,"note":"第5课「味が薄い」（味道淡），第7课「薄く切る」（切薄片）合并为一张卡","lessons":[5,7],"also":[{"lesson":5,"text":"この料理は味が薄い。"},{"lesson":7,"text":"薄く切る。"}],"forms":{"neg":{"w":"薄くない","r":"うすくない"},"past":{"w":"薄かった","r":"うすかった"},"pastneg":{"w":"薄くなかった","r":"うすくなかった"},"te":{"w":"薄くて","r":"うすくて"},"adv":{"w":"薄く","r":"うすく"},"attr":{"w":"薄い～","r":"うすい～"}},"col":[{"c":"{味|あじ}が{薄|うす}い","cz":"味道淡","ex":"{味|あじ}が{薄|うす}くて、おいしくないです。","exz":"味道太淡，不好吃。","src":"5","csrc":""},{"c":"{薄|うす}く{切|き}る","cz":"切成薄片","ex":"タマネギを{薄|うす}く{切|き}ってください。","exz":"请把洋葱切成薄片。","src":"7","csrc":"7"}]},{"key":"厚い","word":"厚い","reading":"あつい","type":"i","zh":"厚","category":"cook","book":true,"shokyu":false,"note":"","lessons":[7],"also":[],"forms":{"neg":{"w":"厚くない","r":"あつくない"},"past":{"w":"厚かった","r":"あつかった"},"pastneg":{"w":"厚くなかった","r":"あつくなかった"},"te":{"w":"厚くて","r":"あつくて"},"adv":{"w":"厚く","r":"あつく"},"attr":{"w":"厚い～","r":"あつい～"}},"col":[{"c":"{厚|あつ}くむく","cz":"削厚一点","ex":"{大根|だいこん}の{皮|かわ}を{厚|あつ}くむきます。","exz":"萝卜皮削厚一点。","src":"7","csrc":""},{"c":"{厚|あつ}い{本|ほん}","cz":"厚书","ex":"この{辞書|じしょ}はとても{厚|あつ}いです。","exz":"这本词典很厚。","src":"","csrc":""}]},{"key":"濃い","word":"濃い","reading":"こい","type":"i","zh":"浓","category":"cook","book":true,"shokyu":false,"note":"反义：薄い（味が薄い）","lessons":[7],"also":[],"forms":{"neg":{"w":"濃くない","r":"こくない"},"past":{"w":"濃かった","r":"こかった"},"pastneg":{"w":"濃くなかった","r":"こくなかった"},"te":{"w":"濃くて","r":"こくて"},"adv":{"w":"濃く","r":"こく"},"attr":{"w":"濃い～","r":"こい～"}},"col":[{"c":"{味|あじ}を{濃|こ}くする","cz":"把味道调浓","ex":"もう{少|すこ}し{味|あじ}を{濃|こ}くしたかったら、クリームを{入|い}れてください。","exz":"如果想让味道再浓一点，请加奶油。","src":"7","csrc":""},{"c":"{濃|こ}いコーヒー","cz":"浓咖啡","ex":"{朝|あさ}は{濃|こ}いコーヒーを{飲|の}みます。","exz":"早上喝浓咖啡。","src":"","csrc":""}]},{"key":"細かい","word":"細かい","reading":"こまかい","type":"i","zh":"细碎","category":"cook","book":true,"shokyu":false,"note":"「細かいお金」＝零钱","lessons":[7],"also":[],"forms":{"neg":{"w":"細かくない","r":"こまかくない"},"past":{"w":"細かかった","r":"こまかかった"},"pastneg":{"w":"細かくなかった","r":"こまかくなかった"},"te":{"w":"細かくて","r":"こまかくて"},"adv":{"w":"細かく","r":"こまかく"},"attr":{"w":"細かい～","r":"こまかい～"}},"col":[{"c":"{細|こま}かく{切|き}る","cz":"切碎","ex":"ネギを{細|こま}かく{切|き}ってください。","exz":"请把葱切碎。","src":"7","csrc":""},{"c":"{細|こま}かいお{金|かね}","cz":"零钱","ex":"{細|こま}かいお{金|かね}がありません。","exz":"没有零钱。","src":"","csrc":""}]},{"key":"細い","word":"細い","reading":"ほそい","type":"i","zh":"细","category":"cook","book":true,"shokyu":false,"note":"","lessons":[7],"also":[],"forms":{"neg":{"w":"細くない","r":"ほそくない"},"past":{"w":"細かった","r":"ほそかった"},"pastneg":{"w":"細くなかった","r":"ほそくなかった"},"te":{"w":"細くて","r":"ほそくて"},"adv":{"w":"細く","r":"ほそく"},"attr":{"w":"細い～","r":"ほそい～"}},"col":[{"c":"{細|ほそ}く{切|き}る","cz":"切成细条","ex":"ニンジンとジャガイモは{細|ほそ}く{切|き}ります。","exz":"胡萝卜和土豆切成细条。","src":"7","csrc":""},{"c":"{細|ほそ}い{道|みち}","cz":"窄路","ex":"この{細|ほそ}い{道|みち}をまっすぐ{行|い}ってください。","exz":"请沿着这条窄路一直走。","src":"","csrc":""}]},{"key":"太い","word":"太い","reading":"ふとい","type":"i","zh":"粗","category":"cook","book":false,"shokyu":false,"note":"反义词：細い","lessons":[],"also":[],"forms":{"neg":{"w":"太くない","r":"ふとくない"},"past":{"w":"太かった","r":"ふとかった"},"pastneg":{"w":"太くなかった","r":"ふとくなかった"},"te":{"w":"太くて","r":"ふとくて"},"adv":{"w":"太く","r":"ふとく"},"attr":{"w":"太い～","r":"ふとい～"}},"col":[{"c":"{太|ふと}いペン","cz":"粗笔","ex":"{名前|なまえ}は{太|ふと}いペンで{書|か}いてください。","exz":"名字请用粗笔写。","src":"","csrc":""}]},{"key":"弱い","word":"弱い","reading":"よわい","type":"i","zh":"弱、小","category":"cook","book":true,"shokyu":false,"note":"","lessons":[7],"also":[],"forms":{"neg":{"w":"弱くない","r":"よわくない"},"past":{"w":"弱かった","r":"よわかった"},"pastneg":{"w":"弱くなかった","r":"よわくなかった"},"te":{"w":"弱くて","r":"よわくて"},"adv":{"w":"弱く","r":"よわく"},"attr":{"w":"弱い～","r":"よわい～"}},"col":[{"c":"{火|ひ}を{弱|よわ}くする","cz":"把火调小","ex":"{火|ひ}を{弱|よわ}くしてください。","exz":"请把火调小。","src":"7","csrc":""},{"c":"{体|からだ}が{弱|よわ}い","cz":"身体弱","ex":"{子|こ}どもの{頃|ころ}は{体|からだ}が{弱|よわ}かったです。","exz":"我小时候身体很弱。","src":"","csrc":""}]},{"key":"強い","word":"強い","reading":"つよい","type":"i","zh":"强；（火）大","category":"cook","book":false,"shokyu":true,"note":"反义词：弱い","lessons":[],"also":[],"forms":{"neg":{"w":"強くない","r":"つよくない"},"past":{"w":"強かった","r":"つよかった"},"pastneg":{"w":"強くなかった","r":"つよくなかった"},"te":{"w":"強くて","r":"つよくて"},"adv":{"w":"強く","r":"つよく"},"attr":{"w":"強い～","r":"つよい～"}},"col":[{"c":"{火|ひ}を{強|つよ}くする","cz":"把火调大","ex":"{火|ひ}を{強|つよ}くして、2{分|ふん}{焼|や}きます。","exz":"开大火，烤两分钟。","src":"","csrc":""},{"c":"{風|かぜ}が{強|つよ}い","cz":"风大","ex":"{今日|きょう}は{風|かぜ}が{強|つよ}いです。","exz":"今天风很大。","src":"","csrc":""}]},{"key":"不利","word":"不利","reading":"ふり","type":"na","zh":"不利（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[13],"also":[],"forms":{"neg":{"w":"不利じゃない","r":"ふりじゃない"},"past":{"w":"不利だった","r":"ふりだった"},"pastneg":{"w":"不利じゃなかった","r":"ふりじゃなかった"},"te":{"w":"不利で","r":"ふりで"},"adv":{"w":"不利に","r":"ふりに"},"attr":{"w":"不利な～","r":"ふりな～"}},"col":[{"c":"～には{不利|ふり}","cz":"对～不利","ex":"そうですね、{確|たし}かに、{進学|しんがく}には{少|すこ}し{不利|ふり}かもしれません。","exz":"是啊，对升学来说可能确实有点不利。","src":"13","csrc":""},{"c":"{不利|ふり}な{条件|じょうけん}","cz":"不利的条件","ex":"この{条件|じょうけん}は{私|わたし}たちに{不利|ふり}です。","exz":"这个条件对我们不利。","src":"","csrc":""}]},{"key":"有利","word":"有利","reading":"ゆうり","type":"na","zh":"有利（的）","category":"judge","book":false,"shokyu":false,"note":"反义词：不利","lessons":[],"also":[],"forms":{"neg":{"w":"有利じゃない","r":"ゆうりじゃない"},"past":{"w":"有利だった","r":"ゆうりだった"},"pastneg":{"w":"有利じゃなかった","r":"ゆうりじゃなかった"},"te":{"w":"有利で","r":"ゆうりで"},"adv":{"w":"有利に","r":"ゆうりに"},"attr":{"w":"有利な～","r":"ゆうりな～"}},"col":[{"c":"{就職|しゅうしょく}に{有利|ゆうり}","cz":"对就业有利","ex":"{日本語|にほんご}ができると、{就職|しゅうしょく}に{有利|ゆうり}です。","exz":"会日语对就业有利。","src":"","csrc":""}]},{"key":"得","word":"得","reading":"とく","type":"na","zh":"合算（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[2],"also":[],"forms":{"neg":{"w":"得じゃない","r":"とくじゃない"},"past":{"w":"得だった","r":"とくだった"},"pastneg":{"w":"得じゃなかった","r":"とくじゃなかった"},"te":{"w":"得で","r":"とくで"},"adv":{"w":"得に","r":"とくに"},"attr":{"w":"得な～","r":"とくな～"}},"col":[{"c":"こっちのほうが{得|とく}","cz":"这个更划算","ex":"{学生|がくせい}{割引|わりびき}があるので、こっちのほうが{得|とく}です。","exz":"有学生折扣，所以这个更划算。","src":"","csrc":""},{"c":"{得|とく}なチケット","cz":"划算的票","ex":"まとめて{買|か}うと{得|とく}なチケットがありますよ。","exz":"有一起买更划算的票哦。","src":"","csrc":""}]},{"key":"損","word":"損","reading":"そん","type":"na","zh":"吃亏（的）、不划算（的）","category":"judge","book":false,"shokyu":false,"note":"反义词：得","lessons":[],"also":[],"forms":{"neg":{"w":"損じゃない","r":"そんじゃない"},"past":{"w":"損だった","r":"そんだった"},"pastneg":{"w":"損じゃなかった","r":"そんじゃなかった"},"te":{"w":"損で","r":"そんで"},"adv":{"w":"損に","r":"そんに"},"attr":{"w":"損な～","r":"そんな～"}},"col":[{"c":"{損|そん}をする","cz":"吃亏","ex":"{急|いそ}いで{買|か}うと、{損|そん}をしますよ。","exz":"着急买会吃亏的哦。","src":"","csrc":""}]},{"key":"メジャー","word":"メジャー","reading":"メジャー","type":"na","zh":"主流（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[14],"also":[],"forms":{"neg":{"w":"メジャーじゃない","r":"メジャーじゃない"},"past":{"w":"メジャーだった","r":"メジャーだった"},"pastneg":{"w":"メジャーじゃなかった","r":"メジャーじゃなかった"},"te":{"w":"メジャーで","r":"メジャーで"},"adv":{"w":"メジャーに","r":"メジャーに"},"attr":{"w":"メジャーな～","r":"メジャーな～"}},"col":[{"c":"メジャーなスポーツ","cz":"主流运动","ex":"{日本|にほん}では{野球|やきゅう}はメジャーなスポーツです。","exz":"在日本，棒球是主流运动。","src":"","csrc":""}]},{"key":"マイナー","word":"マイナー","reading":"マイナー","type":"na","zh":"小众（的）、冷门（的）","category":"judge","book":false,"shokyu":false,"note":"反义词：メジャー","lessons":[],"also":[],"forms":{"neg":{"w":"マイナーじゃない","r":"マイナーじゃない"},"past":{"w":"マイナーだった","r":"マイナーだった"},"pastneg":{"w":"マイナーじゃなかった","r":"マイナーじゃなかった"},"te":{"w":"マイナーで","r":"マイナーで"},"adv":{"w":"マイナーに","r":"マイナーに"},"attr":{"w":"マイナーな～","r":"マイナーな～"}},"col":[{"c":"マイナーなゲーム","cz":"小众游戏","ex":"このゲームは{日本|にほん}ではまだマイナーです。","exz":"这个游戏在日本还很小众。","src":"","csrc":""}]},{"key":"必要","word":"必要","reading":"ひつよう","type":"na","zh":"必要（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[4],"also":[],"forms":{"neg":{"w":"必要じゃない","r":"ひつようじゃない"},"past":{"w":"必要だった","r":"ひつようだった"},"pastneg":{"w":"必要じゃなかった","r":"ひつようじゃなかった"},"te":{"w":"必要で","r":"ひつようで"},"adv":{"w":"必要に","r":"ひつように"},"attr":{"w":"必要な～","r":"ひつような～"}},"col":[{"c":"～が{必要|ひつよう}","cz":"需要～","ex":"{行|い}く{前|まえ}に、{予約|よやく}が{必要|ひつよう}ですよ。","exz":"去之前需要预约哦。","src":"4","csrc":""},{"c":"{必要|ひつよう}なもの","cz":"需要的东西","ex":"{旅行|りょこう}に{必要|ひつよう}なものを{買|か}いました。","exz":"买了旅行需要的东西。","src":"","csrc":""}]},{"key":"特別","word":"特別","reading":"とくべつ","type":"na","zh":"特别（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[14],"also":[],"forms":{"neg":{"w":"特別じゃない","r":"とくべつじゃない"},"past":{"w":"特別だった","r":"とくべつだった"},"pastneg":{"w":"特別じゃなかった","r":"とくべつじゃなかった"},"te":{"w":"特別で","r":"とくべつで"},"adv":{"w":"特別に","r":"とくべつに"},"attr":{"w":"特別な～","r":"とくべつな～"}},"col":[{"c":"{特別|とくべつ}な{料理|りょうり}","cz":"特别的料理","ex":"おせち{料理|りょうり}というのはお{正月|しょうがつ}に{食|た}べる{特別|とくべつ}な{料理|りょうり}です。","exz":"御节料理是新年吃的特别的料理。","src":"14","csrc":""},{"c":"{特別|とくべつ}な{日|ひ}","cz":"特别的日子","ex":"{誕生日|たんじょうび}は{特別|とくべつ}な{日|ひ}です。","exz":"生日是特别的日子。","src":"","csrc":""}]},{"key":"珍しい","word":"珍しい","reading":"めずらしい","type":"i","zh":"少见、稀有","category":"judge","book":true,"shokyu":false,"note":"","lessons":[6],"also":[],"forms":{"neg":{"w":"珍しくない","r":"めずらしくない"},"past":{"w":"珍しかった","r":"めずらしかった"},"pastneg":{"w":"珍しくなかった","r":"めずらしくなかった"},"te":{"w":"珍しくて","r":"めずらしくて"},"adv":{"w":"珍しく","r":"めずらしく"},"attr":{"w":"珍しい～","r":"めずらしい～"}},"col":[{"c":"{珍|めずら}しい{食|た}べ{物|もの}","cz":"少见的食物","ex":"{珍|めずら}しい{食|た}べ{物|もの}も{食|た}べられるし、{有名|ゆうめい}な{水族館|すいぞくかん}もありますよ。","exz":"能吃到少见的食物，还有有名的水族馆哦。","src":"6","csrc":""},{"c":"～のは{珍|めずら}しい","cz":"～很少见","ex":"この{町|まち}で{雪|ゆき}が{降|ふ}るのは{珍|めずら}しいです。","exz":"这个城市很少下雪。","src":"","csrc":""}]},{"key":"伝統的","word":"伝統的","reading":"でんとうてき","type":"na","zh":"传统（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[6],"also":[],"forms":{"neg":{"w":"伝統的じゃない","r":"でんとうてきじゃない"},"past":{"w":"伝統的だった","r":"でんとうてきだった"},"pastneg":{"w":"伝統的じゃなかった","r":"でんとうてきじゃなかった"},"te":{"w":"伝統的で","r":"でんとうてきで"},"adv":{"w":"伝統的に","r":"でんとうてきに"},"attr":{"w":"伝統的な～","r":"でんとうてきな～"}},"col":[{"c":"{伝統的|でんとうてき}な{料理|りょうり}","cz":"传统料理","ex":"{古|ふる}いお{寺|てら}もあるし、{伝統的|でんとうてき}な{料理|りょうり}が{食|た}べられますよ。","exz":"有古老的寺庙，还能吃到传统料理哦。","src":"6","csrc":""},{"c":"{伝統的|でんとうてき}な{祭|まつ}り","cz":"传统节日","ex":"{京都|きょうと}には{伝統的|でんとうてき}な{祭|まつ}りがたくさんあります。","exz":"京都有很多传统节日。","src":"","csrc":""}]},{"key":"邪魔","word":"邪魔","reading":"じゃま","type":"na","zh":"妨碍、碍事","category":"judge","book":true,"shokyu":false,"note":"「お邪魔します」＝打扰了（进别人家时）","lessons":[9],"also":[],"forms":{"neg":{"w":"邪魔じゃない","r":"じゃまじゃない"},"past":{"w":"邪魔だった","r":"じゃまだった"},"pastneg":{"w":"邪魔じゃなかった","r":"じゃまじゃなかった"},"te":{"w":"邪魔で","r":"じゃまで"},"adv":{"w":"邪魔に","r":"じゃまに"},"attr":{"w":"邪魔な～","r":"じゃまな～"}},"col":[{"c":"{邪魔|じゃま}になる","cz":"碍事、妨碍","ex":"{商品|しょうひん}を{並|なら}べるとき、お{客|きゃく}{様|さま}の{邪魔|じゃま}にならないようにしてください。","exz":"摆商品时，注意别妨碍顾客。","src":"9","csrc":""},{"c":"お{邪魔|じゃま}します","cz":"打扰了","ex":"お{邪魔|じゃま}します。","exz":"打扰了。","src":"7","csrc":""}]},{"key":"ちょうどいい","word":"ちょうどいい","reading":"ちょうどいい","type":"ii","zh":"正合适","category":"judge","book":true,"shokyu":false,"note":"","lessons":[2],"also":[],"forms":{"neg":{"w":"ちょうどよくない","r":"ちょうどよくない"},"past":{"w":"ちょうどよかった","r":"ちょうどよかった"},"pastneg":{"w":"ちょうどよくなかった","r":"ちょうどよくなかった"},"te":{"w":"ちょうどよくて","r":"ちょうどよくて"},"adv":{"w":"ちょうどよく","r":"ちょうどよく"},"attr":{"w":"ちょうどいい～","r":"ちょうどいい～"}},"col":[{"c":"サイズがちょうどいい","cz":"尺寸正合适","ex":"サイズもちょうどいいです。","exz":"尺寸也正合适。","src":"2","csrc":""},{"c":"ちょうどいい{温度|おんど}","cz":"温度正合适","ex":"お{風呂|ふろ}はちょうどいい{温度|おんど}です。","exz":"洗澡水的温度正合适。","src":"","csrc":""}]},{"key":"危険","word":"危険","reading":"きけん","type":"na","zh":"危险（的）","category":"judge","book":true,"shokyu":false,"note":"","lessons":[15],"also":[],"forms":{"neg":{"w":"危険じゃない","r":"きけんじゃない"},"past":{"w":"危険だった","r":"きけんだった"},"pastneg":{"w":"危険じゃなかった","r":"きけんじゃなかった"},"te":{"w":"危険で","r":"きけんで"},"adv":{"w":"危険に","r":"きけんに"},"attr":{"w":"危険な～","r":"きけんな～"}},"col":[{"c":"～は{危険|きけん}だ","cz":"～很危险","ex":"ここはとても{危険|きけん}なために、{立入禁止|たちいりきんし}になりました。","exz":"这里非常危险，所以禁止入内了。","src":"15","csrc":""},{"c":"{危険|きけん}な{場所|ばしょ}","cz":"危险的地方","ex":"{夜|よる}、{危険|きけん}な{場所|ばしょ}に{行|い}かないでください。","exz":"晚上请不要去危险的地方。","src":"","csrc":""}]},{"key":"安全","word":"安全","reading":"あんぜん","type":"na","zh":"安全（的）","category":"judge","book":false,"shokyu":false,"note":"反义词：危険","lessons":[],"also":[],"forms":{"neg":{"w":"安全じゃない","r":"あんぜんじゃない"},"past":{"w":"安全だった","r":"あんぜんだった"},"pastneg":{"w":"安全じゃなかった","r":"あんぜんじゃなかった"},"te":{"w":"安全で","r":"あんぜんで"},"adv":{"w":"安全に","r":"あんぜんに"},"attr":{"w":"安全な～","r":"あんぜんな～"}},"col":[{"c":"{安全|あんぜん}な{場所|ばしょ}","cz":"安全的地方","ex":"{地震|じしん}のときは、{安全|あんぜん}な{場所|ばしょ}に{逃|に}げてください。","exz":"地震时请逃到安全的地方。","src":"","csrc":""}]}],"pairs":[{"a":"つまらない","b":"おもしろい","kind":"反义","explanation":"没意思 ↔ 有意思。"},{"a":"うれしい","b":"悲しい","kind":"反义","explanation":"高兴 ↔ 难过。"},{"a":"嫌","b":"好き","kind":"对照","explanation":"不愿意、讨厌 ↔ 喜欢（严格的反义词是「嫌い ↔ 好き」）。"},{"a":"得意","b":"苦手","kind":"反义","explanation":"擅长 ↔ 不擅长：料理が得意 ↔ 料理が苦手。"},{"a":"遅い","b":"速い","kind":"反义","explanation":"慢 ↔ 快：食べるのが遅い ↔ 走るのが速い。"},{"a":"うまい","b":"下手","kind":"反义","explanation":"（做得）好 ↔ 不擅长、笨拙。"},{"a":"丁寧","b":"失礼","kind":"对照","explanation":"有礼貌 ↔ 不礼貌、失礼。"},{"a":"厳しい","b":"優しい","kind":"反义","explanation":"严格 ↔ 温柔。"},{"a":"積極的","b":"消極的","kind":"反义","explanation":"积极 ↔ 消极。"},{"a":"重い","b":"軽い","kind":"反义","explanation":"重 ↔ 轻。"},{"a":"明るい","b":"暗い","kind":"反义","explanation":"明亮 ↔ 暗。"},{"a":"汚い","b":"きれい","kind":"反义","explanation":"脏 ↔ 干净。"},{"a":"厚い","b":"薄い","kind":"反义","explanation":"厚 ↔ 薄：厚く切る ↔ 薄く切る。（味道「淡」的反义词是「濃い」）"},{"a":"細い","b":"太い","kind":"反义","explanation":"细 ↔ 粗。"},{"a":"弱い","b":"強い","kind":"反义","explanation":"弱 ↔ 强：火を弱くする ↔ 火を強くする。"},{"a":"不利","b":"有利","kind":"反义","explanation":"不利 ↔ 有利。"},{"a":"得","b":"損","kind":"反义","explanation":"划算 ↔ 吃亏。"},{"a":"メジャー","b":"マイナー","kind":"反义","explanation":"主流 ↔ 小众。"},{"a":"危険","b":"安全","kind":"反义","explanation":"危险 ↔ 安全。"}],"stats":{"cards":50,"i":26,"na":24,"pairs":19,"extras":13,"colItems":113,"tbEx":52,"newEx":61}};
+/* ---------- shared helpers ---------- */
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function toHira(s){ return String(s).replace(/[\u30a1-\u30f6]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0x60); }); }
+var RB = /\{([^{}|]+)\|([^{}|]+)\}/g;
+function ruby(s){ return esc(s).replace(RB, "<ruby>$1<rt>$2</rt></ruby>"); }
+function plain(s){ return String(s).replace(RB, "$1"); }
+function yomi(s){ return String(s).replace(RB, "$2"); }
+function hasKanji(s){ return /[\u4e00-\u9fff々]/.test(s); }
+function norm(s){ return toHira(String(s).toLowerCase()).replace(/[～~\s（）()・]/g, ""); }
+/* text spoken for a ruby string: the hiragana from the ruby (exact textbook reading),
+   except a kanji counter right after a digit keeps its kanji (TTS then applies 3日→みっか etc.) */
+function sayOf(s){
+  return String(s).replace(/([0-9０-９])\{([^{}|]+)\|([^{}|]+)\}/g, "$1$2").replace(RB, "$2").replace(/[～〜（）()／]/g, "").trim();
+}
+function sayBtn(text, label){
+  text = String(text || "").replace(/[～〜（）()／]/g, "").trim();
+  return '<button type="button" class="say" data-say="' + esc(text) + '" aria-label="朗读 ' + esc(label || text) + '">🔊</button>';
+}
+function srcBadge(lesson, kind){ return lesson ? ' <span class="badge tb">' + kind + ' 第' + esc(lesson) + '课</span>' : ""; }
+function lessonLine(r){
+  var s = r.lessons && r.lessons.length ? "<b>" + r.lessons.map(function(n){ return "第" + n + "课"; }).join("、") + "</b>" : (r.book ? "" : "—（补充词）");
+  if (r.also && r.also.length) s += '<span class="also">另见：' + r.also.map(function(a){ return "第" + a.lesson + "课「" + esc(a.text) + "」"; }).join("；") + "</span>";
+  return s;
+}
+function colBlock(r){
+  if (!r.col || !r.col.length) return "";
+  return '<div class="cols">' + r.col.map(function(c){
+    return '<div class="col"><div class="cphrase">' + ruby(c.c) + sayBtn(sayOf(c.c), plain(c.c)) + '<span class="cz">' + esc(c.cz) + "</span>" + srcBadge(c.csrc, "课本短语") + "</div>" +
+      '<div class="ex">' + ruby(c.ex) + sayBtn(sayOf(c.ex), plain(c.ex)) + (c.src ? srcBadge(c.src, "课本例句") : ' <span class="badge nw">新写例句</span>') + '</div><div class="exz">' + esc(c.exz) + "</div></div>";
+  }).join("") + "</div>";
+}
+function bookBadge(r){
+  return '<span class="badge ' + (r.book ? "book" : "extra") + '">' + (r.book ? "课本" : "书里没有") + "</span>" +
+    (!r.book && r.shokyu ? '<span class="badge nw">初級学过</span>' : "");
+}
+function store(k, v){ try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+function load(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+</script>
+<script>
+/* adjective card renderer */
+var TCOLOR = {"i":"#e11d48","ii":"#e11d48","na":"#0d9488"};
+var FORMLABEL = [["neg","否定"],["past","过去"],["pastneg","过去否定"],["te","て形"],["adv","副词形"],["attr","修饰名词"]];
+var APP = {
+  types: [{id:"i", name:"い形容词", color:TCOLOR.i}, {id:"na", name:"な形容词", color:TCOLOR.na}],
+  typeMatch: function(r, t){ return t === "i" ? r.type !== "na" : r.type === "na"; },
+  pairTitle: function(p){ return p.kind === "反义" ? "反义词" : "对照"; },
+  statsHtml: function(s){
+    return '<span class="stat">课本形容词 ' + s.cards + ' 张</span><span class="stat">い ' + s.i + ' · な ' + s.na + '</span><span class="stat">反义词对 ' + s.pairs +
+      ' 组</span><span class="stat">搭配 ' + s.colItems + '</span><span class="stat">课本例句 ' + s.tbEx + '</span>';
+  },
+  hayParts: function(r){
+    var p = [r.word, r.reading, r.zh, DATA.typeNames[r.type]];
+    FORMLABEL.forEach(function(f){ p.push(r.forms[f[0]].w, r.forms[f[0]].r); });
+    return p;
+  },
+  card: function(r){
+    var c = catById.get(r.category), t = r.type === "na" ? "な" : "い";
+    var kana = (hasKanji(r.word) || r.reading !== r.word) ? '<span class="kana">' + esc(r.reading) + (r.type === "na" ? "（な）" : "") + "</span>" : "";
+    var forms = FORMLABEL.map(function(f){
+      var x = r.forms[f[0]];
+      return '<div class="field"><div class="fv"><span class="label">' + f[1] + '</span><span class="formvalue">' + esc(x.w) + "</span>" +
+        (x.w !== x.r ? '<span class="fr">' + esc(x.r) + "</span>" : "") + "</div>" + sayBtn(x.r, x.w) + "</div>";
+    }).join("");
+    return '<article class="card' + (r.book ? "" : " extra-card") + '" style="--c:' + c.color + '" data-key="' + esc(r.key) + '">' +
+      '<div class="top"><div><div class="word">' + esc(r.word) + (r.type === "na" ? '<span class="nana">（な）</span>' : "") + sayBtn(r.reading, r.word) + "</div>" + kana + "</div>" +
+      '<div class="badges">' + bookBadge(r) + '<span class="badge" style="color:#fff;background:' + TCOLOR[r.type] + '">' + t + "形容词</span></div></div>" +
+      '<div class="meaning">' + esc(r.zh) + "</div>" +
+      '<div class="forms">' + forms + "</div>" +
+      '<div class="meta">课次：' + lessonLine(r) + "</div>" +
+      (r.note ? '<div class="cardnote">' + esc(r.note) + "</div>" : "") + colBlock(r) + "</article>";
+  }
+};
+
+</script>
+<script>
+/* ---------- shared app shell (sections, filter, search, theme, big font) ---------- */
+const byKey = new Map(DATA.records.map(function(x){ return [x.key, x]; }));
+const catById = new Map(DATA.categories.map(function(c){ return [c.id, c]; }));
+const pairOf = new Map();
+DATA.pairs.forEach(function(p){ pairOf.set(p.a, p); pairOf.set(p.b, p); });
+const state = {cat:"all", lesson:0, q:"", extras:true, type:"all"};
+function pairBlock(p, va, vb){
+  var a = byKey.get(p.a), b = byKey.get(p.b);
+  return '<div class="pair' + (va && vb ? "" : " solo") + '">' +
+    '<div class="pairtitle">↔ ' + esc(APP.pairTitle(p)) + '</div>' +
+    '<div class="paircards">' + (va ? APP.card(a) : "") + '<div class="arrow" aria-hidden="true">↔</div>' + (vb ? APP.card(b) : "") + "</div>" +
+    '<p class="pairnote">' + esc(p.explanation) + "</p></div>";
+}
+function hay(r){
+  var parts = APP.hayParts(r).concat([r.note || ""]);
+  (r.lessons || []).forEach(function(l){ parts.push("第" + l + "课"); });
+  (r.also || []).forEach(function(a){ parts.push(a.text); });
+  (r.col || []).forEach(function(c){ parts.push(plain(c.c), yomi(c.c), c.cz, plain(c.ex), yomi(c.ex), c.exz); });
+  return norm(parts.join(" "));
+}
+var HAY = new Map(), CORE = new Map();
+DATA.records.forEach(function(r){ HAY.set(r.key, hay(r)); CORE.set(r.key, norm(APP.hayParts(r).join(" "))); });
+function match(r){
+  if (!state.extras && !r.book) return false;
+  if (state.type !== "all" && !APP.typeMatch(r, state.type)) return false;
+  if (state.lesson && (r.lessons || []).indexOf(state.lesson) === -1 && !(r.also || []).some(function(a){ return a.lesson === state.lesson; })) return false;
+  if (!state.q) return true;
+  return (state.q.length <= 1 ? CORE : HAY).get(r.key).indexOf(state.q) !== -1;
+}
+var SECTIONS = [];
+function renderSection(S){
+  var html = "";
+  if (S.other) {
+    DATA.otherTypes.forEach(function(t){
+      var rs = S.matched.filter(function(r){ return r.otype === t.id; });
+      if (rs.length) html += '<div class="ogroup"><h3>' + t.icon + " " + esc(t.name) + " · " + rs.length + '</h3><div class="ogrid">' + rs.map(APP.ocard).join("") + "</div></div>";
+    });
+  } else {
+    if (APP.sectionTop) html += APP.sectionTop(S.id, state);
+    var set = new Set(S.matched.map(function(r){ return r.key; })), done = new Set(), singles = [];
+    S.matched.forEach(function(r){
+      if (done.has(r.key)) return;
+      var p = pairOf.get(r.key);
+      if (p) { done.add(p.a); done.add(p.b); html += pairBlock(p, set.has(p.a), set.has(p.b)); }
+      else singles.push(r);
+    });
+    html += '<div class="grid">' + singles.map(APP.card).join("") + "</div>";
+  }
+  S.inside.innerHTML = html;
+  S.rendered = true;
+}
+function build(){
+  document.getElementById("stats").innerHTML = APP.statsHtml(DATA.stats);
+  var hasOther = !!(DATA.otherTypes && DATA.otherTypes.length);
+  var otherDef = {id:"other", icon:"💬", name:APP.otherName || "其他", color:"#64748b"};
+  var chips = [{id:"all", icon:"✦", name:"全部"}].concat(DATA.categories, hasOther ? [otherDef] : []);
+  document.getElementById("chips").innerHTML = chips.map(function(c){
+    return '<button type="button" class="chip' + (c.id === "all" ? " active" : "") + '" data-cat="' + c.id + '">' + c.icon + " " + esc(c.name) + "</button>";
+  }).join("");
+  var l = '<button type="button" class="chip active" data-lesson="0">全部课</button>';
+  for (var i = 1; i <= 15; i++) l += '<button type="button" class="chip" data-lesson="' + i + '">第' + i + "课</button>";
+  document.getElementById("lchips").innerHTML = l;
+  document.getElementById("tchips").innerHTML = [{id:"all", name:"全部类型"}].concat(APP.types).map(function(t){
+    return '<button type="button" class="chip' + (t.id === "all" ? " active" : "") + '" data-type="' + t.id + '"' + (t.color ? ' style="--tc:' + t.color + '"' : "") + ">" + esc(t.name) + "</button>";
+  }).join("");
+  var content = document.getElementById("content");
+  var defs = DATA.categories.map(function(c){ return {id:c.id, name:c.name, icon:c.icon, color:c.color, other:false}; });
+  if (hasOther) defs.push({id:"other", name:otherDef.name, icon:otherDef.icon, color:otherDef.color, other:true});
+  defs.forEach(function(d){
+    var det = document.createElement("details");
+    det.className = "section"; det.id = "cat-" + d.id; det.dataset.cat = d.id; det.style.setProperty("--c", d.color);
+    det.innerHTML = "<summary><span>" + d.icon + "</span><span>" + esc(d.name) + '</span><span class="count"></span><span class="caret">⌄</span></summary><div class="inside"></div>';
+    content.appendChild(det);
+    var S = {id:d.id, other:d.other, el:det, inside:det.querySelector(".inside"), count:det.querySelector(".count"), rendered:false, dirty:true, matched:[],
+             records:DATA.records.filter(function(r){ return d.other ? r.kind === "other" : (r.kind !== "other" && r.category === d.id); })};
+    det.addEventListener("toggle", function(){ if (det.open && (S.dirty || !S.rendered)) { renderSection(S); S.dirty = false; } });
+    SECTIONS.push(S);
+  });
+  var h = decodeURIComponent((location.hash || "").slice(1)), o = (location.search.match(/[?&]open=([a-z]+)/) || [])[1];
+  SECTIONS.forEach(function(S){ if (h === "cat-" + S.id || o === S.id || o === "all") S.el.open = true; });
+  filter();
+}
+function filter(){
+  var total = 0, autoOpen = !!(state.q || state.lesson || state.type !== "all");
+  SECTIONS.forEach(function(S){
+    var catOK = state.cat === "all" || state.cat === S.id;
+    S.matched = catOK ? S.records.filter(match) : [];
+    total += S.matched.length;
+    S.el.classList.toggle("hidden", S.matched.length === 0);
+    S.count.textContent = S.matched.length + (S.other ? " 条" : " 张");
+    S.dirty = true;
+    if (S.matched.length && (autoOpen || state.cat === S.id)) S.el.open = true;
+    if (S.el.open) { renderSection(S); S.dirty = false; }
+  });
+  document.getElementById("empty").classList.toggle("hidden", total > 0);
+  document.getElementById("resultText").textContent = "显示 " + total + " 条";
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest(".chip");
+  if (!b) return;
+  if (b.dataset.lesson !== undefined) {
+    state.lesson = +b.dataset.lesson;
+    document.querySelectorAll("#lchips .chip").forEach(function(x){ x.classList.toggle("active", x === b); });
+    filter(); return;
+  }
+  if (b.dataset.type !== undefined) {
+    state.type = b.dataset.type;
+    document.querySelectorAll("#tchips .chip").forEach(function(x){ x.classList.toggle("active", x === b); });
+    filter(); return;
+  }
+  state.cat = b.dataset.cat;
+  document.querySelectorAll("#chips .chip").forEach(function(x){ x.classList.toggle("active", x === b); });
+  filter();
+  if (state.cat !== "all") {
+    var el = document.getElementById("cat-" + state.cat);
+    if (el && el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+});
+var timer = null;
+document.getElementById("q").addEventListener("input", function(e){
+  clearTimeout(timer);
+  timer = setTimeout(function(){ state.q = norm(e.target.value); filter(); }, 150);
+});
+document.getElementById("showExtras").addEventListener("change", function(e){ state.extras = e.target.checked; filter(); });
+document.getElementById("showCol").addEventListener("change", function(e){ document.body.classList.toggle("hide-col", !e.target.checked); });
+document.getElementById("showEx").addEventListener("change", function(e){ document.body.classList.toggle("hide-ex", !e.target.checked); });
+document.getElementById("foldBtn").addEventListener("click", function(){ SECTIONS.forEach(function(S){ S.el.open = false; }); });
+var THEMES = [["auto","🌓 自动"],["dark","🌙 深色"],["light","☀️ 浅色"]];
+function applyTheme(t){
+  if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+  document.getElementById("themeBtn").textContent = THEMES.filter(function(x){ return x[0] === t; })[0][1];
+}
+var theme = load("shochukyuTheme") || "auto"; applyTheme(theme);
+document.getElementById("themeBtn").addEventListener("click", function(){
+  var i = THEMES.map(function(x){ return x[0]; }).indexOf(theme);
+  theme = THEMES[(i + 1) % 3][0]; applyTheme(theme); store("shochukyuTheme", theme);
+});
+function applyBig(on){ document.documentElement.classList.toggle("big", on); document.getElementById("bigBtn").setAttribute("aria-pressed", on ? "true" : "false"); }
+var big = load("shochukyuBig") === "1"; applyBig(big);
+document.getElementById("bigBtn").addEventListener("click", function(){ big = !big; applyBig(big); store("shochukyuBig", big ? "1" : null); });
+
+/* ---------- click-to-speak (Web Speech API, offline system voices) ---------- */
+var TTS = {
+  ok: typeof window !== "undefined" && "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance !== "undefined",
+  voice: null, hasJa: false, voicesLoaded: false, rate: load("shochukyuTtsRate") === "0.7" ? 0.7 : 1.0,
+  btn: null, u: null, watch: null, noteShown: false
+};
+var UA = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+function pickVoice(){
+  if (!TTS.ok) return 0;
+  var vs = [];
+  try { vs = window.speechSynthesis.getVoices() || []; } catch (e) {}
+  if (vs.length) TTS.voicesLoaded = true;
+  var ja = vs.filter(function(v){ return /^ja([-_]|$)/i.test(v.lang || "") || /日本語|Japanese/i.test(v.name || ""); });
+  TTS.hasJa = ja.length > 0;
+  function find(rx){ for (var i = 0; i < ja.length; i++) if (rx.test(ja[i].name || "")) return ja[i]; return null; }
+  TTS.voice = find(/Kyoko/i) || find(/Otoya/i) || find(/Google\s*日本語|Google.*Japanese/i) ||
+    ja.filter(function(v){ return /^ja[-_]JP$/i.test(v.lang || "") && v.localService; })[0] ||
+    ja.filter(function(v){ return /^ja[-_]JP$/i.test(v.lang || ""); })[0] || ja[0] || null;
+  return ja.length;
+}
+function noteText(kind){
+  if (kind === "api") return "当前浏览器不支持发音，请用 Safari / Chrome 打开（微信内置浏览器可能不支持）。";
+  var s = "没有找到日语语音，暂时无法发音。";
+  if (/Android/i.test(UA)) s += "安卓手机：设置 → 系统 → 语言和输入法 → 文字转语音（TTS）输出 → 安装「日语」语音数据，然后重新打开本页。";
+  else if (/iPhone|iPad|iPod|Macintosh/i.test(UA)) s += "iPhone：设置 → 辅助功能 → 朗读内容 → 声音 → 日语，下载 Kyoko 或 Otoya。";
+  return s + "也可以换 Safari / Chrome 打开（微信内置浏览器可能不支持）。";
+}
+function showNote(kind, force){
+  if (TTS.noteShown && !force) return;
+  TTS.noteShown = true;
+  document.getElementById("ttsNoteText").textContent = noteText(kind);
+  document.getElementById("ttsNote").classList.remove("hidden");
+}
+document.getElementById("ttsNoteClose").addEventListener("click", function(){
+  document.getElementById("ttsNote").classList.add("hidden"); store("shochukyuTtsNoteSeen", "1");
+});
+function unmark(){
+  if (TTS.btn) { TTS.btn.classList.remove("speaking"); TTS.btn.removeAttribute("aria-pressed"); }
+  TTS.btn = null; TTS.u = null;
+  if (TTS.watch) { clearInterval(TTS.watch); TTS.watch = null; }
+}
+/* must run synchronously inside the click handler (iOS Safari only allows speech started by a user gesture) */
+function speak(text, btn){
+  text = String(text || "").trim();
+  if (!text) return false;
+  if (!TTS.ok) { showNote("api", true); return false; }
+  var ss = window.speechSynthesis;
+  var again = TTS.btn === btn && (ss.speaking || ss.pending);
+  if (ss.speaking || ss.pending) ss.cancel();      // cancel the previous utterance before starting a new one
+  unmark();
+  if (again) return false;                          // tapping the active button again just stops it
+  if (!TTS.voice) pickVoice();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = "ja-JP";
+  if (TTS.voice) u.voice = TTS.voice;
+  u.rate = TTS.rate; u.pitch = 1; u.volume = 1;
+  TTS.u = u; TTS.btn = btn || null;
+  if (btn) { btn.classList.add("speaking"); btn.setAttribute("aria-pressed", "true"); }
+  u.onend = function(){ if (TTS.u === u) unmark(); };
+  u.onerror = function(ev){
+    if (TTS.u === u) unmark();
+    var er = ev && ev.error;
+    if (er && !/interrupted|canceled|cancelled/.test(er)) showNote("voice", true);
+  };
+  if (ss.paused) ss.resume();
+  ss.speak(u);
+  var started = Date.now();
+  TTS.watch = setInterval(function(){   // some browsers never fire onend: clear the highlight when speech stops
+    if (TTS.u !== u) return;
+    if (!ss.speaking && !ss.pending && Date.now() - started > 600) unmark();
+  }, 300);
+  if (TTS.voicesLoaded && !TTS.hasJa) showNote("voice", true);
+  return true;
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest(".say");
+  if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  speak(b.getAttribute("data-say"), b);
+}, true);
+function applyRate(){
+  var b = document.getElementById("rateBtn");
+  b.textContent = TTS.rate < 1 ? "🐢 慢速" : "🔊 正常";
+  b.setAttribute("aria-pressed", TTS.rate < 1 ? "true" : "false");
+}
+applyRate();
+document.getElementById("rateBtn").addEventListener("click", function(){
+  TTS.rate = TTS.rate < 1 ? 1.0 : 0.7; store("shochukyuTtsRate", TTS.rate < 1 ? "0.7" : null); applyRate();
+});
+if (TTS.ok) {
+  pickVoice();
+  var ss0 = window.speechSynthesis;
+  if (ss0.addEventListener) ss0.addEventListener("voiceschanged", pickVoice);
+  else ss0.onvoiceschanged = pickVoice;
+  setTimeout(function(){ pickVoice(); if (TTS.voicesLoaded && !TTS.hasJa && load("shochukyuTtsNoteSeen") !== "1") showNote("voice"); }, 1500);
+} else if (load("shochukyuTtsNoteSeen") !== "1") {
+  showNote("api");
+}
+build();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register(new URL("../sw.js", location.href)).catch(function () {});
+}
+</script>
+
+</body>
+</html>
