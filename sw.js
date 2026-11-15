@@ -1,5 +1,5 @@
 /* Basic offline cache for the Japanese study static pages. */
-const CACHE_NAME = "japanese-study-v1";
+const CACHE_NAME = "japanese-study-v2";
 const PRECACHE = [
   "./",
   "./index.html",
