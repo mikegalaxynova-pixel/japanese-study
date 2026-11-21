@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>汉字同源词朗读｜一天三练</title>
+<meta name="description" content="一天三练：写法、意思与汉字相同的日语词，按五十音分组，慢慢朗读方便记忆。">
+<meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1e1b4b" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="日语复习">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+<style>
+:root {
+  --bg: #f4f6fb;
+  --panel: #ffffff;
+  --ink: #172033;
+  --muted: #4b5568;
+  --line: #e2e6ef;
+  --accent: #4f46e5;
+  --accent-ink: #ffffff;
+  --soft: #eef2ff;
+  --shadow: 0 8px 24px rgba(23, 32, 51, 0.07);
+  --cur: #eef2ff;
+  --a0: #0f766e;
+  --a0bg: #f0fdfa;
+  --a1: #b45309;
+  --a1bg: #fff7ed;
+  --aN: #6d28d9;
+  --aNbg: #f5f3ff;
+  --danger: #b91c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --ink: #f1f5f9;
+    --muted: #94a3b8;
+    --line: #334155;
+    --accent: #a5b4fc;
+    --accent-ink: #1e1b4b;
+    --soft: #1e2a4a;
+    --shadow: none;
+    --cur: #1e1b4b;
+    --a0: #5eead4;
+    --a0bg: #0b2e2b;
+    --a1: #fdba74;
+    --a1bg: #3b2714;
+    --aN: #c4b5fd;
+    --aNbg: #2e1065;
+    --danger: #fca5a5;
+  }
+}
+* { box-sizing: border-box; }
+html { overflow-x: hidden; max-width: 100%; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 18px/1.6 system-ui, -apple-system, "Hiragino Sans", "Noto Sans CJK JP", "PingFang SC", "Noto Sans SC", sans-serif;
+  max-width: 100%;
+}
+button, input { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+.skip {
+  position: absolute;
+  left: 12px; top: 8px;
+  background: var(--panel); color: var(--ink);
+  padding: 10px 14px; border-radius: 8px; min-height: 48px;
+  transform: translateY(-200%); z-index: 100;
+}
+.skip:focus { transform: none; }
+.site-home {
+  display: inline-flex; align-items: center;
+  min-height: 48px; padding: 0 8px 0 0; margin: 0 0 2px;
+  color: #fff; font-weight: 700; font-size: 16px; text-decoration: none;
+}
+.site-home:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+header {
+  padding: 16px max(16px, env(safe-area-inset-right)) 14px max(16px, env(safe-area-inset-left));
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 55%, #0891b2 100%);
+  color: #fff;
+}
+h1 { margin: 0 0 4px; font-size: clamp(22px, 6.4vw, 32px); line-height: 1.25; }
+header .lead { margin: 0; opacity: 0.94; font-size: 0.95rem; }
+.intro {
+  margin: 12px 0 0;
+  background: rgba(255,255,255,0.14);
+  border-radius: 12px;
+  padding: 0;
+}
+.intro summary {
+  list-style: none;
+  cursor: pointer;
+  min-height: 48px;
+  display: flex; align-items: center;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.intro summary::-webkit-details-marker { display: none; }
+.intro summary::before { content: "▸ "; }
+.intro[open] summary::before { content: "▾ "; }
+.intro .intro-body {
+  padding: 0 14px 12px;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  opacity: 0.96;
+}
+.intro .intro-body p { margin: 0 0 8px; }
+.intro .intro-body p:last-child { margin: 0; }
+.credit { opacity: 0.9; font-size: 0.85rem; }
+
+.player-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--bg);
+  padding: 8px max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--line);
+  max-width: 100%;
+}
+.now {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 14px 12px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.now-word {
+  font-size: clamp(28px, 9vw, 44px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+.now-reading {
+  font-size: clamp(20px, 6.4vw, 28px);
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.now-meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.controls, .opts, .cats, .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.controls { justify-content: stretch; }
+.controls button {
+  flex: 1 1 0;
+  min-width: 64px;
+  min-height: 48px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 6px 8px;
+}
+.controls #btn-play {
+  flex: 1.4 1 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.controls #btn-stop { color: var(--danger); }
+.controls button:disabled { opacity: 0.45; cursor: default; }
+.controls button:focus-visible,
+.opts button:focus-visible,
+.cat-sel:focus-visible,
+.cat-play:focus-visible,
+.word:focus-visible,
+#search:focus-visible,
+.intro summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.opts button {
+  min-height: 48px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 650;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.opts button.on {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.hint {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+main {
+  padding: 10px max(16px, env(safe-area-inset-right)) 48px max(16px, env(safe-area-inset-left));
+  max-width: 840px;
+  margin: 0 auto;
+}
+.toolbar { margin: 0 0 8px; }
+#search {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: var(--panel);
+  color: var(--ink);
+}
+.cats { gap: 8px; margin: 0 0 12px; }
+.cat {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--panel);
+  max-width: 100%;
+}
+.cat-sel {
+  min-height: 48px;
+  min-width: 64px;
+  padding: 4px 10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cat-sel .n {
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--muted);
+}
+.cat-play {
+  min-width: 48px;
+  min-height: 48px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--accent);
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0 8px;
+}
+.cat.on { border-color: var(--accent); background: var(--soft); }
+.cat.on .cat-sel { color: var(--accent); }
+.cat.row-a { --tone: #4f46e5; }
+.cat.row-ka { --tone: #0f766e; }
+.cat.row-sa { --tone: #be185d; }
+.cat.row-ta { --tone: #c2410c; }
+.cat.row-na { --tone: #7c3aed; }
+.cat.row-ha { --tone: #0369a1; }
+.cat.row-ma { --tone: #b45309; }
+.cat.row-ya { --tone: #0e7490; }
+.cat.row-ra { --tone: #6d28d9; }
+.cat.row-wa { --tone: #334155; }
+@media (prefers-color-scheme: dark) {
+  .cat.row-a { --tone: #a5b4fc; }
+  .cat.row-ka { --tone: #5eead4; }
+  .cat.row-sa { --tone: #f9a8d4; }
+  .cat.row-ta { --tone: #fdba74; }
+  .cat.row-na { --tone: #c4b5fd; }
+  .cat.row-ha { --tone: #7dd3fc; }
+  .cat.row-ma { --tone: #fcd34d; }
+  .cat.row-ya { --tone: #67e8f9; }
+  .cat.row-ra { --tone: #c4b5fd; }
+  .cat.row-wa { --tone: #cbd5e1; }
+}
+.cat .kana { color: var(--tone, var(--ink)); font-size: 1.15rem; }
+.list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.list-head .sub { color: var(--muted); font-size: 0.88rem; font-weight: 650; }
+.list { display: flex; flex-direction: column; gap: 6px; }
+.word {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.word .w { font-weight: 800; font-size: 1.2rem; line-height: 1.3; flex: 1 1 auto; }
+.word .r { color: var(--muted); font-weight: 650; font-size: 0.95rem; }
+.word .acc {
+  flex: 0 0 auto;
+  min-width: 32px;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  background: var(--a0bg);
+  color: var(--a0);
+  padding: 0 8px;
+}
+.word .acc.a1 { background: var(--a1bg); color: var(--a1); }
+.word .acc.an { background: var(--aNbg); color: var(--aN); }
+.word .acc.ax { background: var(--line); color: var(--muted); }
+.word.current {
+  background: var(--cur);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.status { color: var(--muted); padding: 20px 0; text-align: center; }
+footer {
+  padding: 8px max(16px, env(safe-area-inset-right)) 36px max(16px, env(safe-area-inset-left));
+  color: var(--muted);
+  font-size: 0.88rem;
+  max-width: 840px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到内容</a>
+<header>
+  <a class="site-home" href="../index.html">← 首页</a>
+  <h1>汉字同源词朗读</h1>
+  <p class="lead">写法、意思与汉字相同的日语词，点一个五十音类别，慢慢把这类词全部读出来。</p>
+  <details class="intro">
+    <summary>「一天三练」是怎么记的？</summary>
+    <div class="intro-body">
+      <p>这是作者「阴阳」（tanteng，2012）在《单词记忆法 之 一天三练》里介绍的方法：从《中日交流标准日本语》里挑出写法和意思都跟汉语相同的词，当成还不认识的汉字来记。这样不用同时记写法、意思和读音，主要记日语读法（音读、训读对考试也有帮助）。</p>
+      <p>原文建议找个安静的地方，每天大约 300 个词：早上 30 分钟、中午 20 分钟、晚上 10 分钟，大声朗读（最好捂上耳朵），不要抄写，除非那个汉字本来就不会写。记完请别人抽查，大概能记住七成以上再往下。作者说自己三天记完（一部分本来就会），如果已经会五十音，一个星期也应该够。要经常复习。</p>
+      <p>词后面的数字是音调（アクセント）。「~」开头、没有数字的条目，原文就没有标注。这份表原文写有 1991 个词；按文档逐条核对后，实际录入 1901 条（其中「公衆」在原文里连续出现两次）。文档没有中文释义，这些词的意思本身就和汉字相同，所以这里也不另加译文。</p>
+      <p class="credit">内容整理自原文，作者：阴阳 / tanteng，2012。</p>
+    </div>
+  </details>
+</header>
+
+<div class="player-wrap" id="player-wrap">
+  <div class="now" aria-live="polite">
+    <div class="now-word" id="now-word">—</div>
+    <div class="now-reading" id="now-reading">请选择一个类别</div>
+    <div class="now-meta">
+      <span id="now-accent"></span>
+      <span id="now-progress">0 / 0</span>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" id="btn-prev" aria-label="上一词">上一词</button>
+    <button type="button" id="btn-play" aria-label="播放或暂停">▶ 播放</button>
+    <button type="button" id="btn-stop" aria-label="停止">停止</button>
+    <button type="button" id="btn-next" aria-label="下一词">下一词</button>
+  </div>
+  <div class="opts" role="group" aria-label="朗读选项">
+    <button type="button" id="opt-slow" class="on" aria-pressed="true">慢</button>
+    <button type="button" id="opt-normal" aria-pressed="false">正常</button>
+    <button type="button" id="opt-twice" aria-pressed="false">读两遍</button>
+    <button type="button" id="opt-loop" aria-pressed="false">循环</button>
+    <button type="button" id="opt-random" aria-pressed="false">随机顺序</button>
+    <button type="button" id="opt-restart">从头</button>
+  </div>
+  <p class="hint">注意：手机锁屏或切到后台后，朗读一般会停止。请保持屏幕亮着（播放时本页会尽量防止自动锁屏）。</p>
+</div>
+
+<main id="main">
+  <div class="toolbar">
+    <input type="search" id="search" placeholder="搜索汉字或读音" enterkeyhint="search" autocomplete="off" aria-label="搜索汉字或读音">
+  </div>
+  <div class="cats" id="cats" role="list"></div>
+  <div class="list-head">
+    <span id="list-title">全部类别</span>
+    <span class="sub" id="list-count"></span>
+  </div>
+  <div class="list" id="list"></div>
+  <p class="status" id="status">正在载入词表…</p>
+</main>
+<footer>
+  <p>词表来自《单词记忆法 之 一天三练》（阴阳 / tanteng，2012），仅供个人学习朗读。数字是原文标注的音调。本页不收录中文释义。</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "kanji_cjk_words_v1";
+  var GAP_MS = 1500;
+  var REPEAT_GAP_MS = 400;
+  var data = null;
+  var groupsById = {};
+  var viewGroup = null;
+  var playlist = [];
+  var playSource = { type: "group", id: null };
+  var index = 0;
+  var playing = false;
+  var paused = false;
+  var pass = 1;
+  var cmd = null;
+  var rate = 0.7;
+  var twice = false;
+  var loopOn = false;
+  var randomOn = false;
+  var jaVoice = null;
+  var wakeLock = null;
+  var resumeTimer = null;
+  var gapTimer = null;
+  var currentUtterance = null;
+  var searchQuery = "";
+
+  var el = {
+    cats: document.getElementById("cats"),
+    list: document.getElementById("list"),
+    status: document.getElementById("status"),
+    listTitle: document.getElementById("list-title"),
+    listCount: document.getElementById("list-count"),
+    nowWord: document.getElementById("now-word"),
+    nowReading: document.getElementById("now-reading"),
+    nowAccent: document.getElementById("now-accent"),
+    nowProgress: document.getElementById("now-progress"),
+    btnPlay: document.getElementById("btn-play"),
+    btnPrev: document.getElementById("btn-prev"),
+    btnNext: document.getElementById("btn-next"),
+    btnStop: document.getElementById("btn-stop"),
+    optSlow: document.getElementById("opt-slow"),
+    optNormal: document.getElementById("opt-normal"),
+    optTwice: document.getElementById("opt-twice"),
+    optLoop: document.getElementById("opt-loop"),
+    optRandom: document.getElementById("opt-random"),
+    optRestart: document.getElementById("opt-restart"),
+    search: document.getElementById("search")
+  };
+
+  var ROW = {
+    "あ": "row-a", "い": "row-a", "う": "row-a", "え": "row-a", "お": "row-a",
+    "か": "row-ka", "き": "row-ka", "く": "row-ka", "け": "row-ka", "こ": "row-ka",
+    "さ": "row-sa", "し": "row-sa", "す": "row-sa", "せ": "row-sa", "そ": "row-sa",
+    "た": "row-ta", "ち": "row-ta", "つ": "row-ta", "て": "row-ta", "と": "row-ta",
+    "な": "row-na", "に": "row-na", "ぬ": "row-na", "ね": "row-na", "の": "row-na",
+    "は": "row-ha", "ひ": "row-ha", "ふ": "row-ha", "へ": "row-ha", "ほ": "row-ha",
+    "ま": "row-ma", "み": "row-ma", "む": "row-ma", "め": "row-ma", "も": "row-ma",
+    "や": "row-ya", "ゆ": "row-ya", "よ": "row-ya",
+    "ら": "row-ra", "り": "row-ra", "る": "row-ra", "れ": "row-ra", "ろ": "row-ra",
+    "わ": "row-wa"
+  };
+
+  function speakText(word) {
+    return String(word || "").replace(/^[~～〜]+/, "");
+  }
+
+  function accentLabel(a) {
+    if (a === null || a === undefined) return "无音调标注";
+    return "音调 " + a;
+  }
+
+  function loadSettings() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveSettings() {
+    try {
+      var payload = {
+        group: playSource.type === "group" ? playSource.id : viewGroup,
+        index: index,
+        rate: rate,
+        twice: twice,
+        loop: loopOn,
+        random: randomOn
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (e) {}
+  }
+
+  function pickVoice() {
+    if (!window.speechSynthesis) return;
+    var voices = speechSynthesis.getVoices() || [];
+    jaVoice = voices.filter(function (v) { return v.lang === "ja-JP"; })[0]
+      || voices.filter(function (v) { return v.lang && v.lang.toLowerCase().indexOf("ja") === 0; })[0]
+      || null;
+  }
+
+  function waitForVoices() {
+    if (!window.speechSynthesis) return;
+    pickVoice();
+    if (jaVoice || (speechSynthesis.getVoices() || []).length) return;
+    speechSynthesis.addEventListener("voiceschanged", function () { pickVoice(); }, { once: true });
+    setTimeout(pickVoice, 800);
+  }
+
+  async function requestWake() {
+    if (!("wakeLock" in navigator)) return;
+    try {
+      wakeLock = await navigator.wakeLock.request("screen");
+    } catch (e) {
+      wakeLock = null;
+    }
+  }
+
+  async function releaseWake() {
+    if (!wakeLock) return;
+    try { await wakeLock.release(); } catch (e) {}
+    wakeLock = null;
+  }
+
+  function startResumeWatch() {
+    stopResumeWatch();
+    if (!window.speechSynthesis) return;
+    resumeTimer = setInterval(function () {
+      if (!playing || paused) return;
+      try {
+        if (speechSynthesis.speaking) speechSynthesis.resume();
+      } catch (e) {}
+    }, 8000);
+  }
+
+  function stopResumeWatch() {
+    if (resumeTimer) {
+      clearInterval(resumeTimer);
+      resumeTimer = null;
+    }
+  }
+
+  function clearGap() {
+    if (gapTimer) {
+      clearTimeout(gapTimer);
+      gapTimer = null;
+    }
+  }
+
+  function visibleWords() {
+    if (!data) return [];
+    var q = searchQuery.trim();
+    if (q) {
+      var all = [];
+      data.groups.forEach(function (g) {
+        g.words.forEach(function (w, i) {
+          if (w.w.indexOf(q) !== -1 || w.r.indexOf(q) !== -1) {
+            all.push({ word: w, group: g.id, orig: i });
+          }
+        });
+      });
+      return all;
+    }
+    var gid = viewGroup || (data.groups[0] && data.groups[0].id);
+    var g = groupsById[gid];
+    if (!g) return [];
+    return g.words.map(function (w, i) {
+      return { word: w, group: g.id, orig: i };
+    });
+  }
+
+  function buildPlaylist(gid, useRandom) {
+    var g = groupsById[gid];
+    if (!g) return [];
+    var items = g.words.map(function (w, i) {
+      return { word: w, group: g.id, orig: i };
+    });
+    if (useRandom) items = shuffle(items.slice());
+    return items;
+  }
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i];
+      arr[i] = arr[j];
+      arr[j] = t;
+    }
+    return arr;
+  }
+
+  function currentItem() {
+    return playlist[index] || null;
+  }
+
+  function showNow(item) {
+    if (!item) {
+      el.nowWord.textContent = "—";
+      el.nowReading.textContent = searchQuery ? "没有匹配的词" : "请选择一个类别";
+      el.nowAccent.textContent = "";
+      el.nowProgress.textContent = "0 / 0";
+      return;
+    }
+    var w = item.word;
+    el.nowWord.textContent = w.w;
+    el.nowReading.textContent = w.r;
+    el.nowAccent.textContent = accentLabel(w.a);
+    el.nowProgress.textContent = (index + 1) + " / " + playlist.length + " · " + item.group;
+  }
+
+  function highlightList() {
+    var item = currentItem();
+    var nodes = el.list.querySelectorAll(".word");
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var on = item && n.getAttribute("data-group") === item.group && Number(n.getAttribute("data-orig")) === item.orig;
+      n.classList.toggle("current", !!on);
+      if (on) {
+        try { n.scrollIntoView({ block: "center", behavior: "smooth", inline: "nearest" }); } catch (e) {
+          n.scrollIntoView(true);
+        }
+      }
+    }
+  }
+
+  function renderCats() {
+    el.cats.innerHTML = "";
+    data.groups.forEach(function (g) {
+      var wrap = document.createElement("div");
+      wrap.className = "cat " + (ROW[g.id] || "") + (viewGroup === g.id && !searchQuery ? " on" : "");
+      wrap.setAttribute("role", "listitem");
+      wrap.setAttribute("data-group", g.id);
+      var sel = document.createElement("button");
+      sel.type = "button";
+      sel.className = "cat-sel";
+      sel.setAttribute("data-group", g.id);
+      sel.innerHTML = '<span class="kana">' + g.id + '</span><span class="n">' + g.count + '</span>';
+      sel.setAttribute("aria-label", g.id + "行，" + g.count + " 个词");
+      sel.addEventListener("click", function () {
+        el.search.value = "";
+        searchQuery = "";
+        selectGroup(g.id, 0, false);
+      });
+      var play = document.createElement("button");
+      play.type = "button";
+      play.className = "cat-play";
+      play.setAttribute("data-group", g.id);
+      play.setAttribute("aria-label", "播放" + g.id + "行");
+      play.textContent = "▶ 播放";
+      play.addEventListener("click", function () {
+        startGroup(g.id, 0);
+      });
+      wrap.appendChild(sel);
+      wrap.appendChild(play);
+      el.cats.appendChild(wrap);
+    });
+  }
+
+  function renderList() {
+    var items = visibleWords();
+    el.list.innerHTML = "";
+    if (searchQuery.trim()) {
+      el.listTitle.textContent = "搜索「" + searchQuery.trim() + "」";
+      el.listCount.textContent = items.length + " 词";
+    } else {
+      var gid = viewGroup || (data.groups[0] && data.groups[0].id);
+      el.listTitle.textContent = gid + " 行";
+      el.listCount.textContent = items.length + " 词";
+    }
+    if (!items.length) {
+      el.status.hidden = false;
+      el.status.textContent = "没有找到匹配的词。";
+      return;
+    }
+    el.status.hidden = true;
+    var frag = document.createDocumentFragment();
+    items.forEach(function (item) {
+      var w = item.word;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "word";
+      btn.setAttribute("data-group", item.group);
+      btn.setAttribute("data-orig", String(item.orig));
+      var accClass = "acc";
+      var accText = w.a === null || w.a === undefined ? "—" : String(w.a);
+      if (w.a === 1) accClass += " a1";
+      else if (w.a === 0) accClass += "";
+      else if (w.a === null || w.a === undefined) accClass += " ax";
+      else accClass += " an";
+      btn.innerHTML = '<span class="w"></span><span class="r"></span><span class="' + accClass + '"></span>';
+      btn.querySelector(".w").textContent = w.w;
+      btn.querySelector(".r").textContent = w.r;
+      btn.querySelector(".acc").textContent = accText;
+      btn.addEventListener("click", function () { onTapWord(item); });
+      frag.appendChild(btn);
+    });
+    el.list.appendChild(frag);
+    highlightList();
+  }
+
+  function selectGroup(gid, startIndex, keepPlaylist) {
+    viewGroup = gid;
+    if (!keepPlaylist) {
+      playSource = { type: "group", id: gid };
+      playlist = buildPlaylist(gid, randomOn);
+      index = Math.max(0, Math.min(startIndex || 0, Math.max(0, playlist.length - 1)));
+    }
+    renderCats();
+    renderList();
+    showNow(currentItem());
+    highlightList();
+    saveSettings();
+    updateButtons();
+  }
+
+  function updateButtons() {
+    var has = playlist.length > 0;
+    el.btnPrev.disabled = !has;
+    el.btnNext.disabled = !has;
+    el.btnStop.disabled = !playing && !paused;
+    if (playing && !paused) {
+      el.btnPlay.textContent = "暂停";
+      el.btnPlay.setAttribute("aria-label", "暂停");
+    } else if (playing && paused) {
+      el.btnPlay.textContent = "继续";
+      el.btnPlay.setAttribute("aria-label", "继续");
+    } else {
+      el.btnPlay.textContent = "▶ 播放";
+      el.btnPlay.setAttribute("aria-label", "播放");
+    }
+    el.optSlow.classList.toggle("on", rate < 0.95);
+    el.optSlow.setAttribute("aria-pressed", rate < 0.95 ? "true" : "false");
+    el.optNormal.classList.toggle("on", rate >= 0.95);
+    el.optNormal.setAttribute("aria-pressed", rate >= 0.95 ? "true" : "false");
+    el.optTwice.classList.toggle("on", twice);
+    el.optTwice.setAttribute("aria-pressed", twice ? "true" : "false");
+    el.optLoop.classList.toggle("on", loopOn);
+    el.optLoop.setAttribute("aria-pressed", loopOn ? "true" : "false");
+    el.optRandom.classList.toggle("on", randomOn);
+    el.optRandom.setAttribute("aria-pressed", randomOn ? "true" : "false");
+  }
+
+  function cancelSpeech() {
+    clearGap();
+    currentUtterance = null;
+    if (window.speechSynthesis) {
+      try { speechSynthesis.cancel(); } catch (e) {}
+    }
+  }
+
+  function startGroup(gid, startIndex) {
+    el.search.value = "";
+    searchQuery = "";
+    viewGroup = gid;
+    playSource = { type: "group", id: gid };
+    playlist = buildPlaylist(gid, randomOn);
+    index = Math.max(0, Math.min(startIndex || 0, Math.max(0, playlist.length - 1)));
+    pass = 1;
+    renderCats();
+    renderList();
+    beginPlay();
+  }
+
+  function startVisible(startIndex) {
+    var items = visibleWords();
+    if (searchQuery.trim()) {
+      playSource = { type: "search", q: searchQuery.trim() };
+      playlist = randomOn ? shuffle(items.slice()) : items.slice();
+    } else {
+      var gid = viewGroup || (data.groups[0] && data.groups[0].id);
+      playSource = { type: "group", id: gid };
+      playlist = buildPlaylist(gid, randomOn);
+    }
+    index = Math.max(0, Math.min(startIndex || 0, Math.max(0, playlist.length - 1)));
+    pass = 1;
+    beginPlay();
+  }
+
+  function beginPlay() {
+    if (!playlist.length) return;
+    if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") {
+      el.status.hidden = false;
+      el.status.textContent = "这个浏览器不支持朗读。请改用 Safari 或 Chrome。";
+      return;
+    }
+    cmd = null;
+    cancelSpeech();
+    playing = true;
+    paused = false;
+    pickVoice();
+    requestWake();
+    startResumeWatch();
+    showNow(currentItem());
+    highlightList();
+    saveSettings();
+    updateButtons();
+    speakCurrent();
+  }
+
+  function speakCurrent() {
+    var item = currentItem();
+    if (!item) { stopPlay(false); return; }
+    showNow(item);
+    highlightList();
+    saveSettings();
+    var text = speakText(item.word.w);
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "ja-JP";
+    u.rate = rate;
+    if (jaVoice) u.voice = jaVoice;
+    currentUtterance = u;
+    u.onend = function () {
+      if (currentUtterance !== u) return;
+      currentUtterance = null;
+      onEnded("end");
+    };
+    u.onerror = function (ev) {
+      if (currentUtterance !== u) return;
+      currentUtterance = null;
+      var err = ev && ev.error;
+      onEnded(err === "canceled" || err === "interrupted" ? "cancel" : "error");
+    };
+    try {
+      speechSynthesis.speak(u);
+    } catch (e) {
+      onEnded("error");
+    }
+  }
+
+  function onEnded(kind) {
+    if (cmd === "stop" || !playing) return;
+    if (cmd === "pause") return;
+    if (cmd === "skip") {
+      cmd = null;
+      pass = 1;
+      if (playing && !paused) speakCurrent();
+      return;
+    }
+    if (kind === "cancel") return;
+    if (kind !== "end") {
+      paused = true;
+      cmd = "pause";
+      clearGap();
+      updateButtons();
+      return;
+    }
+    if (twice && pass === 1) {
+      pass = 2;
+      scheduleGap(REPEAT_GAP_MS, function () {
+        if (playing && !paused && cmd == null) speakCurrent();
+      });
+      return;
+    }
+    scheduleGap(GAP_MS, advanceAndSpeak);
+  }
+
+  function scheduleGap(ms, fn) {
+    clearGap();
+    if (ms <= 0) {
+      fn();
+      return;
+    }
+    gapTimer = setTimeout(function () {
+      gapTimer = null;
+      fn();
+    }, ms);
+  }
+
+  function advanceAndSpeak() {
+    if (!playing || paused || cmd === "stop") return;
+    if (cmd === "skip") {
+      cmd = null;
+      pass = 1;
+      speakCurrent();
+      return;
+    }
+    if (cmd === "pause") return;
+    index += 1;
+    if (index >= playlist.length) {
+      if (loopOn) {
+        index = 0;
+      } else {
+        index = Math.max(0, playlist.length - 1);
+        stopPlay(false);
+        showNow(currentItem());
+        highlightList();
+        return;
+      }
+    }
+    pass = 1;
+    speakCurrent();
+  }
+
+  function stopPlay(resetIndex) {
+    cmd = "stop";
+    playing = false;
+    paused = false;
+    pass = 1;
+    cancelSpeech();
+    stopResumeWatch();
+    releaseWake();
+    if (resetIndex) {
+      index = 0;
+      showNow(currentItem());
+      highlightList();
+    }
+    saveSettings();
+    updateButtons();
+  }
+
+  function pausePlay() {
+    if (!playing || paused) return;
+    paused = true;
+    cmd = "pause";
+    clearGap();
+    if (window.speechSynthesis) {
+      try { speechSynthesis.pause(); } catch (e) {}
+      setTimeout(function () {
+        if (playing && paused && speechSynthesis.speaking && !speechSynthesis.paused) {
+          try { speechSynthesis.cancel(); } catch (e) {}
+        }
+      }, 120);
+    }
+    updateButtons();
+  }
+
+  function resumePlay() {
+    if (!playing || !paused) return;
+    paused = false;
+    cmd = null;
+    pickVoice();
+    requestWake();
+    startResumeWatch();
+    updateButtons();
+    if (window.speechSynthesis && speechSynthesis.paused) {
+      try { speechSynthesis.resume(); return; } catch (e) {}
+    }
+    pass = 1;
+    speakCurrent();
+  }
+
+  function skipTo(nextIndex) {
+    if (!playlist.length) return;
+    index = Math.max(0, Math.min(nextIndex, playlist.length - 1));
+    pass = 1;
+    showNow(currentItem());
+    highlightList();
+    saveSettings();
+    if (playing && !paused) {
+      cmd = "skip";
+      cancelSpeech();
+      speakCurrent();
+    }
+    updateButtons();
+  }
+
+  function onTapWord(item) {
+    if (searchQuery.trim()) {
+      var items = visibleWords();
+      playSource = { type: "search", q: searchQuery.trim() };
+      playlist = randomOn ? shuffle(items.slice()) : items.slice();
+    } else if (playSource.type !== "group" || playSource.id !== item.group || !playlist.length) {
+      playSource = { type: "group", id: item.group };
+      viewGroup = item.group;
+      playlist = buildPlaylist(item.group, randomOn);
+    }
+    var found = -1;
+    for (var i = 0; i < playlist.length; i++) {
+      if (playlist[i].group === item.group && playlist[i].orig === item.orig) {
+        found = i;
+        break;
+      }
+    }
+    if (found < 0) return;
+    index = found;
+    pass = 1;
+    showNow(currentItem());
+    highlightList();
+    saveSettings();
+    if (playing && !paused) {
+      cmd = "skip";
+      cancelSpeech();
+      speakCurrent();
+    } else if (!playing) {
+      speakOnce(item.word.w);
+    }
+    updateButtons();
+  }
+
+  function speakOnce(word) {
+    if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
+    pickVoice();
+    try { speechSynthesis.cancel(); } catch (e) {}
+    var u = new SpeechSynthesisUtterance(speakText(word));
+    u.lang = "ja-JP";
+    u.rate = rate;
+    if (jaVoice) u.voice = jaVoice;
+    currentUtterance = null;
+    speechSynthesis.speak(u);
+  }
+
+  function togglePlay() {
+    if (playing && !paused) {
+      pausePlay();
+      return;
+    }
+    if (playing && paused) {
+      resumePlay();
+      return;
+    }
+    if (!playlist.length || (searchQuery.trim() && playSource.type !== "search")) {
+      startVisible(index);
+      return;
+    }
+    beginPlay();
+  }
+
+  el.btnPlay.addEventListener("click", togglePlay);
+  el.btnStop.addEventListener("click", function () { stopPlay(false); });
+  el.btnPrev.addEventListener("click", function () { skipTo(index - 1); });
+  el.btnNext.addEventListener("click", function () { skipTo(index + 1); });
+  el.optSlow.addEventListener("click", function () { rate = 0.7; saveSettings(); updateButtons(); });
+  el.optNormal.addEventListener("click", function () { rate = 1; saveSettings(); updateButtons(); });
+  el.optTwice.addEventListener("click", function () { twice = !twice; saveSettings(); updateButtons(); });
+  el.optLoop.addEventListener("click", function () { loopOn = !loopOn; saveSettings(); updateButtons(); });
+  el.optRandom.addEventListener("click", function () {
+    randomOn = !randomOn;
+    var cur = currentItem();
+    if (playSource.type === "group" && playSource.id) {
+      playlist = buildPlaylist(playSource.id, randomOn);
+    } else if (playSource.type === "search") {
+      playlist = randomOn ? shuffle(visibleWords().slice()) : visibleWords().slice();
+    }
+    if (cur) {
+      var found = -1;
+      for (var i = 0; i < playlist.length; i++) {
+        if (playlist[i].group === cur.group && playlist[i].orig === cur.orig) { found = i; break; }
+      }
+      index = found >= 0 ? found : 0;
+    } else {
+      index = 0;
+    }
+    showNow(currentItem());
+    highlightList();
+    saveSettings();
+    updateButtons();
+  });
+  el.optRestart.addEventListener("click", function () {
+    index = 0;
+    pass = 1;
+    showNow(currentItem());
+    highlightList();
+    saveSettings();
+    if (playing && !paused) {
+      cmd = "skip";
+      cancelSpeech();
+      speakCurrent();
+    }
+    updateButtons();
+  });
+
+  var searchTimer = null;
+  el.search.addEventListener("input", function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function () {
+      searchQuery = el.search.value || "";
+      renderCats();
+      renderList();
+    }, 120);
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && playing && !paused) {
+      requestWake();
+      try { if (window.speechSynthesis) speechSynthesis.resume(); } catch (e) {}
+    }
+  });
+
+  window.__kanjiPlayer = {
+    getState: function () {
+      var item = currentItem();
+      return {
+        playing: playing,
+        paused: paused,
+        index: index,
+        group: playSource.id,
+        source: playSource.type,
+        rate: rate,
+        twice: twice,
+        loop: loopOn,
+        random: randomOn,
+        total: playlist.length,
+        word: item ? item.word.w : null,
+        reading: item ? item.word.r : null,
+        speakText: item ? speakText(item.word.w) : null,
+        gap: GAP_MS
+      };
+    },
+    setGap: function (ms) { GAP_MS = Number(ms) || 0; REPEAT_GAP_MS = Math.min(REPEAT_GAP_MS, GAP_MS); },
+    playGroup: function (id, start) { startGroup(id, start || 0); },
+    next: function () { skipTo(index + 1); },
+    prev: function () { skipTo(index - 1); },
+    stop: function () { stopPlay(false); },
+    pause: function () { pausePlay(); },
+    resume: function () { resumePlay(); },
+    speakText: speakText
+  };
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register(new URL("../sw.js", location.href)).catch(function () {});
+  }
+
+  fetch("words.json")
+    .then(function (res) {
+      if (!res.ok) throw new Error("load failed");
+      return res.json();
+    })
+    .then(function (json) {
+      data = json;
+      json.groups.forEach(function (g) { groupsById[g.id] = g; });
+      var s = loadSettings();
+      if (typeof s.rate === "number") rate = s.rate >= 0.95 ? 1 : 0.7;
+      if (s.twice) twice = true;
+      if (s.loop) loopOn = true;
+      if (s.random) randomOn = true;
+      var gid = s.group && groupsById[s.group] ? s.group : json.groups[0].id;
+      var start = typeof s.index === "number" ? s.index : 0;
+      el.status.hidden = true;
+      selectGroup(gid, start, false);
+      waitForVoices();
+    })
+    .catch(function () {
+      el.status.hidden = false;
+      el.status.textContent = "词表载入失败。请检查网络后刷新。";
+    });
+})();
+</script>
+</body>
+</html>

@@ -256,6 +256,17 @@
     @media (prefers-color-scheme: dark) {
       .card.sprint { background: #0b2e2b; color: #5eead4; }
     }
+    .card.kanji-card {
+      grid-column: 1 / -1;
+      min-height: 72px;
+      background: linear-gradient(135deg, #eef2ff, #ecfeff);
+      color: #3730a3;
+      border: 1px solid color-mix(in srgb, #4f46e5 25%, var(--line));
+    }
+    @media (prefers-color-scheme: dark) {
+      .card.kanji-card { background: #1e1b4b; color: #a5b4fc; }
+    }
+    .level.kanji { border-color: color-mix(in srgb, #4f46e5 25%, var(--line)); }
     @media (max-width: 359px) {
       .grid { grid-template-columns: 1fr; }
     }
@@ -268,7 +279,7 @@
       <img src="icons/icon-192.png" width="56" height="56" alt="">
       <h1>日语复习</h1>
     </div>
-    <p class="tagline">JLPT N2 与《できる日本語》初級・初中級・中級的词汇和语法复习。适合手机，点进去即可朗读、筛选和标记。</p>
+    <p class="tagline">JLPT N2 与《できる日本語》初級・初中級・中級的词汇和语法复习，以及汉字同源词分组朗读。适合手机，点进去即可朗读、筛选和标记。</p>
     <div id="install-box" class="install-box">
       <button type="button" id="install-btn" class="install-btn">📲 添加到桌面</button>
       <p id="install-hint" class="install-hint" hidden></p>
@@ -281,6 +292,17 @@
         <span class="sub">单词 + 语法 · 自他动词对照 · 近义／易混辨析</span>
       </a>
     </div>
+    <section aria-labelledby="kanji-title">
+      <h2 id="kanji-title">汉字同源词 <span class="count">一天三练</span></h2>
+      <div class="level kanji">
+        <div class="grid">
+          <a class="card kanji-card" href="kanji-words/">
+            <span class="label">▶ 按五十音分组朗读</span>
+            <span class="num">1,901 词 · 写法、意思与汉字相同 · 点一类慢慢读完</span>
+          </a>
+        </div>
+      </div>
+    </section>
     <section aria-labelledby="n2-title">
       <h2 id="n2-title">N2 <span class="count">2,091 项</span></h2>
       <div class="level n2">
