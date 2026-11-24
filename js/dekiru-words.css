@@ -27,6 +27,13 @@ html[data-level="shochukyu"] {
   --cur: #f0fdfa;
   --header: linear-gradient(135deg, #0f766e 0%, #0e7490 50%, #4f46e5 100%);
 }
+html[data-level="all"] {
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --soft: #f0fdfa;
+  --cur: #f0fdfa;
+  --header: linear-gradient(135deg, #5b21b6 0%, #0f766e 55%, #4f46e5 100%);
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0f172a;
@@ -50,6 +57,12 @@ html[data-level="shochukyu"] {
     --othbg: #4a1040;
   }
   html[data-level="shochukyu"] {
+    --accent: #5eead4;
+    --accent-ink: #0b2e2b;
+    --soft: #0b2e2b;
+    --cur: #0b2e2b;
+  }
+  html[data-level="all"] {
     --accent: #5eead4;
     --accent-ink: #0b2e2b;
     --soft: #0b2e2b;
@@ -267,3 +280,38 @@ footer {
 .ex-head .txt { flex: 1 1 auto; min-width: 0; }
 ruby { ruby-align: center; }
 rt { font-size: 0.65em; color: var(--muted); font-weight: 650; }
+
+.level-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.level-filters button {
+  min-height: 48px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.level-filters button.on {
+  background: #fff;
+  color: #0f766e;
+  border-color: #fff;
+}
+.level-filters button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+.badge.lv-sk { background: #f5f3ff; color: #6d28d9; }
+.badge.lv-sc { background: #f0fdfa; color: #0f766e; }
+@media (prefers-color-scheme: dark) {
+  .badge.lv-sk { background: #2e1065; color: #c4b5fd; }
+  .badge.lv-sc { background: #0b2e2b; color: #5eead4; }
+}
+
+.word .lv { display:flex; flex-wrap:wrap; gap:4px; justify-content:flex-end; }

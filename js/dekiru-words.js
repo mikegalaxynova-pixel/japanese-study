@@ -2,13 +2,15 @@
   "use strict";
 
   var cfg = window.DEKIRU_CONFIG || {};
-  var STORAGE_KEY = cfg.storageKey || "dekiru_words_v1";
+  var STORAGE_KEY = cfg.storageKey || "dekiru_words_v2";
   var GAP_MS = 1500;
   var REPEAT_GAP_MS = 400;
   var RB = /\{([^{}|]+)\|([^{}|]+)\}/g;
 
   var data = null;
   var groupsById = {};
+  var filteredGroups = [];
+  var filterLevel = "all";
   var viewGroup = null;
   var playlist = [];
   var playSource = { type: "group", id: null };
@@ -83,7 +85,8 @@
         rate: rate,
         twice: twice,
         loop: loopOn,
-        random: randomOn
+        random: randomOn,
+        filter: filterLevel
       }));
     } catch (e) {}
   }
@@ -135,8 +138,8 @@
 
   function allWords() {
     var out = [];
-    if (!data) return out;
-    data.groups.forEach(function (g) {
+    if (!filteredGroups.length) return out;
+    filteredGroups.forEach(function (g) {
       g.words.forEach(function (w, i) {
         out.push({ word: w, group: g.id, orig: i });
       });
@@ -157,7 +160,7 @@
           || (w.en && String(w.en).toLowerCase().indexOf(nq) !== -1);
       });
     }
-    var gid = viewGroup || (data.groups[0] && data.groups[0].id);
+    var gid = viewGroup || (filteredGroups[0] && filteredGroups[0].id);
     var g = groupsById[gid];
     if (!g) return [];
     return g.words.map(function (w, i) { return { word: w, group: g.id, orig: i }; });
@@ -213,7 +216,7 @@
 
   function renderCats() {
     el.cats.innerHTML = "";
-    data.groups.forEach(function (g) {
+    filteredGroups.forEach(function (g) {
       var wrap = document.createElement("div");
       wrap.className = "cat" + (viewGroup === g.id && !searchQuery ? " on" : "");
       wrap.setAttribute("role", "listitem");
@@ -250,7 +253,7 @@
       el.listTitle.textContent = "搜索「" + searchQuery.trim() + "」";
       el.listCount.textContent = items.length + " 词";
     } else {
-      var gid = viewGroup || (data.groups[0] && data.groups[0].id);
+      var gid = viewGroup || (filteredGroups[0] && filteredGroups[0].id);
       el.listTitle.textContent = gid + " 行";
       el.listCount.textContent = items.length + " 词";
     }
@@ -272,12 +275,13 @@
       row.setAttribute("data-id", w.id);
       var pos = w.posd ? w.pos + " · " + w.posd : w.pos;
       row.innerHTML = '<div class="main"><span class="w"></span><span class="r"></span><span class="zh"></span></div>'
-        + '<div class="meta"><span class="badge ' + posClass(w.pos) + '"></span></div>'
+        + '<div class="meta"><span class="lv"></span><span class="badge ' + posClass(w.pos) + '"></span></div>'
         + '<button type="button" class="say" aria-label="朗读">🔊</button>';
       row.querySelector(".w").textContent = w.w;
       row.querySelector(".r").textContent = w.r;
       row.querySelector(".zh").textContent = w.zh || "";
       row.querySelector(".badge").textContent = pos;
+      row.querySelector(".lv").innerHTML = levelBadgeHtml(w);
       row.querySelector(".say").addEventListener("click", function (ev) {
         ev.stopPropagation();
         speakOnce(speakText(w.w));
@@ -364,7 +368,7 @@
       playSource = { type: "search", q: searchQuery.trim() };
       playlist = randomOn ? shuffle(items.slice()) : items.slice();
     } else {
-      var gid = viewGroup || (data.groups[0] && data.groups[0].id);
+      var gid = viewGroup || (filteredGroups[0] && filteredGroups[0].id);
       playSource = { type: "group", id: gid };
       playlist = buildPlaylist(gid, randomOn);
     }
@@ -578,6 +582,116 @@
     beginPlay();
   }
 
+  function levelBadgeHtml(w) {
+    var html = "";
+    (w.levels || []).forEach(function (lv) {
+      if (lv === "shokyu") html += badgeHtml("初級", "lv-sk");
+      else if (lv === "shochukyu") html += badgeHtml("初中級", "lv-sc");
+    });
+    return html;
+  }
+
+  function wordInFilter(w) {
+    if (filterLevel === "all") return true;
+    return (w.levels || []).indexOf(filterLevel) !== -1;
+  }
+
+  function rebuildGroups() {
+    groupsById = {};
+    filteredGroups = [];
+    if (!data) return;
+    (data.groups || []).forEach(function (g) {
+      var words = (g.words || []).filter(wordInFilter);
+      if (!words.length) return;
+      var ng = { id: g.id, count: words.length, words: words };
+      filteredGroups.push(ng);
+      groupsById[g.id] = ng;
+    });
+  }
+
+  function filteredTotal() {
+    var n = 0;
+    filteredGroups.forEach(function (g) { n += g.count; });
+    return n;
+  }
+
+  function updateChrome() {
+    document.documentElement.setAttribute("data-level", filterLevel === "all" ? "all" : filterLevel);
+    var buttons = document.querySelectorAll(".level-filters button");
+    for (var i = 0; i < buttons.length; i++) {
+      var on = buttons[i].getAttribute("data-level") === filterLevel;
+      buttons[i].classList.toggle("on", on);
+      buttons[i].setAttribute("aria-pressed", on ? "true" : "false");
+    }
+    var titles = {
+      all: "できる日本語 初級＋初中級",
+      shokyu: "できる日本語 初級",
+      shochukyu: "できる日本語 初中級"
+    };
+    var h1 = document.getElementById("page-title");
+    var lead = document.getElementById("lead");
+    if (h1) h1.textContent = titles[filterLevel] || titles.all;
+    var n = filteredTotal();
+    if (lead) {
+      if (filterLevel === "all") {
+        lead.textContent = "初級与初中級共 " + n + " 个单词（同一词、同一读音已合并），按五十音统一复习。也可以只看初級或初中級。点一类的 ▶ 播放会慢慢读完；点单词可看详情。";
+      } else if (filterLevel === "shokyu") {
+        lead.textContent = "初級 " + n + " 个单词按五十音分组。点一类的 ▶ 播放，会慢慢把这类词全部读出来；点单词可看详情。";
+      } else {
+        lead.textContent = "初中級 " + n + " 个单词（含第7–9课课内短语）按五十音分组。点一类的 ▶ 播放，会慢慢把这类词全部读出来；点单词可看详情。";
+      }
+    }
+    document.title = (titles[filterLevel] || titles.all) + "单词朗读｜按五十音";
+  }
+
+  function syncUrl() {
+    try {
+      var url = new URL(location.href);
+      url.searchParams.set("level", filterLevel);
+      history.replaceState(null, "", url.pathname + url.search + url.hash);
+    } catch (e) {}
+  }
+
+  function setFilter(lv) {
+    if (lv !== "shokyu" && lv !== "shochukyu") lv = "all";
+    var cur = currentItem();
+    if (playing) stopPlay(false);
+    filterLevel = lv;
+    rebuildGroups();
+    var gid = null;
+    var start = 0;
+    if (cur) {
+      for (var i = 0; i < filteredGroups.length; i++) {
+        var g = filteredGroups[i];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          if (w.id === cur.word.id || (w.w === cur.word.w && w.r === cur.word.r)) {
+            gid = g.id;
+            start = j;
+            break;
+          }
+        }
+        if (gid) break;
+      }
+    }
+    if (!gid) {
+      gid = groupsById[viewGroup] ? viewGroup : (filteredGroups[0] && filteredGroups[0].id);
+      start = 0;
+    }
+    if (gid) selectGroup(gid, start, false);
+    else {
+      playlist = [];
+      index = 0;
+      renderCats();
+      renderList();
+      showNow(null);
+      updateButtons();
+    }
+    updateChrome();
+    syncUrl();
+    saveSettings();
+  }
+
   function badgeHtml(text, cls) {
     if (!text) return "";
     return '<span class="badge ' + (cls || "") + '">' + esc(text) + "</span>";
@@ -595,6 +709,7 @@
     html += "</div>";
     html += '<div class="sheet-zh"></div>';
     html += '<div class="sheet-row">';
+    html += levelBadgeHtml(w);
     html += badgeHtml(w.posd ? w.pos + " · " + w.posd : w.pos, posClass(w.pos));
     (w.lessons || []).forEach(function (ls) { html += badgeHtml(ls, "book"); });
     html += badgeHtml(w.book === false ? "书里没有" : (w.book ? "课本" : ""), w.book === false ? "extra" : "book");
@@ -840,9 +955,12 @@
         speakText: item ? speakText(item.word.w) : null,
         gap: GAP_MS,
         sheetOpen: !!(el.sheet && !el.sheet.hidden),
-        sheetWord: sheetItem ? sheetItem.word.w : null
+        sheetWord: sheetItem ? sheetItem.word.w : null,
+        filter: filterLevel,
+        filteredTotal: filteredTotal()
       };
     },
+    setFilter: setFilter,
     setGap: function (ms) { GAP_MS = Number(ms) || 0; REPEAT_GAP_MS = Math.min(REPEAT_GAP_MS, GAP_MS); },
     playGroup: function (id, start) { startGroup(id, start || 0); },
     next: function () { skipTo(index + 1); },
@@ -859,7 +977,7 @@
   };
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register(new URL("../../sw.js", location.href)).catch(function () {});
+    navigator.serviceWorker.register(new URL(cfg.swUrl || "../sw.js", location.href)).catch(function () {});
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -871,16 +989,24 @@
       })
       .then(function (json) {
         data = json;
-        json.groups.forEach(function (g) { groupsById[g.id] = g; });
         var s = loadSettings();
         if (typeof s.rate === "number") rate = s.rate >= 0.95 ? 1 : 0.7;
         if (s.twice) twice = true;
         if (s.loop) loopOn = true;
         if (s.random) randomOn = true;
-        var gid = s.group && groupsById[s.group] ? s.group : json.groups[0].id;
+        var q = "";
+        try { q = new URLSearchParams(location.search).get("level") || ""; } catch (e) {}
+        if (q === "shokyu" || q === "shochukyu" || q === "all") filterLevel = q;
+        else if (s.filter === "shokyu" || s.filter === "shochukyu" || s.filter === "all") filterLevel = s.filter;
+        else filterLevel = "all";
+        rebuildGroups();
+        updateChrome();
+        var gid = s.group && groupsById[s.group] ? s.group : (filteredGroups[0] && filteredGroups[0].id);
         var start = typeof s.index === "number" ? s.index : 0;
+        if (gid && start >= (groupsById[gid] && groupsById[gid].count || 0)) start = 0;
         el.status.hidden = true;
-        selectGroup(gid, start, false);
+        if (gid) selectGroup(gid, start, false);
+        syncUrl();
         waitForVoices();
       })
       .catch(function () {

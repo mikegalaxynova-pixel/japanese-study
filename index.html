@@ -277,6 +277,16 @@
       .shokyu .card.words-card { background: #2e1065; }
       .shochu .card.words-card { background: #0b2e2b; }
     }
+    .card.words-all {
+      grid-column: 1 / -1;
+      min-height: 72px;
+      background: linear-gradient(135deg, #f5f3ff, #f0fdfa);
+      color: #0f766e;
+      border: 1px solid color-mix(in srgb, #0f766e 25%, var(--line));
+    }
+    @media (prefers-color-scheme: dark) {
+      .card.words-all { background: #0b2e2b; color: #5eead4; }
+    }
     @media (max-width: 359px) {
       .grid { grid-template-columns: 1fr; }
     }
@@ -327,10 +337,18 @@
     </section>
     <section aria-labelledby="dekiru-title">
       <h2 id="dekiru-title">できる日本語 <span class="count">课本复习</span></h2>
+      <div class="level kanji" style="margin-bottom:14px">
+        <div class="grid">
+          <a class="card words-all" href="dekiru-words/?level=all">
+            <span class="label">▶ 初級＋初中級 统一朗读</span>
+            <span class="num">1,873 词（相同词已合并）· 按五十音分组 · 点开可看详情</span>
+          </a>
+        </div>
+      </div>
       <div class="level shokyu">
         <h3>初級 <span class="sub">第 1–15 课 · 1,107 项</span></h3>
         <div class="grid">
-          <a class="card words-card" href="shokyu/words/"><span class="label">▶ 按五十音分组朗读</span><span class="num">971 词 · 点一类慢慢读完 · 可看详情</span></a>
+          <a class="card words-card" href="dekiru-words/?level=shokyu"><span class="label">▶ 只看初級 · 按五十音朗读</span><span class="num">971 词 · 点一类慢慢读完 · 可看详情</span></a>
           <a class="card" href="shokyu/verbs.html"><span class="label">动词</span><span class="num">183 词</span></a>
           <a class="card" href="shokyu/adjectives.html"><span class="label">形容词</span><span class="num">97 词</span></a>
           <a class="card" href="shokyu/nouns.html"><span class="label">名词</span><span class="num">691 词</span></a>
@@ -340,7 +358,7 @@
       <div class="level shochu">
         <h3>初中級 <span class="sub">第 1–15 课 · 1,097 项</span></h3>
         <div class="grid">
-          <a class="card words-card" href="shochukyu/words/"><span class="label">▶ 按五十音分组朗读</span><span class="num">984 词 · 含第7–9课短语 · 点一类慢慢读完 · 可看详情</span></a>
+          <a class="card words-card" href="dekiru-words/?level=shochukyu"><span class="label">▶ 只看初中級 · 按五十音朗读</span><span class="num">984 词 · 含第7–9课短语 · 点一类慢慢读完 · 可看详情</span></a>
           <a class="card sprint" href="shochukyu/lesson7-9.html"><span class="label">📖 第7〜9课 考前冲刺</span><span class="num">217 词 + 24 条语法 · 自他对照 · 易混辨析</span></a>
           <a class="card" href="shochukyu/verbs.html"><span class="label">动词</span><span class="num">289 词</span></a>
           <a class="card" href="shochukyu/adjectives.html"><span class="label">形容词</span><span class="num">63 词</span></a>
