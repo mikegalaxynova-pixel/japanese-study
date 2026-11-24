@@ -267,6 +267,16 @@
       .card.kanji-card { background: #1e1b4b; color: #a5b4fc; }
     }
     .level.kanji { border-color: color-mix(in srgb, #4f46e5 25%, var(--line)); }
+    .card.words-card {
+      grid-column: 1 / -1;
+      min-height: 72px;
+    }
+    .shokyu .card.words-card { background: linear-gradient(135deg, #f5f3ff, #ecfeff); }
+    .shochu .card.words-card { background: linear-gradient(135deg, #f0fdfa, #eef2ff); }
+    @media (prefers-color-scheme: dark) {
+      .shokyu .card.words-card { background: #2e1065; }
+      .shochu .card.words-card { background: #0b2e2b; }
+    }
     @media (max-width: 359px) {
       .grid { grid-template-columns: 1fr; }
     }
@@ -320,6 +330,7 @@
       <div class="level shokyu">
         <h3>初級 <span class="sub">第 1–15 课 · 1,107 项</span></h3>
         <div class="grid">
+          <a class="card words-card" href="shokyu/words/"><span class="label">▶ 按五十音分组朗读</span><span class="num">971 词 · 点一类慢慢读完 · 可看详情</span></a>
           <a class="card" href="shokyu/verbs.html"><span class="label">动词</span><span class="num">183 词</span></a>
           <a class="card" href="shokyu/adjectives.html"><span class="label">形容词</span><span class="num">97 词</span></a>
           <a class="card" href="shokyu/nouns.html"><span class="label">名词</span><span class="num">691 词</span></a>
@@ -329,6 +340,7 @@
       <div class="level shochu">
         <h3>初中級 <span class="sub">第 1–15 课 · 1,097 项</span></h3>
         <div class="grid">
+          <a class="card words-card" href="shochukyu/words/"><span class="label">▶ 按五十音分组朗读</span><span class="num">984 词 · 含第7–9课短语 · 点一类慢慢读完 · 可看详情</span></a>
           <a class="card sprint" href="shochukyu/lesson7-9.html"><span class="label">📖 第7〜9课 考前冲刺</span><span class="num">217 词 + 24 条语法 · 自他对照 · 易混辨析</span></a>
           <a class="card" href="shochukyu/verbs.html"><span class="label">动词</span><span class="num">289 词</span></a>
           <a class="card" href="shochukyu/adjectives.html"><span class="label">形容词</span><span class="num">63 词</span></a>

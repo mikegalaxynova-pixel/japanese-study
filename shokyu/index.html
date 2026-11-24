@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>できる日本語 初級｜できる日本語</title>
+<meta name="description" content="できる日本語 初級单词、语法复习，以及按五十音分组朗读。">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="日语复习">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+<style>
+:root { --bg:#f4f6fb; --panel:#fff; --ink:#172033; --muted:#4b5568; --line:#e2e6ef; --accent:#7c3aed; --accent-ink:#fff; --soft:#f5f3ff; --shadow:0 8px 24px rgba(23,32,51,.07); }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0f172a; --panel:#1e293b; --ink:#f1f5f9; --muted:#94a3b8; --line:#334155; --accent:#c4b5fd; --accent-ink:#2e1065; --soft:#2e1065; --shadow:none; }
+}
+* { box-sizing:border-box; }
+html { overflow-x:hidden; max-width:100%; -webkit-text-size-adjust:100%; }
+body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans CJK JP","PingFang SC","Noto Sans SC",sans-serif; }
+.site-home { display:inline-flex; align-items:center; min-height:48px; color:#fff; font-weight:700; text-decoration:none; }
+header { padding:16px max(16px,env(safe-area-inset-right)) 20px max(16px,env(safe-area-inset-left)); background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; }
+h1 { margin:0 0 6px; font-size:clamp(22px,6.4vw,32px); }
+header p { margin:0; opacity:.94; }
+main { padding:20px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left)); max-width:840px; margin:0 auto; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.card { display:flex; flex-direction:column; justify-content:center; min-height:72px; padding:12px 14px; border-radius:14px; text-decoration:none; background:var(--panel); border:1px solid var(--line); color:var(--accent); font-weight:700; box-shadow:var(--shadow); }
+.card.wide { grid-column:1 / -1; }
+.card .label { font-size:1.05rem; }
+.card .num { font-size:.92rem; font-weight:650; opacity:.9; margin-top:2px; }
+.card:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+@media (max-width:359px) { .grid { grid-template-columns:1fr; } }
+footer { padding:8px max(16px,env(safe-area-inset-right)) 32px max(16px,env(safe-area-inset-left)); color:var(--muted); font-size:.9rem; max-width:840px; margin:0 auto; }
+</style>
+</head>
+<body>
+<header>
+  <a class="site-home" href="../index.html">← 首页</a>
+  <h1>できる日本語 初級</h1>
+  <p>第 1–15 课 · 单词按五十音朗读，也可以按词性分类复习。</p>
+</header>
+<main>
+  <div class="grid">
+      <a class="card wide" href="words/"><span class="label">▶ 按五十音分组朗读</span><span class="num">971 词 · 点一类慢慢读完 · 可看详情</span></a>
+      <a class="card" href="verbs.html"><span class="label">动词</span><span class="num">183 词</span></a>
+      <a class="card" href="adjectives.html"><span class="label">形容词</span><span class="num">97 词</span></a>
+      <a class="card" href="nouns.html"><span class="label">名词</span><span class="num">691 词</span></a>
+      <a class="card" href="grammar.html"><span class="label">语法</span><span class="num">136 条</span></a>
+  </div>
+</main>
+<footer><p>个人学习用复习页。词表来自课本学习笔记，不是官方电子书。</p></footer>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register(new URL("../sw.js", location.href)).catch(function () {});
+}
+</script>
+</body>
+</html>

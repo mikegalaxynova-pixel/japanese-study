@@ -1,5 +1,5 @@
 /* Basic offline cache for the Japanese study static pages. */
-const CACHE_NAME = "japanese-study-v5";
+const CACHE_NAME = "japanese-study-v6";
 const PRECACHE = [
   "./",
   "./index.html",
@@ -11,14 +11,26 @@ const PRECACHE = [
   "./icons/icon-512-maskable.png",
   "./icons/apple-touch-icon.png",
   "./icons/favicon-32.png",
+  "./js/dekiru-words.css",
+  "./js/dekiru-words.js",
   "./n2/verbs.html",
   "./n2/adjectives.html",
   "./n2/nouns.html",
   "./n2/grammar.html",
+  "./shokyu/",
+  "./shokyu/index.html",
+  "./shokyu/words/",
+  "./shokyu/words/index.html",
+  "./shokyu/words/words.json",
   "./shokyu/verbs.html",
   "./shokyu/adjectives.html",
   "./shokyu/nouns.html",
   "./shokyu/grammar.html",
+  "./shochukyu/",
+  "./shochukyu/index.html",
+  "./shochukyu/words/",
+  "./shochukyu/words/index.html",
+  "./shochukyu/words/words.json",
   "./shochukyu/verbs.html",
   "./shochukyu/adjectives.html",
   "./shochukyu/nouns.html",

@@ -133,11 +133,18 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .site-home:hover{text-decoration:underline}
 .site-home:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
 
+
+    .header-links { display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center; }
+    .site-kana { display:inline-flex; align-items:center; min-height:48px; color:#fff; font-weight:700; font-size:16px; text-decoration:none; }
+    .site-kana:focus-visible { outline:2px solid #fff; outline-offset:3px; border-radius:4px; }
 </style>
 </head>
 <body>
 <header>
+  <div class="header-links">
   <a class="site-home" href="../index.html">← 首页</a>
+  <a class="site-kana" href="words/">▶ 五十音朗读</a>
+</div>
   <h1>できる日本語 初級<br>名词复习</h1>
   <p>按含义分类 · 平假名注音 · 对照记忆 · する名词 · 搭配例句 · 量词速查</p>
   <div class="stats" id="stats"></div>
