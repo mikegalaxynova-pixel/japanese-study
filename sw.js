@@ -1,5 +1,5 @@
 /* Basic offline cache for the Japanese study static pages. */
-const CACHE_NAME = "japanese-study-v7";
+const CACHE_NAME = "japanese-study-v8";
 const PRECACHE = [
   "./",
   "./index.html",
@@ -73,6 +73,23 @@ self.addEventListener("fetch", function (event) {
   if (event.request.method !== "GET") return;
   var url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
+  var isPage = event.request.mode === "navigate" || /\.(html|json)$/.test(url.pathname) || url.pathname.endsWith("/");
+  if (isPage) {
+    event.respondWith(
+      fetch(event.request).then(function (response) {
+        if (response && response.ok) {
+          var copy = response.clone();
+          caches.open(CACHE_NAME).then(function (cache) { cache.put(event.request, copy); });
+        }
+        return response;
+      }).catch(function () {
+        return caches.match(event.request).then(function (cached) {
+          return cached || caches.match("./index.html");
+        });
+      })
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then(function (cached) {
       if (cached) return cached;
