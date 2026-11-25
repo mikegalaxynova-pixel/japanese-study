@@ -315,3 +315,20 @@ rt { font-size: 0.65em; color: var(--muted); font-weight: 650; }
 }
 
 .word .lv { display:flex; flex-wrap:wrap; gap:4px; justify-content:flex-end; }
+
+/* Compact player: no big now-card, more room for the list */
+.player-wrap .now { display: none; }
+.player-wrap { padding-top: 6px; padding-bottom: 6px; }
+.player-wrap .controls { margin-top: 0; }
+.player-wrap .controls button, .player-wrap .opts button { min-height: 42px; }
+.player-wrap .opts { margin-top: 6px; }
+header .hint-head { color: #fff; opacity: 0.85; margin-top: 8px; }
+@media (min-width: 700px) {
+  .player-wrap { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .player-wrap .controls { flex: 1 1 380px; }
+  .player-wrap .opts { margin-top: 0; flex: 0 1 auto; }
+}
+@media (max-width: 480px) {
+  .player-wrap .opts { gap: 5px; flex-wrap: nowrap; }
+  .player-wrap .opts button { padding: 4px 8px; font-size: 0.82rem; flex: 1 1 auto; }
+}
