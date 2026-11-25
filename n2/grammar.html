@@ -149,11 +149,18 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .site-home:hover{text-decoration:underline}
 .site-home:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
 
+
+    .header-links { display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center; }
+    .site-kana { display:inline-flex; align-items:center; min-height:48px; color:#fff; font-weight:700; font-size:16px; text-decoration:none; }
+    .site-kana:focus-visible { outline:2px solid #fff; outline-offset:3px; border-radius:4px; }
 </style>
 </head>
 <body>
 <header>
+  <div class="header-links">
   <a class="site-home" href="../index.html">← 首页</a>
+  <a class="site-kana" href="../n2-words/">▶ 五十音朗读</a>
+</div>
   <h1>JLPT N2<br>语法复习</h1>
   <p>按功能分组 · 接续 · 中文说明 · 例句 · 🔊 点读 · 学过标记 · 易混对比 · 接续规则</p>
   <div class="stats" id="stats"></div>

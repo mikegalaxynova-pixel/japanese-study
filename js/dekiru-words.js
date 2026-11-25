@@ -157,7 +157,8 @@
           || (w.r && w.r.indexOf(q) !== -1)
           || (w.zh && w.zh.indexOf(q) !== -1)
           || (w.pos && w.pos.indexOf(q) !== -1)
-          || (w.en && String(w.en).toLowerCase().indexOf(nq) !== -1);
+          || (w.en && String(w.en).toLowerCase().indexOf(nq) !== -1)
+          || (w.origin && String(w.origin).toLowerCase().indexOf(nq) !== -1);
       });
     }
     var gid = viewGroup || (filteredGroups[0] && filteredGroups[0].id);
@@ -281,7 +282,7 @@
       row.querySelector(".r").textContent = w.r;
       row.querySelector(".zh").textContent = w.zh || "";
       row.querySelector(".badge").textContent = pos;
-      row.querySelector(".lv").innerHTML = levelBadgeHtml(w);
+      row.querySelector(".lv").innerHTML = levelBadgeHtml(w) + (w.star ? badgeHtml("⭐", "star") : "");
       row.querySelector(".say").addEventListener("click", function (ev) {
         ev.stopPropagation();
         speakOnce(speakText(w.w));
@@ -583,10 +584,14 @@
   }
 
   function levelBadgeHtml(w) {
+    var map = cfg.levelBadges || {
+      shokyu: { label: "初級", cls: "lv-sk" },
+      shochukyu: { label: "初中級", cls: "lv-sc" }
+    };
     var html = "";
     (w.levels || []).forEach(function (lv) {
-      if (lv === "shokyu") html += badgeHtml("初級", "lv-sk");
-      else if (lv === "shochukyu") html += badgeHtml("初中級", "lv-sc");
+      var meta = map[lv];
+      if (meta) html += badgeHtml(meta.label, meta.cls || "");
     });
     return html;
   }
@@ -616,32 +621,34 @@
   }
 
   function updateChrome() {
-    document.documentElement.setAttribute("data-level", filterLevel === "all" ? "all" : filterLevel);
+    var theme = cfg.theme || "";
+    if (theme) document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-level", filterLevel === "all" ? (theme || "all") : filterLevel);
     var buttons = document.querySelectorAll(".level-filters button");
     for (var i = 0; i < buttons.length; i++) {
       var on = buttons[i].getAttribute("data-level") === filterLevel;
       buttons[i].classList.toggle("on", on);
       buttons[i].setAttribute("aria-pressed", on ? "true" : "false");
     }
-    var titles = {
+    var titles = cfg.titles || {
       all: "できる日本語 初級＋初中級",
       shokyu: "できる日本語 初級",
       shochukyu: "できる日本語 初中級"
     };
     var h1 = document.getElementById("page-title");
     var lead = document.getElementById("lead");
-    if (h1) h1.textContent = titles[filterLevel] || titles.all;
+    if (h1) h1.textContent = titles[filterLevel] || titles.all || "";
     var n = filteredTotal();
     if (lead) {
-      if (filterLevel === "all") {
-        lead.textContent = "初級与初中級共 " + n + " 个单词（同一词、同一读音已合并），按五十音统一复习。也可以只看初級或初中級。点一类的 ▶ 播放会慢慢读完；点单词可看详情。";
-      } else if (filterLevel === "shokyu") {
-        lead.textContent = "初級 " + n + " 个单词按五十音分组。点一类的 ▶ 播放，会慢慢把这类词全部读出来；点单词可看详情。";
-      } else {
-        lead.textContent = "初中級 " + n + " 个单词（含第7–9课课内短语）按五十音分组。点一类的 ▶ 播放，会慢慢把这类词全部读出来；点单词可看详情。";
-      }
+      var leads = cfg.leads || {
+        all: "初級与初中級共 {n} 个单词（同一词、同一读音已合并），按五十音统一复习。也可以只看初級或初中級。点一类的 ▶ 播放会慢慢读完；点单词可看详情。",
+        shokyu: "初級 {n} 个单词按五十音分组。点一类的 ▶ 播放，会慢慢把这类词全部读出来；点单词可看详情。",
+        shochukyu: "初中級 {n} 个单词（含第7–9课课内短语）按五十音分组。点一类的 ▶ 播放，会慢慢把这类词全部读出来；点单词可看详情。"
+      };
+      var tpl = leads[filterLevel] || leads.all || "";
+      lead.textContent = tpl.replace(/\{n\}/g, String(n));
     }
-    document.title = (titles[filterLevel] || titles.all) + "单词朗读｜按五十音";
+    document.title = (titles[filterLevel] || titles.all || "") + (cfg.titleSuffix || "单词朗读｜按五十音");
   }
 
   function syncUrl() {
@@ -652,8 +659,22 @@
     } catch (e) {}
   }
 
+  function knownFilters() {
+    var list = (cfg.filters && cfg.filters.length) ? cfg.filters : [
+      { id: "all", label: "全部" },
+      { id: "shokyu", label: "初級" },
+      { id: "shochukyu", label: "初中級" }
+    ];
+    return list.map(function (f) { return typeof f === "string" ? f : f.id; });
+  }
+
+  function isKnownFilter(lv) {
+    if (!lv) return false;
+    return knownFilters().indexOf(lv) !== -1;
+  }
+
   function setFilter(lv) {
-    if (lv !== "shokyu" && lv !== "shochukyu") lv = "all";
+    if (!isKnownFilter(lv)) lv = "all";
     var cur = currentItem();
     if (playing) stopPlay(false);
     filterLevel = lv;
@@ -711,15 +732,27 @@
     html += '<div class="sheet-row">';
     html += levelBadgeHtml(w);
     html += badgeHtml(w.posd ? w.pos + " · " + w.posd : w.pos, posClass(w.pos));
+    if (w.star) html += badgeHtml("⭐", "star");
+    if (w.vt) html += badgeHtml(w.vt, "verb");
+    if (w.learned) html += badgeHtml("已学：" + w.learned, "book");
     (w.lessons || []).forEach(function (ls) { html += badgeHtml(ls, "book"); });
     html += badgeHtml(w.book === false ? "书里没有" : (w.book ? "课本" : ""), w.book === false ? "extra" : "book");
     if (w.suru) html += badgeHtml("する动词", "verb");
     html += "</div>";
+    if (w.origin) {
+      html += "<h3>外来语来源</h3><div class=\"note note-origin\"></div>";
+    }
     if (w.en) {
-      html += "<h3>英语来源</h3><div class=\"note\"></div>";
+      html += "<h3>英语</h3><div class=\"note note-en\"></div>";
     }
     if (w.note) {
       html += "<h3>说明</h3><div class=\"note note-text\"></div>";
+    }
+    if (w.confuse && w.confuse.length) {
+      html += "<h3>近义／易混</h3>";
+      w.confuse.forEach(function (j, i) {
+        html += '<div class="pair" data-confuse="' + i + '"></div>';
+      });
     }
     if (w.jita && w.jita.length) {
       html += "<h3>自他对照</h3>";
@@ -757,14 +790,26 @@
     el.sheet.innerHTML = html;
     el.sheet.querySelector(".sheet-word").textContent = w.w;
     el.sheet.querySelector(".sheet-reading").textContent = w.r;
-    el.sheet.querySelector(".sheet-zh").textContent = w.zh || "";
+    var zhText = w.zh || "";
+    if (zhText && w.zhtag) zhText += "  ·  " + w.zhtag;
+    el.sheet.querySelector(".sheet-zh").textContent = zhText;
+    if (w.origin) {
+      var oBox = el.sheet.querySelector(".note-origin");
+      if (oBox) oBox.textContent = w.origin;
+    }
     if (w.en) {
-      var enBox = el.sheet.querySelector(".note");
-      if (enBox && !enBox.classList.contains("note-text") && !enBox.classList.contains("also")) {
-        enBox.textContent = w.en;
-      }
+      var enBox = el.sheet.querySelector(".note-en");
+      if (enBox) enBox.textContent = w.en;
     }
     if (w.note) el.sheet.querySelector(".note-text").textContent = w.note;
+    (w.confuse || []).forEach(function (j, i) {
+      var box = el.sheet.querySelector('[data-confuse="' + i + '"]');
+      if (!box) return;
+      var line = (j.w || "") + (j.r ? "  " + j.r : "") + (j.zh ? "  " + j.zh : "");
+      box.innerHTML = "<b></b>" + (j.tip || j.exp ? "<div></div>" : "");
+      box.querySelector("b").textContent = line;
+      if (j.tip || j.exp) box.querySelector("div:last-child").textContent = j.tip || j.exp;
+    });
     (w.jita || []).forEach(function (j, i) {
       var box = el.sheet.querySelector('[data-jita="' + i + '"]');
       var role = j.role ? "（" + j.role + "）" : "";
@@ -996,8 +1041,8 @@
         if (s.random) randomOn = true;
         var q = "";
         try { q = new URLSearchParams(location.search).get("level") || ""; } catch (e) {}
-        if (q === "shokyu" || q === "shochukyu" || q === "all") filterLevel = q;
-        else if (s.filter === "shokyu" || s.filter === "shochukyu" || s.filter === "all") filterLevel = s.filter;
+        if (isKnownFilter(q)) filterLevel = q;
+        else if (isKnownFilter(s.filter)) filterLevel = s.filter;
         else filterLevel = "all";
         rebuildGroups();
         updateChrome();

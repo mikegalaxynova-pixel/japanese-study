@@ -1,5 +1,5 @@
 /* Basic offline cache for the Japanese study static pages. */
-const CACHE_NAME = "japanese-study-v9";
+const CACHE_NAME = "japanese-study-v10";
 const PRECACHE = [
   "./",
   "./index.html",
@@ -16,6 +16,9 @@ const PRECACHE = [
   "./dekiru-words/",
   "./dekiru-words/index.html",
   "./dekiru-words/words.json",
+  "./n2-words/",
+  "./n2-words/index.html",
+  "./n2-words/words.json",
   "./n2/verbs.html",
   "./n2/adjectives.html",
   "./n2/nouns.html",

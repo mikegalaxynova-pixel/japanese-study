@@ -287,6 +287,16 @@
     @media (prefers-color-scheme: dark) {
       .card.words-all { background: #0b2e2b; color: #5eead4; }
     }
+    .card.words-n2 {
+      grid-column: 1 / -1;
+      min-height: 72px;
+      background: linear-gradient(135deg, #eef2ff, #ecfeff);
+      color: #3730a3;
+      border: 1px solid color-mix(in srgb, #4f46e5 25%, var(--line));
+    }
+    @media (prefers-color-scheme: dark) {
+      .card.words-n2 { background: #1e1b4b; color: #a5b4fc; }
+    }
     @media (max-width: 359px) {
       .grid { grid-template-columns: 1fr; }
     }
@@ -323,6 +333,17 @@
         </div>
       </div>
     </section>
+    <section aria-labelledby="n2-all-title">
+      <h2 id="n2-all-title">N2 单词朗读 <span class="count">动词＋形容词＋名词</span></h2>
+      <div class="level n2" style="margin-bottom:14px">
+        <div class="grid">
+          <a class="card words-n2" href="n2-words/?level=all">
+            <span class="label">▶ N2 单词统一朗读</span>
+            <span class="num">1,901 词 · 按五十音分组 · 点开可看详情</span>
+          </a>
+        </div>
+      </div>
+    </section>
     <section aria-labelledby="kanji-title">
       <h2 id="kanji-title">汉字同源词 <span class="count">一天三练</span></h2>
       <div class="level kanji">
@@ -339,6 +360,7 @@
       <div class="level n2">
         <h3>JLPT N2 <span class="sub">词汇 + 语法</span></h3>
         <div class="grid">
+          <a class="card words-n2" href="n2-words/?level=all"><span class="label">▶ 按五十音分组朗读</span><span class="num">1,901 词 · 动词 302 · 形容词 127 · 名词 1,472</span></a>
           <a class="card" href="n2/verbs.html"><span class="label">动词</span><span class="num">302 词</span></a>
           <a class="card" href="n2/adjectives.html"><span class="label">形容词</span><span class="num">127 词</span></a>
           <a class="card" href="n2/nouns.html"><span class="label">名词</span><span class="num">1,472 词</span></a>
