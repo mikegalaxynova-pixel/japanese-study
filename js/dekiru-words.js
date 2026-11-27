@@ -3,6 +3,7 @@
 
   var cfg = window.DEKIRU_CONFIG || {};
   var STORAGE_KEY = cfg.storageKey || "dekiru_words_v2";
+  var DELETED_KEY = STORAGE_KEY + "_deleted";
   var GAP_MS = 1500;
   var REPEAT_GAP_MS = 400;
   var PAIR_GAP_MS = 300;
@@ -35,6 +36,10 @@
   var currentUtterance = null;
   var searchQuery = "";
   var sheetItem = null;
+  var deletedSet = {};
+  var deletedOrder = [];
+  var toastTimer = null;
+  var toastUndoKey = null;
 
   var el = {};
 
@@ -701,17 +706,294 @@
     return (w.levels || []).indexOf(filterLevel) !== -1;
   }
 
+  function wordKey(w) {
+    if (!w) return "";
+    return String(w.id || w.w || "") + "\t" + String(w.r || "");
+  }
+
+  function isDeleted(w) {
+    var k = wordKey(w);
+    return !!(k && deletedSet[k]);
+  }
+
+  function loadDeleted() {
+    deletedSet = {};
+    deletedOrder = [];
+    try {
+      var raw = JSON.parse(localStorage.getItem(DELETED_KEY) || "[]");
+      if (!Array.isArray(raw)) raw = [];
+      raw.forEach(function (k) {
+        k = String(k || "");
+        if (!k || deletedSet[k]) return;
+        deletedSet[k] = true;
+        deletedOrder.push(k);
+      });
+    } catch (e) {
+      deletedSet = {};
+      deletedOrder = [];
+    }
+  }
+
+  function saveDeleted() {
+    try { localStorage.setItem(DELETED_KEY, JSON.stringify(deletedOrder)); } catch (e) {}
+  }
+
+  function pruneDeleted() {
+    if (!data) return;
+    var valid = {};
+    (data.groups || []).forEach(function (g) {
+      (g.words || []).forEach(function (w) { valid[wordKey(w)] = true; });
+    });
+    var next = [];
+    deletedOrder.forEach(function (k) {
+      if (valid[k]) next.push(k);
+      else delete deletedSet[k];
+    });
+    if (next.length !== deletedOrder.length) {
+      deletedOrder = next;
+      saveDeleted();
+    }
+  }
+
+  function findSourceItem(key) {
+    if (!data || !key) return null;
+    for (var i = 0; i < (data.groups || []).length; i++) {
+      var g = data.groups[i];
+      for (var j = 0; j < (g.words || []).length; j++) {
+        if (wordKey(g.words[j]) === key) return { word: g.words[j], group: g.id, orig: j };
+      }
+    }
+    return null;
+  }
+
+  function deletedCount() { return deletedOrder.length; }
+
+  function updateDeletedBtn() {
+    var btn = el.btnDeleted || $("btn-deleted");
+    if (!btn) return;
+    var n = deletedCount();
+    btn.textContent = "已删除 (" + n + ")";
+    btn.classList.toggle("has-items", n > 0);
+  }
+
+  function hideToast() {
+    if (toastTimer) { clearTimeout(toastTimer); toastTimer = null; }
+    toastUndoKey = null;
+    if (el.toast) {
+      el.toast.hidden = true;
+      el.toast.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function showToast(msg, undoKey) {
+    if (!el.toast) return;
+    toastUndoKey = undoKey || null;
+    if (el.toastMsg) el.toastMsg.textContent = msg;
+    if (el.toastUndo) el.toastUndo.hidden = !toastUndoKey;
+    el.toast.hidden = false;
+    el.toast.setAttribute("aria-hidden", "false");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 4500);
+  }
+
+  function dialogOpen() {
+    return (el.sheet && !el.sheet.hidden) || (el.deletedSheet && !el.deletedSheet.hidden);
+  }
+
+  function syncBackdrop() {
+    var open = dialogOpen();
+    if (el.backdrop) {
+      el.backdrop.hidden = !open;
+      el.backdrop.setAttribute("aria-hidden", open ? "false" : "true");
+    }
+    document.body.style.overflow = open ? "hidden" : "";
+  }
+
   function rebuildGroups() {
     groupsById = {};
     filteredGroups = [];
     if (!data) return;
     (data.groups || []).forEach(function (g) {
-      var words = (g.words || []).filter(wordInFilter);
+      var words = (g.words || []).filter(function (w) {
+        return wordInFilter(w) && !isDeleted(w);
+      });
       if (!words.length) return;
       var ng = { id: g.id, count: words.length, words: words };
       filteredGroups.push(ng);
       groupsById[g.id] = ng;
     });
+  }
+
+  function indexInGroup(gid, key) {
+    var g = groupsById[gid];
+    if (!g || !key) return 0;
+    for (var i = 0; i < g.words.length; i++) {
+      if (wordKey(g.words[i]) === key) return i;
+    }
+    return 0;
+  }
+
+  function refreshAfterMutation(changedKey, opts) {
+    opts = opts || {};
+    var wasPlaying = playing && !paused;
+    var keepGroup = viewGroup;
+    var focusKey = opts.focusKey || null;
+    var nextKey = null;
+    if (opts.advance) {
+      var i;
+      for (i = index + 1; i < playlist.length; i++) {
+        var k = wordKey(playlist[i].word);
+        if (k && k !== changedKey && !deletedSet[k]) { nextKey = k; break; }
+      }
+    }
+    if (!focusKey && currentItem() && currentItem().word && !isDeleted(currentItem().word)) {
+      var curKey = wordKey(currentItem().word);
+      if (curKey !== changedKey) focusKey = curKey;
+    }
+    rebuildGroups();
+    updateChrome();
+    updateDeletedBtn();
+    var targetKey = nextKey || focusKey;
+    var gid = groupsById[keepGroup] ? keepGroup : null;
+    var start = 0;
+    if (targetKey) {
+      var found = findSourceItem(targetKey);
+      if (found && groupsById[found.group]) {
+        gid = found.group;
+        start = indexInGroup(gid, targetKey);
+      }
+    }
+    if (!gid) gid = filteredGroups[0] && filteredGroups[0].id;
+    if (!gid) {
+      if (wasPlaying) stopPlay(false);
+      playlist = [];
+      index = 0;
+      viewGroup = null;
+      renderCats();
+      renderList();
+      showNow(null);
+      updateButtons();
+      saveSettings();
+      return;
+    }
+    if (wasPlaying && opts.advance) {
+      viewGroup = gid;
+      playSource = { type: "group", id: gid };
+      playlist = buildPlaylist(gid, randomOn);
+      index = start;
+      pass = 1;
+      speakPhase = "ja";
+      renderCats();
+      renderList();
+      showNow(currentItem());
+      saveSettings();
+      if (!playlist.length) { stopPlay(false); return; }
+      cmd = "skip";
+      cancelSpeech();
+      speakCurrent();
+      updateButtons();
+    } else {
+      if (wasPlaying) stopPlay(false);
+      selectGroup(gid, start, false);
+    }
+  }
+
+  function deleteItem(item) {
+    if (!item || !item.word) return false;
+    var key = wordKey(item.word);
+    if (!key || deletedSet[key]) return false;
+    deletedSet[key] = true;
+    deletedOrder = deletedOrder.filter(function (k) { return k !== key; });
+    deletedOrder.unshift(key);
+    saveDeleted();
+    closeDetails();
+    refreshAfterMutation(key, { advance: true });
+    showToast("已删除「" + (item.word.w || "") + "」", key);
+    return true;
+  }
+
+  function restoreKey(key, silent) {
+    if (!key || !deletedSet[key]) return false;
+    delete deletedSet[key];
+    deletedOrder = deletedOrder.filter(function (k) { return k !== key; });
+    saveDeleted();
+    refreshAfterMutation(key, { focusKey: key });
+    if (el.deletedSheet && !el.deletedSheet.hidden) renderDeletedList();
+    if (!silent) {
+      var it = findSourceItem(key);
+      showToast("已恢复「" + ((it && it.word && it.word.w) || "") + "」", null);
+    }
+    return true;
+  }
+
+  function restoreAll() {
+    if (!deletedOrder.length) return;
+    deletedSet = {};
+    deletedOrder = [];
+    saveDeleted();
+    closeDetails();
+    refreshAfterMutation(null, {});
+    if (el.deletedSheet && !el.deletedSheet.hidden) renderDeletedList();
+    showToast("已全部恢复", null);
+  }
+
+  function undoDelete() {
+    var key = toastUndoKey;
+    hideToast();
+    if (key) restoreKey(key, true);
+  }
+
+  function renderDeletedList() {
+    if (!el.deletedList) return;
+    el.deletedList.innerHTML = "";
+    if (el.deletedEmpty) el.deletedEmpty.hidden = deletedOrder.length > 0;
+    if (el.deletedRestoreAll) el.deletedRestoreAll.hidden = !deletedOrder.length;
+    if (el.deletedCount) el.deletedCount.textContent = String(deletedOrder.length);
+    deletedOrder.forEach(function (key) {
+      var item = findSourceItem(key);
+      if (!item) return;
+      var w = item.word;
+      var row = document.createElement("div");
+      row.className = "del-item";
+      row.setAttribute("role", "button");
+      row.tabIndex = 0;
+      row.innerHTML = '<div class="main"><span class="w"></span><span class="r"></span><span class="zh"></span></div>'
+        + '<button type="button" class="restore">恢复</button>';
+      row.querySelector(".w").textContent = w.w || "";
+      row.querySelector(".r").textContent = w.r || "";
+      row.querySelector(".zh").textContent = w.zh || "";
+      row.querySelector(".restore").addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        restoreKey(key, false);
+      });
+      row.addEventListener("click", function () { openDetails(item, true); });
+      row.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          openDetails(item, true);
+        }
+      });
+      el.deletedList.appendChild(row);
+    });
+  }
+
+  function openDeletedList() {
+    hideToast();
+    closeDetails();
+    if (!el.deletedSheet) return;
+    renderDeletedList();
+    el.deletedSheet.hidden = false;
+    el.deletedSheet.setAttribute("aria-hidden", "false");
+    syncBackdrop();
+    var closer = el.deletedSheet.querySelector(".sheet-close");
+    if (closer) closer.focus();
+  }
+
+  function closeDeletedList() {
+    if (!el.deletedSheet || el.deletedSheet.hidden) return;
+    el.deletedSheet.hidden = true;
+    el.deletedSheet.setAttribute("aria-hidden", "true");
+    syncBackdrop();
   }
 
   function filteredTotal() {
@@ -749,6 +1031,7 @@
       lead.textContent = tpl.replace(/\{n\}/g, String(n));
     }
     document.title = (titles[filterLevel] || titles.all || "") + (cfg.titleSuffix || "单词朗读｜按五十音");
+    updateDeletedBtn();
   }
 
   function syncUrl() {
@@ -818,9 +1101,10 @@
     return '<span class="badge ' + (cls || "") + '">' + esc(text) + "</span>";
   }
 
-  function openDetails(item) {
+  function openDetails(item, fromDeleted) {
     sheetItem = item;
     var w = item.word;
+    if (!fromDeleted) closeDeletedList();
     var html = "";
     html += '<div class="sheet-handle"></div>';
     html += '<div class="sheet-top">';
@@ -891,6 +1175,13 @@
     if (w.also && w.also.length) {
       html += "<h3>另见</h3><div class=\"note also\"></div>";
     }
+    html += '<div class="sheet-actions">';
+    if (fromDeleted || isDeleted(w)) {
+      html += '<button type="button" class="sheet-restore">恢复</button>';
+    } else {
+      html += '<button type="button" class="sheet-del">删除</button>';
+    }
+    html += "</div>";
 
     el.sheet.innerHTML = html;
     el.sheet.querySelector(".sheet-word").textContent = w.w;
@@ -987,22 +1278,26 @@
       btn.addEventListener("click", function () { speakOnce(btn.getAttribute("data-say") || "", "ja"); });
     });
     el.sheet.querySelector(".sheet-close").addEventListener("click", closeDetails);
+    var delBtn = el.sheet.querySelector(".sheet-del");
+    if (delBtn) delBtn.addEventListener("click", function () { deleteItem(item); });
+    var restBtn = el.sheet.querySelector(".sheet-restore");
+    if (restBtn) restBtn.addEventListener("click", function () {
+      restoreKey(wordKey(w), false);
+      closeDetails();
+    });
 
-    el.backdrop.hidden = false;
     el.sheet.hidden = false;
     el.sheet.setAttribute("aria-hidden", "false");
-    el.backdrop.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+    syncBackdrop();
     el.sheet.querySelector(".sheet-close").focus();
   }
 
   function closeDetails() {
+    if (!el.sheet || el.sheet.hidden) { sheetItem = null; return; }
     el.sheet.hidden = true;
-    el.backdrop.hidden = true;
     el.sheet.setAttribute("aria-hidden", "true");
-    el.backdrop.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
     sheetItem = null;
+    syncBackdrop();
   }
 
   function bind() {
@@ -1029,7 +1324,16 @@
       optRestart: $("opt-restart"),
       search: $("search"),
       sheet: $("sheet"),
-      backdrop: $("backdrop")
+      backdrop: $("backdrop"),
+      btnDeleted: $("btn-deleted"),
+      deletedSheet: $("deleted-sheet"),
+      deletedList: $("deleted-list"),
+      deletedEmpty: $("deleted-empty"),
+      deletedRestoreAll: $("deleted-restore-all"),
+      deletedCount: $("deleted-count"),
+      toast: $("toast"),
+      toastMsg: $("toast-msg"),
+      toastUndo: $("toast-undo")
     };
 
     el.btnPlay.addEventListener("click", togglePlay);
@@ -1087,10 +1391,22 @@
       }, 120);
     });
 
-    el.backdrop.addEventListener("click", closeDetails);
-    document.addEventListener("keydown", function (ev) {
-      if (ev.key === "Escape" && !el.sheet.hidden) closeDetails();
+    el.backdrop.addEventListener("click", function () {
+      closeDetails();
+      closeDeletedList();
     });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      if (el.sheet && !el.sheet.hidden) closeDetails();
+      else if (el.deletedSheet && !el.deletedSheet.hidden) closeDeletedList();
+    });
+    if (el.btnDeleted) el.btnDeleted.addEventListener("click", openDeletedList);
+    if (el.deletedRestoreAll) el.deletedRestoreAll.addEventListener("click", restoreAll);
+    if (el.deletedSheet) {
+      var delClose = el.deletedSheet.querySelector(".sheet-close");
+      if (delClose) delClose.addEventListener("click", closeDeletedList);
+    }
+    if (el.toastUndo) el.toastUndo.addEventListener("click", undoDelete);
 
     document.addEventListener("visibilitychange", function () {
       if (document.visibilityState === "visible" && playing && !paused) {
@@ -1123,9 +1439,24 @@
         sheetOpen: !!(el.sheet && !el.sheet.hidden),
         sheetWord: sheetItem ? sheetItem.word.w : null,
         filter: filterLevel,
-        filteredTotal: filteredTotal()
+        filteredTotal: filteredTotal(),
+        deletedCount: deletedCount()
       };
     },
+    wordKey: wordKey,
+    deleteCurrent: function () {
+      var item = sheetItem || currentItem();
+      return deleteItem(item);
+    },
+    deleteKey: function (key) {
+      var item = findSourceItem(key);
+      return item ? deleteItem(item) : false;
+    },
+    restoreKey: function (key) { return restoreKey(key, true); },
+    restoreAll: restoreAll,
+    openDeletedList: openDeletedList,
+    closeDeletedList: closeDeletedList,
+    getDeleted: function () { return deletedOrder.slice(); },
     setFilter: setFilter,
     setGap: function (ms) {
       GAP_MS = Number(ms) || 0;
@@ -1162,6 +1493,8 @@
       })
       .then(function (json) {
         data = json;
+        loadDeleted();
+        pruneDeleted();
         var s = loadSettings();
         if (typeof s.rate === "number") rate = s.rate >= 0.95 ? 1 : 0.7;
         if (s.twice) twice = true;

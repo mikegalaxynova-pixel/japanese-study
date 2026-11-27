@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
-<link rel="stylesheet" href="../js/dekiru-words.css?v=11">
+<link rel="stylesheet" href="../js/dekiru-words.css?v=12">
 </head>
 <body>
 <a class="skip" href="#main">跳到内容</a>
@@ -25,10 +25,13 @@
   </div>
   <h1 id="page-title">できる日本語 初級＋初中級</h1>
   <p class="lead" id="lead">初級与初中級共 1,873 个单词（同一词、同一读音已合并），按五十音统一复习。也可以只看初級或初中級。点一类的 ▶ 播放会慢慢读完；点单词可看详情。</p>
-  <div class="level-filters" role="tablist" aria-label="级别">
+  <div class="header-tools">
+    <div class="level-filters" role="tablist" aria-label="级别">
     <button type="button" data-level="all" class="on" aria-pressed="true">全部</button>
     <button type="button" data-level="shokyu" aria-pressed="false">初級</button>
     <button type="button" data-level="shochukyu" aria-pressed="false">初中級</button>
+    </div>
+    <button type="button" id="btn-deleted" class="deleted-btn" aria-haspopup="dialog">已删除 (0)</button>
   </div>
   <p class="hint hint-head">注意：手机锁屏或切到后台后，朗读一般会停止。请保持屏幕亮着（播放时本页会尽量防止自动锁屏）。</p>
 </header>
@@ -76,6 +79,27 @@
 <div class="backdrop" id="backdrop" hidden aria-hidden="true"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="单词详情" hidden aria-hidden="true"></div>
 
+<div class="sheet deleted-sheet" id="deleted-sheet" role="dialog" aria-modal="true" aria-label="已删除的单词" hidden aria-hidden="true">
+  <div class="sheet-handle"></div>
+  <div class="sheet-top">
+    <div>
+      <div class="sheet-word deleted-title">已删除</div>
+      <div class="sheet-reading">共 <span id="deleted-count">0</span> 个词，仅保存在本机。</div>
+    </div>
+    <button type="button" class="sheet-close" aria-label="关闭">关闭</button>
+  </div>
+  <div class="sheet-actions deleted-toolbar">
+    <button type="button" id="deleted-restore-all" class="sheet-restore" hidden>全部恢复</button>
+  </div>
+  <p class="hint" id="deleted-empty">还没有删除的词。在单词详情里点「删除」，词会从列表和朗读里去掉，以后可以在这里恢复。</p>
+  <div id="deleted-list" class="deleted-list"></div>
+</div>
+
+<div class="toast" id="toast" hidden aria-hidden="true" role="status">
+  <span id="toast-msg">已删除</span>
+  <button type="button" id="toast-undo">撤销</button>
+</div>
+
 <script>
 window.DEKIRU_CONFIG = {
   dataUrl: "words.json",
@@ -83,6 +107,6 @@ window.DEKIRU_CONFIG = {
   swUrl: "../sw.js"
 };
 </script>
-<script src="../js/dekiru-words.js?v=11" defer></script>
+<script src="../js/dekiru-words.js?v=12" defer></script>
 </body>
 </html>
