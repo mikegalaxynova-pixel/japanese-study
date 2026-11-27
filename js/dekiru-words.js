@@ -5,6 +5,8 @@
   var STORAGE_KEY = cfg.storageKey || "dekiru_words_v2";
   var GAP_MS = 1500;
   var REPEAT_GAP_MS = 400;
+  var PAIR_GAP_MS = 300;
+  var READ_ZH_KEY = "jp_study_read_zh";
   var RB = /\{([^{}|]+)\|([^{}|]+)\}/g;
 
   var data = null;
@@ -23,7 +25,10 @@
   var twice = false;
   var loopOn = false;
   var randomOn = false;
+  var readZh = false;
+  var speakPhase = "ja";
   var jaVoice = null;
+  var zhVoice = null;
   var wakeLock = null;
   var resumeTimer = null;
   var gapTimer = null;
@@ -65,6 +70,22 @@
     return String(word || "").replace(/^[~～〜]+/, "").replace(/[（）()／]/g, "").trim();
   }
 
+  function speakZhText(zh) {
+    var s = String(zh == null ? "" : zh);
+    s = s.replace(/[★☆⭐]/g, "");
+    s = s.replace(/[（(\[]\s*(自译|新例句|书里没有)\s*[）)\]]/g, "");
+    s = s.replace(/(^|[·•\s,，；;／/])(自译|新例句|书里没有)(?=$|[·•\s,，；;／/）)\]])/g, "$1");
+    s = s.replace(/[（(\[]\s*课本\s*[）)\]]/g, "");
+    s = s.replace(/[·•]\s*课本\s*(?=$|[·•,，；;／/])/g, "");
+    s = s.replace(/[（()）\[\]【】「」『』《》〈〉〔〕]/g, "");
+    s = s.replace(/[／/|｜；;、·•]+/g, "，");
+    s = s.replace(/[,，]{2,}/g, "，");
+    s = s.replace(/(?:^\s*，\s*)+|(?:\s*，\s*)+$/g, "");
+    s = s.replace(/\s+/g, "");
+    if (s === "自译" || s === "新例句" || s === "书里没有") return "";
+    return s;
+  }
+
   function posClass(pos) {
     if (pos === "动词") return "verb";
     if (pos === "形容词") return "adj";
@@ -86,9 +107,20 @@
         twice: twice,
         loop: loopOn,
         random: randomOn,
+        readZh: readZh,
         filter: filterLevel
       }));
+      try { localStorage.setItem(READ_ZH_KEY, readZh ? "1" : "0"); } catch (e2) {}
     } catch (e) {}
+  }
+
+  function loadSharedReadZh() {
+    try {
+      var v = localStorage.getItem(READ_ZH_KEY);
+      if (v === "1" || v === "true") return true;
+      if (v === "0" || v === "false") return false;
+    } catch (e) {}
+    return null;
   }
 
   function pickVoice() {
@@ -97,14 +129,22 @@
     jaVoice = voices.filter(function (v) { return v.lang === "ja-JP"; })[0]
       || voices.filter(function (v) { return v.lang && v.lang.toLowerCase().indexOf("ja") === 0; })[0]
       || null;
+    zhVoice = voices.filter(function (v) { return v.lang === "zh-CN"; })[0]
+      || voices.filter(function (v) { return v.lang === "zh_CN"; })[0]
+      || voices.filter(function (v) { return v.lang && /^zh-Hans/i.test(v.lang); })[0]
+      || voices.filter(function (v) {
+        var lang = (v.lang || "").toLowerCase();
+        return lang.indexOf("zh") === 0 && lang.indexOf("hk") === -1 && lang.indexOf("tw") === -1 && lang.indexOf("hant") === -1;
+      })[0]
+      || voices.filter(function (v) { return v.lang && v.lang.toLowerCase().indexOf("zh") === 0; })[0]
+      || null;
   }
 
   function waitForVoices() {
     if (!window.speechSynthesis) return;
     pickVoice();
-    if (jaVoice || (speechSynthesis.getVoices() || []).length) return;
     speechSynthesis.addEventListener("voiceschanged", function () { pickVoice(); }, { once: true });
-    setTimeout(pickVoice, 800);
+    if (!(speechSynthesis.getVoices() || []).length) setTimeout(pickVoice, 800);
   }
 
   async function requestWake() {
@@ -285,7 +325,7 @@
       row.querySelector(".lv").innerHTML = levelBadgeHtml(w) + (w.star ? badgeHtml("⭐", "star") : "");
       row.querySelector(".say").addEventListener("click", function (ev) {
         ev.stopPropagation();
-        speakOnce(speakText(w.w));
+        speakWordAndMaybeZh(w);
       });
       row.addEventListener("click", function () { openDetails(item); });
       row.addEventListener("keydown", function (ev) {
@@ -336,6 +376,10 @@
     el.optNormal.setAttribute("aria-pressed", rate >= 0.95 ? "true" : "false");
     el.optTwice.classList.toggle("on", twice);
     el.optTwice.setAttribute("aria-pressed", twice ? "true" : "false");
+    if (el.optZh) {
+      el.optZh.classList.toggle("on", readZh);
+      el.optZh.setAttribute("aria-pressed", readZh ? "true" : "false");
+    }
     el.optLoop.classList.toggle("on", loopOn);
     el.optLoop.setAttribute("aria-pressed", loopOn ? "true" : "false");
     el.optRandom.classList.toggle("on", randomOn);
@@ -405,14 +449,25 @@
     showNow(item);
     highlightList();
     saveSettings();
-    speakUtterance(speakText(item.word.w), function (kind) { onEnded(kind); });
+    speakPhase = "ja";
+    speakUtterance(speakText(item.word.w), "ja", function (kind) { onEnded(kind); });
   }
 
-  function speakUtterance(text, done) {
+  function applyVoice(u, lang) {
+    var isZh = lang === "zh" || lang === "zh-CN";
+    u.lang = isZh ? "zh-CN" : "ja-JP";
+    if (isZh) {
+      if (zhVoice) u.voice = zhVoice;
+    } else if (jaVoice) {
+      u.voice = jaVoice;
+    }
+  }
+
+  function speakUtterance(text, lang, done) {
+    if (!text) { if (done) done("end"); return; }
     var u = new SpeechSynthesisUtterance(text);
-    u.lang = "ja-JP";
     u.rate = rate;
-    if (jaVoice) u.voice = jaVoice;
+    applyVoice(u, lang || "ja");
     currentUtterance = u;
     u.onend = function () {
       if (currentUtterance !== u) return;
@@ -446,8 +501,22 @@
       updateButtons();
       return;
     }
+    if (speakPhase === "ja" && readZh) {
+      var item = currentItem();
+      var zh = item ? speakZhText(item.word.zh) : "";
+      if (zh) {
+        speakPhase = "zh";
+        scheduleGap(PAIR_GAP_MS, function () {
+          if (playing && !paused && cmd == null) {
+            speakUtterance(zh, "zh", function (k) { onEnded(k); });
+          }
+        });
+        return;
+      }
+    }
     if (twice && pass === 1) {
       pass = 2;
+      speakPhase = "ja";
       scheduleGap(REPEAT_GAP_MS, function () {
         if (playing && !paused && cmd == null) speakCurrent();
       });
@@ -550,8 +619,23 @@
     updateButtons();
   }
 
-  function speakOnce(text) {
-    if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
+  function speakOnce(text, lang) {
+    speakOnceQueue([{ text: text, lang: lang || "ja" }]);
+  }
+
+  function speakWordAndMaybeZh(word) {
+    if (!word) return;
+    var steps = [{ text: speakText(word.w), lang: "ja" }];
+    if (readZh) {
+      var zh = speakZhText(word.zh);
+      if (zh) steps.push({ text: zh, lang: "zh" });
+    }
+    speakOnceQueue(steps);
+  }
+
+  function speakOnceQueue(steps) {
+    steps = (steps || []).filter(function (s) { return s && s.text; });
+    if (!steps.length || !window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
     pickVoice();
     var keepPlaying = playing && !paused;
     if (keepPlaying) {
@@ -561,15 +645,31 @@
     }
     try { speechSynthesis.cancel(); } catch (e) {}
     currentUtterance = null;
-    var u = new SpeechSynthesisUtterance(text);
-    u.lang = "ja-JP";
-    u.rate = rate;
-    if (jaVoice) u.voice = jaVoice;
-    if (keepPlaying) {
-      u.onend = function () { resumePlay(); };
-      u.onerror = function () { resumePlay(); };
+    var i = 0;
+    function next() {
+      if (i >= steps.length) {
+        if (keepPlaying) resumePlay();
+        return;
+      }
+      var step = steps[i++];
+      var u = new SpeechSynthesisUtterance(step.text);
+      u.rate = rate;
+      applyVoice(u, step.lang || "ja");
+      currentUtterance = u;
+      u.onend = function () {
+        if (currentUtterance !== u) return;
+        currentUtterance = null;
+        next();
+      };
+      u.onerror = function () {
+        if (currentUtterance !== u) return;
+        currentUtterance = null;
+        next();
+      };
+      try { speechSynthesis.speak(u); }
+      catch (e) { next(); }
     }
-    speechSynthesis.speak(u);
+    next();
     updateButtons();
   }
 
@@ -725,10 +825,15 @@
     html += '<div class="sheet-handle"></div>';
     html += '<div class="sheet-top">';
     html += '<div><div class="sheet-word"></div><div class="sheet-reading"></div></div>';
-    html += '<button type="button" class="say" data-say="' + esc(speakText(w.w)) + '" aria-label="朗读单词">🔊</button>';
+    html += '<button type="button" class="say say-word" data-say="' + esc(speakText(w.w)) + '" aria-label="朗读单词">🔊</button>';
     html += '<button type="button" class="sheet-close" aria-label="关闭">关闭</button>';
     html += "</div>";
+    html += '<div class="sheet-zh-row">';
     html += '<div class="sheet-zh"></div>';
+    if (speakZhText(w.zh)) {
+      html += '<button type="button" class="say say-zh" data-say-zh="' + esc(speakZhText(w.zh)) + '" aria-label="朗读中文意思">🔊中</button>';
+    }
+    html += "</div>";
     html += '<div class="sheet-row">';
     html += levelBadgeHtml(w);
     html += badgeHtml(w.posd ? w.pos + " · " + w.posd : w.pos, posClass(w.pos));
@@ -868,8 +973,18 @@
       }).join("；");
     }
 
-    el.sheet.querySelectorAll(".say[data-say]").forEach(function (btn) {
-      btn.addEventListener("click", function () { speakOnce(btn.getAttribute("data-say") || ""); });
+    var wordBtn = el.sheet.querySelector(".say-word");
+    if (wordBtn) {
+      wordBtn.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        speakWordAndMaybeZh(w);
+      });
+    }
+    el.sheet.querySelectorAll(".say[data-say-zh]").forEach(function (btn) {
+      btn.addEventListener("click", function () { speakOnce(btn.getAttribute("data-say-zh") || "", "zh"); });
+    });
+    el.sheet.querySelectorAll(".say[data-say]:not(.say-word)").forEach(function (btn) {
+      btn.addEventListener("click", function () { speakOnce(btn.getAttribute("data-say") || "", "ja"); });
     });
     el.sheet.querySelector(".sheet-close").addEventListener("click", closeDetails);
 
@@ -908,6 +1023,7 @@
       optSlow: $("opt-slow"),
       optNormal: $("opt-normal"),
       optTwice: $("opt-twice"),
+      optZh: $("opt-zh"),
       optLoop: $("opt-loop"),
       optRandom: $("opt-random"),
       optRestart: $("opt-restart"),
@@ -923,6 +1039,9 @@
     el.optSlow.addEventListener("click", function () { rate = 0.7; saveSettings(); updateButtons(); });
     el.optNormal.addEventListener("click", function () { rate = 1; saveSettings(); updateButtons(); });
     el.optTwice.addEventListener("click", function () { twice = !twice; saveSettings(); updateButtons(); });
+    if (el.optZh) {
+      el.optZh.addEventListener("click", function () { readZh = !readZh; saveSettings(); updateButtons(); });
+    }
     el.optLoop.addEventListener("click", function () { loopOn = !loopOn; saveSettings(); updateButtons(); });
     el.optRandom.addEventListener("click", function () {
       randomOn = !randomOn;
@@ -992,12 +1111,14 @@
         source: playSource.type,
         rate: rate,
         twice: twice,
+        readZh: readZh,
         loop: loopOn,
         random: randomOn,
         total: playlist.length,
         word: item ? item.word.w : null,
         reading: item ? item.word.r : null,
         speakText: item ? speakText(item.word.w) : null,
+        speakZh: item ? speakZhText(item.word.zh) : "",
         gap: GAP_MS,
         sheetOpen: !!(el.sheet && !el.sheet.hidden),
         sheetWord: sheetItem ? sheetItem.word.w : null,
@@ -1006,7 +1127,14 @@
       };
     },
     setFilter: setFilter,
-    setGap: function (ms) { GAP_MS = Number(ms) || 0; REPEAT_GAP_MS = Math.min(REPEAT_GAP_MS, GAP_MS); },
+    setGap: function (ms) {
+      GAP_MS = Number(ms) || 0;
+      REPEAT_GAP_MS = Math.min(REPEAT_GAP_MS, GAP_MS);
+      PAIR_GAP_MS = Math.min(PAIR_GAP_MS, GAP_MS);
+    },
+    setReadZh: function (on) { readZh = !!on; saveSettings(); updateButtons(); },
+    setTwice: function (on) { twice = !!on; saveSettings(); updateButtons(); },
+    speakZhText: speakZhText,
     playGroup: function (id, start) { startGroup(id, start || 0); },
     next: function () { skipTo(index + 1); },
     prev: function () { skipTo(index - 1); },
@@ -1039,6 +1167,10 @@
         if (s.twice) twice = true;
         if (s.loop) loopOn = true;
         if (s.random) randomOn = true;
+        if (s.readZh === true) readZh = true;
+        if (s.readZh === false) readZh = false;
+        var sharedZh = loadSharedReadZh();
+        if (sharedZh !== null) readZh = sharedZh;
         var q = "";
         try { q = new URLSearchParams(location.search).get("level") || ""; } catch (e) {}
         if (isKnownFilter(q)) filterLevel = q;

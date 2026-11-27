@@ -329,9 +329,16 @@ header .hint-head { color: #fff; opacity: 0.85; margin-top: 8px; }
   .player-wrap .opts { margin-top: 0; flex: 0 1 auto; }
 }
 @media (max-width: 480px) {
-  .player-wrap .opts { gap: 5px; flex-wrap: nowrap; }
-  .player-wrap .opts button { padding: 4px 8px; font-size: 0.82rem; flex: 1 1 auto; }
+  .player-wrap .opts { gap: 4px; flex-wrap: nowrap; }
+  .player-wrap .opts button { padding: 4px 5px; font-size: 0.78rem; flex: 1 1 0; min-width: 0; white-space: nowrap; }
 }
+@media (max-width: 390px) {
+  .player-wrap .opts { gap: 3px; }
+  .player-wrap .opts button { padding: 4px 3px; font-size: 0.72rem; }
+}
+.sheet-zh-row { display: flex; align-items: flex-start; gap: 8px; }
+.sheet-zh-row .sheet-zh { flex: 1; min-width: 0; }
+.sheet-zh-row .say-zh { flex: 0 0 auto; margin-top: 2px; font-size: 0.9rem; padding: 4px 8px; }
 
 html[data-theme="n2"] {
   --accent: #4f46e5;
